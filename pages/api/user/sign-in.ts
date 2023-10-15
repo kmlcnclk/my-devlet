@@ -7,11 +7,11 @@ import { UserDocument } from '@/server/models/userModel';
 import UserService from '@/server/services/UserService';
 import UserDAO from '@/server/data/UserDAO';
 import MongoDB from '@/server/lib/Mongoose';
+import { openMongooseConnection } from '@/server/middlewares/openDBConnection';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
     try {
-      await MongoDB.connect();
       const validated = await JwtService.isValidatePassword<
         UserDocument,
         typeof UserService
@@ -51,4 +51,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-export default validateResource(handler, generateJwtTokenSchema);
+export default openMongooseConnection(
+  validateResource(handler, generateJwtTokenSchema)
+);

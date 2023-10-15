@@ -10,14 +10,14 @@ import { omit } from 'lodash';
 import validateResource from '@/server/middlewares/validateResource';
 import { createUserSchema } from '@/server/schemas/userSchema';
 import { v4 as uuidv4 } from 'uuid';
-import UserService from '@/server/services/UserService';
-import { EthereumKeyPair } from '@/server/lib/EthereumKeyPair';
+// import UserService from '@/server/services/UserService';
+// import { EthereumKeyPair } from '@/server/lib/EthereumKeyPair';
 import MongoDB from '@/server/lib/Mongoose';
+import { openMongooseConnection } from '@/server/middlewares/openDBConnection';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
     try {
-      await MongoDB.connect();
       const userData: SignUpType = req.body;
 
       // const keyPairNewKey = new EthereumKeyPair();
@@ -32,8 +32,8 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       const data = {
         ...omit(userData, 'passwordConfirmation'),
         uniqueID: uuidv4(),
-        address: "address",
-        privateKey: "hashOfPrivateKey",
+        address: 'address',
+        privateKey: 'hashOfPrivateKey',
       };
 
       const user = await UserDAO.create(data);
@@ -56,4 +56,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-export default validateResource(isUserEmailExists(handler), createUserSchema);
+export default openMongooseConnection(
+  validateResource(isUserEmailExists(handler), createUserSchema)
+);

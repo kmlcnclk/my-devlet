@@ -13,6 +13,7 @@ import SmartContractDAO from '@/server/data/SmartContractDAO';
 import SmartContractService from '@/server/services/SmartContractService';
 import UserModel, { UserDocument } from '@/server/models/userModel';
 import UserService from '@/server/services/UserService';
+import { openMongooseConnection } from '@/server/middlewares/openDBConnection';
 
 async function handler(req: NextApiRequestWithUser, res: NextApiResponse) {
   if (req.method === 'POST') {
@@ -72,7 +73,9 @@ async function handler(req: NextApiRequestWithUser, res: NextApiResponse) {
   }
 }
 
-export default validateResource(
-  checkJwtAndUserExist<typeof UserDAO>(handler, UserDAO),
-  createSmartContractSchema
+export default openMongooseConnection(
+  validateResource(
+    checkJwtAndUserExist<typeof UserDAO>(handler, UserDAO),
+    createSmartContractSchema
+  )
 );
