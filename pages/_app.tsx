@@ -7,7 +7,6 @@ import { ToastContainer } from 'react-toastify';
 import CssBaseline from '@mui/material/CssBaseline';
 import { store } from '@/store';
 import { Provider } from 'react-redux';
-import MongoDB from '@/server/lib/Mongoose';
 // import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 
 import 'react-toastify/dist/ReactToastify.css';
@@ -21,7 +20,6 @@ function AppPage({
 }: AppProps) {
   const baseTheme = useTheme();
 
-  MongoDB.connect();
   return (
     <Fragment>
       <Provider store={store}>
