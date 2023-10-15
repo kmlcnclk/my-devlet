@@ -5,13 +5,10 @@ import { generateJwtTokenSchema } from '@/server/schemas/jwtTokenSchema';
 import { get } from 'lodash';
 import { AdminDocument } from '@/server/models/adminModel';
 import AdminService from '@/server/services/AdminService';
-import MongoDB from '@/server/lib/Mongoose';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
     try {
-      await MongoDB.connect();
-
       const validated = await JwtService.isValidatePassword<
         AdminDocument,
         typeof AdminService

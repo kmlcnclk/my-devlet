@@ -2,13 +2,10 @@ import { NextApiResponse, NextApiRequest } from 'next';
 import { get } from 'lodash';
 import JwtService from '@/server/services/JwtService';
 import { ISignJwt } from '@/types/Jwt';
-import MongoDB from '@/server/lib/Mongoose';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
     try {
-      await MongoDB.connect();
-
       const refreshToken = get(req, 'headers.x-refresh');
       if (refreshToken != undefined || refreshToken) {
         const refreshTokenResponse = await JwtService.isValidRefreshToken(

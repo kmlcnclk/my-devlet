@@ -5,13 +5,10 @@ import { get, omit } from 'lodash';
 
 import { checkJwtAndUserExist } from '@/server/middlewares/jwt';
 import UserDAO from '@/server/data/UserDAO';
-import MongoDB from '@/server/lib/Mongoose';
 
 async function handler(req: NextApiRequestWithUser, res: NextApiResponse) {
   if (req.method === 'GET') {
     try {
-      await MongoDB.connect();
-
       const user = await UserDAO.findById(get(req.user, '_id') as string);
 
       return res.status(200).json({

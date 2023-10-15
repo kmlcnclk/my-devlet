@@ -7,13 +7,10 @@ import { checkJwtAndUserExist } from '@/server/middlewares/jwt';
 import UserDAO from '@/server/data/UserDAO';
 
 import SmartContractModel from '@/server/models/smartContractModel';
-import MongoDB from '@/server/lib/Mongoose';
 
 async function handler(req: NextApiRequestWithUser, res: NextApiResponse) {
   if (req.method === 'GET') {
     try {
-      await MongoDB.connect();
-
       const smartContract = await SmartContractModel.findById(
         get(req.query, 'id') as string
       );

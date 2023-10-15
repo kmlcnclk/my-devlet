@@ -9,13 +9,10 @@ import JwtTokenDAO from '@/server/data/JwtTokenDAO';
 import { omit } from 'lodash';
 import validateResource from '@/server/middlewares/validateResource';
 import { createAdminSchema } from '@/server/schemas/adminSchema';
-import MongoDB from '@/server/lib/Mongoose';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
     try {
-      await MongoDB.connect();
-
       const adminData: RegisterType = req.body;
 
       const admin = await AdminDAO.create(

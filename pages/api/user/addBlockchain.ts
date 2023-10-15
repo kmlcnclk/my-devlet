@@ -14,13 +14,10 @@ import UserService from '@/server/services/UserService';
 import { AddBlockChainType } from '@/types/User';
 import { addBlockChainSchema } from '@/server/schemas/userSchema';
 import Web3Service from '@/server/services/Web3Service';
-import MongoDB from '@/server/lib/Mongoose';
 
 async function handler(req: NextApiRequestWithUser, res: NextApiResponse) {
   if (req.method === 'POST') {
     try {
-      await MongoDB.connect();
-
       const addBlockchainData: AddBlockChainType = req.body;
 
       const user: UserDocument = (await UserModel.findById(
