@@ -6,6 +6,7 @@ import { get } from 'lodash';
 import { checkJwtAndUserExist } from '@/server/middlewares/jwt';
 import UserDAO from '@/server/data/UserDAO';
 import educationalBackgroundModel from '@/server/models/educationalBackgroundModel';
+import { openMongooseConnection } from '@/server/middlewares/openDBConnection';
 
 async function handler(req: NextApiRequestWithUser, res: NextApiResponse) {
   if (req.method === 'GET') {
@@ -39,4 +40,6 @@ async function handler(req: NextApiRequestWithUser, res: NextApiResponse) {
   }
 }
 
-export default checkJwtAndUserExist<typeof UserDAO>(handler, UserDAO);
+export default openMongooseConnection(
+  checkJwtAndUserExist<typeof UserDAO>(handler, UserDAO)
+);

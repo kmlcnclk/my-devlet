@@ -5,6 +5,7 @@ import { generateJwtTokenSchema } from '@/server/schemas/jwtTokenSchema';
 import { get } from 'lodash';
 import { AdminDocument } from '@/server/models/adminModel';
 import AdminService from '@/server/services/AdminService';
+import { openMongooseConnection } from '@/server/middlewares/openDBConnection';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
@@ -44,4 +45,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-export default validateResource(handler, generateJwtTokenSchema);
+export default openMongooseConnection(
+  validateResource(handler, generateJwtTokenSchema)
+);

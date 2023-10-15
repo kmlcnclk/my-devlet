@@ -8,6 +8,7 @@ import UserService from '@/server/services/UserService';
 import { changePasswordSchema } from '@/server/schemas/userSchema';
 import { checkJwtAndUserExist } from '@/server/middlewares/jwt';
 import UserDAO from '@/server/data/UserDAO';
+import { openMongooseConnection } from '@/server/middlewares/openDBConnection';
 
 async function handler(req: NextApiRequestWithUser, res: NextApiResponse) {
   if (req.method === 'PATCH') {
@@ -50,7 +51,9 @@ async function handler(req: NextApiRequestWithUser, res: NextApiResponse) {
   }
 }
 
-export default validateResource(
-  checkJwtAndUserExist<typeof UserDAO>(handler, UserDAO),
-  changePasswordSchema
+export default openMongooseConnection(
+  validateResource(
+    checkJwtAndUserExist<typeof UserDAO>(handler, UserDAO),
+    changePasswordSchema
+  )
 );

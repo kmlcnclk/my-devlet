@@ -9,6 +9,7 @@ import { createEducationalBackgroundSchema } from '@/server/schemas/educationalB
 import educationalBackgroundModel from '@/server/models/educationalBackgroundModel';
 import AdminDAO from '@/server/data/AdminDAO';
 import CustomError from '@/server/errors/CustomError';
+import { openMongooseConnection } from '@/server/middlewares/openDBConnection';
 
 async function handler(req: NextApiRequestWithUser, res: NextApiResponse) {
   if (req.method === 'POST') {
@@ -56,7 +57,9 @@ async function handler(req: NextApiRequestWithUser, res: NextApiResponse) {
   }
 }
 
-export default validateResource(
-  checkJwtAndUserExist<typeof AdminDAO>(handler, AdminDAO),
-  createEducationalBackgroundSchema
+export default openMongooseConnection(
+  validateResource(
+    checkJwtAndUserExist<typeof AdminDAO>(handler, AdminDAO),
+    createEducationalBackgroundSchema
+  )
 );

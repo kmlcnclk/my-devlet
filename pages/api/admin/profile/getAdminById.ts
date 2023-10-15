@@ -5,6 +5,7 @@ import { get, omit } from 'lodash';
 
 import { checkJwtAndUserExist } from '@/server/middlewares/jwt';
 import AdminDAO from '@/server/data/AdminDAO';
+import { openMongooseConnection } from '@/server/middlewares/openDBConnection';
 
 async function handler(req: NextApiRequestWithUser, res: NextApiResponse) {
   if (req.method === 'GET') {
@@ -36,4 +37,6 @@ async function handler(req: NextApiRequestWithUser, res: NextApiResponse) {
   }
 }
 
-export default checkJwtAndUserExist<typeof AdminDAO>(handler, AdminDAO);
+export default openMongooseConnection(
+  checkJwtAndUserExist<typeof AdminDAO>(handler, AdminDAO)
+);

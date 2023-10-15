@@ -17,6 +17,7 @@ import SmartContractModel, {
 import UserModel, { UserDocument } from '@/server/models/userModel';
 import UserService from '@/server/services/UserService';
 import Web3Service from '@/server/services/Web3Service';
+import { openMongooseConnection } from '@/server/middlewares/openDBConnection';
 
 async function handler(req: NextApiRequestWithUser, res: NextApiResponse) {
   if (req.method === 'POST') {
@@ -104,7 +105,9 @@ async function handler(req: NextApiRequestWithUser, res: NextApiResponse) {
   }
 }
 
-export default validateResource(
-  checkJwtAndUserExist<typeof UserDAO>(handler, UserDAO),
-  addBlockChainSchema
+export default openMongooseConnection(
+  validateResource(
+    checkJwtAndUserExist<typeof UserDAO>(handler, UserDAO),
+    addBlockChainSchema
+  )
 );

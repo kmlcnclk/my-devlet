@@ -2,6 +2,7 @@ import { NextApiResponse, NextApiRequest } from 'next';
 import { get } from 'lodash';
 import JwtService from '@/server/services/JwtService';
 import { ISignJwt } from '@/types/Jwt';
+import { openMongooseConnection } from '@/server/middlewares/openDBConnection';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
@@ -41,4 +42,4 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-export default handler;
+export default openMongooseConnection(handler);

@@ -9,6 +9,7 @@ import { checkJwtAndUserExist } from '@/server/middlewares/jwt';
 import UserDAO from '@/server/data/UserDAO';
 import CustomError from '@/server/errors/CustomError';
 import { isUserEmailExists } from '@/server/middlewares/User';
+import { openMongooseConnection } from '@/server/middlewares/openDBConnection';
 
 async function handler(req: NextApiRequestWithUser, res: NextApiResponse) {
   if (req.method === 'PUT') {
@@ -61,7 +62,9 @@ async function handler(req: NextApiRequestWithUser, res: NextApiResponse) {
   }
 }
 
-export default validateResource(
-  checkJwtAndUserExist<typeof UserDAO>(isUserEmailExists(handler), UserDAO),
-  editUserSchema
+export default openMongooseConnection(
+  validateResource(
+    checkJwtAndUserExist<typeof UserDAO>(isUserEmailExists(handler), UserDAO),
+    editUserSchema
+  )
 );

@@ -9,6 +9,7 @@ import JwtTokenDAO from '@/server/data/JwtTokenDAO';
 import { omit } from 'lodash';
 import validateResource from '@/server/middlewares/validateResource';
 import { createAdminSchema } from '@/server/schemas/adminSchema';
+import { openMongooseConnection } from '@/server/middlewares/openDBConnection';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
@@ -36,4 +37,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-export default validateResource(isAdminEmailExists(handler), createAdminSchema);
+export default openMongooseConnection(
+  validateResource(isAdminEmailExists(handler), createAdminSchema)
+);
