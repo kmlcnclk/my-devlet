@@ -52,7 +52,7 @@ function Profile() {
       target: '#summary',
     },
     {
-      content: <h3>You can see your Web3 Api Keys here</h3>,
+      content: <h3>You can add your infos to the Blockchain here</h3>,
       placement: 'bottom',
       spotlightPadding: 20,
       styles: {
@@ -60,29 +60,7 @@ function Profile() {
           width: 300,
         },
       },
-      target: '#web3apikey',
-    },
-    {
-      content: <h3>This is your current plan</h3>,
-      placement: 'right',
-      spotlightPadding: 20,
-      styles: {
-        options: {
-          width: 300,
-        },
-      },
-      target: '#your-plan',
-    },
-    {
-      content: <h3>You can upgrade your plan here</h3>,
-      placement: 'left',
-      spotlightPadding: 20,
-      styles: {
-        options: {
-          width: 300,
-        },
-      },
-      target: '#all-plans',
+      target: '#add-blockchain',
     },
   ];
   const [isLoading, setIsLoading] = useState(false);
@@ -198,6 +176,7 @@ function Profile() {
             <Button
               onClick={() => setOpenModal(true)}
               className={inter.className}
+              id="add-blockchain"
               type="button"
               sx={{
                 color: '#FFFDFF',

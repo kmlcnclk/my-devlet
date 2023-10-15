@@ -50,7 +50,7 @@ function Sidebar({ children, pageTitle }: SidebarProps) {
       target: 'body',
     },
     {
-      content: <h3>You can see your NFTs here</h3>,
+      content: <h3>You can see your Education infos here</h3>,
       placement: 'right',
       spotlightPadding: 20,
       styles: {
@@ -58,10 +58,10 @@ function Sidebar({ children, pageTitle }: SidebarProps) {
           width: 350,
         },
       },
-      target: '#my-nfts',
+      target: '#educational-background',
     },
     {
-      content: <h3>You can create NFTs here</h3>,
+      content: <h3>You can create your Smart Contracts here</h3>,
       placement: 'right',
       spotlightPadding: 20,
       styles: {
@@ -69,10 +69,10 @@ function Sidebar({ children, pageTitle }: SidebarProps) {
           width: 330,
         },
       },
-      target: '#create-nfts',
+      target: '#smart-contract',
     },
     {
-      content: <h3>You can add your customers here</h3>,
+      content: <h3>You can see your Smart Contracts here</h3>,
       placement: 'right',
       spotlightPadding: 20,
       styles: {
@@ -80,18 +80,7 @@ function Sidebar({ children, pageTitle }: SidebarProps) {
           width: 330,
         },
       },
-      target: '#add-users-data',
-    },
-    {
-      content: <h3>You can create your rules here</h3>,
-      placement: 'right',
-      spotlightPadding: 20,
-      styles: {
-        options: {
-          width: 330,
-        },
-      },
-      target: '#create-rule',
+      target: '#smart-contracts',
     },
     {
       content: <h3>You can see your profile here</h3>,
@@ -103,6 +92,17 @@ function Sidebar({ children, pageTitle }: SidebarProps) {
         },
       },
       target: '#profile',
+    },
+    {
+      content: <h3>You can buy Token here</h3>,
+      placement: 'right',
+      spotlightPadding: 20,
+      styles: {
+        options: {
+          width: 300,
+        },
+      },
+      target: '#buy-token',
     },
   ];
 

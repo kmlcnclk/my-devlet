@@ -64,6 +64,7 @@ function MobileSidebar({
           <Button
             type="button"
             onClick={sendToken}
+            id="buy-token"
             sx={{
               position: 'fixed',
               bottom: 10,
@@ -114,6 +115,7 @@ function MobileSidebar({
         <Button
           type="button"
           onClick={sendToken}
+          id="buy-token"
           sx={{
             position: 'fixed',
             bottom: 10,

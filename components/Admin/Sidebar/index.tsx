@@ -50,18 +50,7 @@ function Sidebar({ children, pageTitle }: SidebarProps) {
       target: 'body',
     },
     {
-      content: <h3>You can see your NFTs here</h3>,
-      placement: 'right',
-      spotlightPadding: 20,
-      styles: {
-        options: {
-          width: 350,
-        },
-      },
-      target: '#my-nfts',
-    },
-    {
-      content: <h3>You can create NFTs here</h3>,
+      content: <h3>You can add education information here</h3>,
       placement: 'right',
       spotlightPadding: 20,
       styles: {
@@ -69,40 +58,7 @@ function Sidebar({ children, pageTitle }: SidebarProps) {
           width: 330,
         },
       },
-      target: '#create-nfts',
-    },
-    {
-      content: <h3>You can add your customers here</h3>,
-      placement: 'right',
-      spotlightPadding: 20,
-      styles: {
-        options: {
-          width: 330,
-        },
-      },
-      target: '#add-users-data',
-    },
-    {
-      content: <h3>You can create your rules here</h3>,
-      placement: 'right',
-      spotlightPadding: 20,
-      styles: {
-        options: {
-          width: 330,
-        },
-      },
-      target: '#create-rule',
-    },
-    {
-      content: <h3>You can see your profile here</h3>,
-      placement: 'right',
-      spotlightPadding: 20,
-      styles: {
-        options: {
-          width: 300,
-        },
-      },
-      target: '#profile',
+      target: '#educational-background',
     },
   ];
 
