@@ -56,7 +56,7 @@ function SignUp() {
         passwordConfirmation: signUpData.passwordConfirmation,
       };
 
-      const res = await fetch('https://my-devlet.vercel.app/api/user/sign-up', {
+      const res = await fetch('/api/user/sign-up', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
