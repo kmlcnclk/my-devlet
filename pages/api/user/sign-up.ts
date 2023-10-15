@@ -1,18 +1,18 @@
 import { NextApiResponse, NextApiRequest } from 'next';
 
 import { SignUpType } from '@/types/User';
-import UserDAO from '@/server/data/UserDAO';
-import JwtService from '@/server/services/JwtService';
-import { IGeneratedJwtTokens } from '@/types/Jwt';
+// import UserDAO from '@/server/data/UserDAO';
+// import JwtService from '@/server/services/JwtService';
+// import { IGeneratedJwtTokens } from '@/types/Jwt';
 import { isUserEmailExists } from '@/server/middlewares/User';
-import JwtTokenDAO from '@/server/data/JwtTokenDAO';
+// import JwtTokenDAO from '@/server/data/JwtTokenDAO';
 import { omit } from 'lodash';
 import validateResource from '@/server/middlewares/validateResource';
 import { createUserSchema } from '@/server/schemas/userSchema';
 import { v4 as uuidv4 } from 'uuid';
 import UserService from '@/server/services/UserService';
 import { EthereumKeyPair } from '@/server/lib/EthereumKeyPair';
-import MongoDB from '@/server/lib/Mongoose';
+// import MongoDB from '@/server/lib/Mongoose';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
