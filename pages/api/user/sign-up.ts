@@ -20,20 +20,20 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       await MongoDB.connect();
       const userData: SignUpType = req.body;
 
-      const keyPairNewKey = new EthereumKeyPair();
+      // const keyPairNewKey = new EthereumKeyPair();
 
-      const privateKey = keyPairNewKey.getPrivateAddress();
-      const address = keyPairNewKey.getPublicAddress();
+      // const privateKey = keyPairNewKey.getPrivateAddress();
+      // const address = keyPairNewKey.getPublicAddress();
 
-      const hashOfPrivateKey = await UserService.hashUserWalletPrivateKey(
-        privateKey
-      );
+      // const hashOfPrivateKey = await UserService.hashUserWalletPrivateKey(
+      //   privateKey
+      // );
 
       const data = {
         ...omit(userData, 'passwordConfirmation'),
         uniqueID: uuidv4(),
-        address: address,
-        privateKey: hashOfPrivateKey,
+        address: "address",
+        privateKey: "hashOfPrivateKey",
       };
 
       const user = await UserDAO.create(data);
