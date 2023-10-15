@@ -95,7 +95,7 @@ function Sidebar({ children, pageTitle }: SidebarProps) {
     },
     {
       content: <h3>You can buy Token here</h3>,
-      placement: 'right',
+      placement: 'top',
       spotlightPadding: 20,
       styles: {
         options: {
