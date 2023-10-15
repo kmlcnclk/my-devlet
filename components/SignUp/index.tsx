@@ -67,7 +67,7 @@ function SignUp() {
       const status = await res.status;
 
       const data = await res.json();
-console.log(data)
+
       if (status === 201) {
         toast.success('Sign up is successful');
         addAccessTokenToLocalStorage(data.accessToken);
