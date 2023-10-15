@@ -3,7 +3,6 @@ import Head from 'next/head';
 import { AppProps } from 'next/app';
 import { ThemeProvider } from '@mui/material/styles';
 import { useTheme } from '@mui/material/styles';
-import MongoDB from '@/server/lib/Mongoose';
 import { ToastContainer } from 'react-toastify';
 import CssBaseline from '@mui/material/CssBaseline';
 import { store } from '@/store';
@@ -19,7 +18,6 @@ function AppPage({
   Component,
   pageProps: { session, ...pageProps },
 }: AppProps) {
-  MongoDB.connect();
   const baseTheme = useTheme();
   return (
     <Fragment>

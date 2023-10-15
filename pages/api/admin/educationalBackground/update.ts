@@ -8,10 +8,13 @@ import { CreateType } from '@/types/EducationalBackground';
 import { createEducationalBackgroundSchema } from '@/server/schemas/educationalBackgroundSchema';
 import educationalBackgroundModel from '@/server/models/educationalBackgroundModel';
 import AdminDAO from '@/server/data/AdminDAO';
+import MongoDB from '@/server/lib/Mongoose';
 
 async function handler(req: NextApiRequestWithUser, res: NextApiResponse) {
   if (req.method === 'PUT') {
     try {
+      await MongoDB.connect();
+
       const educationalBackgroundData: CreateType = req.body;
 
       await educationalBackgroundModel.findOneAndUpdate(

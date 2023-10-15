@@ -9,10 +9,13 @@ import { createEducationalBackgroundSchema } from '@/server/schemas/educationalB
 import educationalBackgroundModel from '@/server/models/educationalBackgroundModel';
 import AdminDAO from '@/server/data/AdminDAO';
 import CustomError from '@/server/errors/CustomError';
+import MongoDB from '@/server/lib/Mongoose';
 
 async function handler(req: NextApiRequestWithUser, res: NextApiResponse) {
   if (req.method === 'POST') {
     try {
+      await MongoDB.connect();
+
       const educationalBackgroundData: CreateType = req.body;
 
       const eduBg = await educationalBackgroundModel.findOne({

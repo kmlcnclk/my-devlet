@@ -8,10 +8,13 @@ import UserService from '@/server/services/UserService';
 import { changePasswordSchema } from '@/server/schemas/userSchema';
 import { checkJwtAndUserExist } from '@/server/middlewares/jwt';
 import UserDAO from '@/server/data/UserDAO';
+import MongoDB from '@/server/lib/Mongoose';
 
 async function handler(req: NextApiRequestWithUser, res: NextApiResponse) {
   if (req.method === 'PATCH') {
     try {
+      await MongoDB.connect();
+
       const validated = await UserService.validatePasswordWithID({
         userID: get(req.user, '_id') as string,
         password: get(req.body, 'oldPassword'),

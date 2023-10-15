@@ -9,10 +9,13 @@ import { checkJwtAndUserExist } from '@/server/middlewares/jwt';
 import UserDAO from '@/server/data/UserDAO';
 import CustomError from '@/server/errors/CustomError';
 import { isUserEmailExists } from '@/server/middlewares/User';
+import MongoDB from '@/server/lib/Mongoose';
 
 async function handler(req: NextApiRequestWithUser, res: NextApiResponse) {
   if (req.method === 'PUT') {
     try {
+      await MongoDB.connect();
+
       let data: any = {};
 
       if (get(req.body, 'name')) {

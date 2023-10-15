@@ -13,10 +13,13 @@ import SmartContractDAO from '@/server/data/SmartContractDAO';
 import SmartContractService from '@/server/services/SmartContractService';
 import UserModel, { UserDocument } from '@/server/models/userModel';
 import UserService from '@/server/services/UserService';
+import MongoDB from '@/server/lib/Mongoose';
 
 async function handler(req: NextApiRequestWithUser, res: NextApiResponse) {
   if (req.method === 'POST') {
     try {
+      await MongoDB.connect();
+
       const smartContractData: CreateType = req.body;
 
       const user: UserDocument = (await UserModel.findById(
