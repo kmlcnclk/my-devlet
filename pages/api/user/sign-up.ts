@@ -17,7 +17,7 @@ import MongoDB from '@/server/lib/Mongoose';
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
     try {
-      await MongoDB.connect();
+      // await MongoDB.connect();
 
       const userData: SignUpType = req.body;
 
@@ -37,16 +37,17 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         privateKey: hashOfPrivateKey,
       };
 
-      const user = await UserDAO.create(data);
+      // const user = await UserDAO.create(data);
 
-      const { accessToken, refreshToken }: IGeneratedJwtTokens =
-        await JwtService.generateJwtToken(user);
+      // const { accessToken, refreshToken }: IGeneratedJwtTokens =
+        // await JwtService.generateJwtToken(user);
 
-      await JwtTokenDAO.create(user._id, accessToken, refreshToken);
+      // await JwtTokenDAO.create(user._id, accessToken, refreshToken);
 
       return res.status(201).json({
-        accessToken,
-        refreshToken,
+        // accessToken,
+        // refreshToken,
+        m:"ad"
       });
     } catch (err: any) {
       return res.status(500).json({ error: err.message });
