@@ -76,7 +76,6 @@ function Profile() {
     (state: RootState) => state.smartContracts
   ) as SmartContractState;
 
-  console.log(isUserDataAddedToBlockchain);
   // TODO: eğer zaten eklenmişse eklemesin ekledin yazsın  bu değeride user model da tut
 
   const addBlockChain = async (e: any) => {
