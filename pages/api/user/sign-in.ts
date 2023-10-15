@@ -24,7 +24,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         await JwtService.generateWithIdAndSaveDbJwtToken<UserDocument>(
           validated
         );
-      await MongoDB.close();
 
       return res.status(200).json({
         ...generatedTokensData,

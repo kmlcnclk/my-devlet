@@ -1,4 +1,4 @@
-import React, { ReactNode, useState, useEffect } from 'react';
+import React, { ReactNode, useState } from 'react';
 import AppHeader from './AppHeader';
 import clsx from 'clsx';
 import Box from '@mui/material/Box';
@@ -18,13 +18,12 @@ import PersonIcon from '@mui/icons-material/Person';
 import { Inter } from 'next/font/google';
 import dynamic from 'next/dynamic';
 const Tour = dynamic(() => import('../../Tour'), { ssr: false });
-import {
-  addLeftMenuTourToLocalStorage,
-  getLeftMenuTourFromLocalStorage,
-} from '@/localstorage/leftMenuStorage';
 import { routesForMenu } from '@/constants/admin/routes';
 import LogoutIcon from '@mui/icons-material/Logout';
-import FetchSmartContracts from '../../FetchSmartContracts';
+import {
+  addLeftMenuTourForAdminToLocalStorage,
+  getLeftMenuTourForAdminFromLocalStorage,
+} from '@/localstorage/leftMenuForAdminStoarage';
 
 const inter = Inter({ subsets: ['latin'] });
 interface SidebarProps {
@@ -66,8 +65,8 @@ function Sidebar({ children, pageTitle }: SidebarProps) {
     <SidebarContainer>
       {typeof window !== 'undefined' && (
         <Tour
-          run={getLeftMenuTourFromLocalStorage() !== 'true'}
-          setRun={addLeftMenuTourToLocalStorage}
+          run={getLeftMenuTourForAdminFromLocalStorage() !== 'true'}
+          setRun={addLeftMenuTourForAdminToLocalStorage}
           steps={steps}
         />
       )}
