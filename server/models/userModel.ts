@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 import { IUser } from '@/types/User';
 
-const saltWorkFactor = process.env.SALT_WORK_FACTOR as number | 10;
+const saltWorkFactor = (Number(process.env.SALT_WORK_FACTOR) as number) || 10;
 
 export interface UserDocument extends IUser, mongoose.Document {
   createdAt: Date;
