@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "npm install --dev typescript && npm install && next build",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
@@ -53,7 +53,7 @@
     "@types/lodash": "^4.14.195",
     "@types/node": "latest",
     "@types/node-rsa": "^1.1.2",
-    "@types/react": "latest",
+    "@types/react": "18.0.4",
     "@types/react-dom": "latest",
     "@types/uuid": "^9.0.4",
     "autoprefixer": "latest",
