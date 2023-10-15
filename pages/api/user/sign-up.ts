@@ -1,17 +1,17 @@
 import { NextApiResponse, NextApiRequest } from 'next';
 
-import { SignUpType } from '@/types/User';
+// import { SignUpType } from '@/types/User';
 // import UserDAO from '@/server/data/UserDAO';
 // import JwtService from '@/server/services/JwtService';
 // import { IGeneratedJwtTokens } from '@/types/Jwt';
 import { isUserEmailExists } from '@/server/middlewares/User';
 // import JwtTokenDAO from '@/server/data/JwtTokenDAO';
-import { omit } from 'lodash';
+// import { omit } from 'lodash';
 import validateResource from '@/server/middlewares/validateResource';
 import { createUserSchema } from '@/server/schemas/userSchema';
-import { v4 as uuidv4 } from 'uuid';
-import UserService from '@/server/services/UserService';
-import { EthereumKeyPair } from '@/server/lib/EthereumKeyPair';
+// import { v4 as uuidv4 } from 'uuid';
+// import UserService from '@/server/services/UserService';
+// import { EthereumKeyPair } from '@/server/lib/EthereumKeyPair';
 // import MongoDB from '@/server/lib/Mongoose';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -19,23 +19,23 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     try {
       // await MongoDB.connect();
 
-      const userData: SignUpType = req.body;
+      // const userData: SignUpType = req.body;
 
-      const keyPairNewKey = new EthereumKeyPair();
+      // const keyPairNewKey = new EthereumKeyPair();
 
-      const privateKey = keyPairNewKey.getPrivateAddress();
-      const address = keyPairNewKey.getPublicAddress();
+      // const privateKey = keyPairNewKey.getPrivateAddress();
+      // const address = keyPairNewKey.getPublicAddress();
 
-      const hashOfPrivateKey = await UserService.hashUserWalletPrivateKey(
-        privateKey
-      );
+      // const hashOfPrivateKey = await UserService.hashUserWalletPrivateKey(
+      //   privateKey
+      // );
 
-      const data = {
-        ...omit(userData, 'passwordConfirmation'),
-        uniqueID: uuidv4(),
-        address: address,
-        privateKey: hashOfPrivateKey,
-      };
+      // const data = {
+      //   ...omit(userData, 'passwordConfirmation'),
+      //   uniqueID: uuidv4(),
+      //   address: address,
+      //   privateKey: hashOfPrivateKey,
+      // };
 
       // const user = await UserDAO.create(data);
 
