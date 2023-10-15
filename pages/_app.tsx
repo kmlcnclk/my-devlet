@@ -15,13 +15,13 @@ import 'react-toastify/dist/ReactToastify.css';
 // import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 // import { SessionProvider } from 'next-auth/react';
 
-MongoDB.connect();
-
 function AppPage({
   Component,
   pageProps: { session, ...pageProps },
 }: AppProps) {
   const baseTheme = useTheme();
+
+  MongoDB.connect();
   return (
     <Fragment>
       <Provider store={store}>
