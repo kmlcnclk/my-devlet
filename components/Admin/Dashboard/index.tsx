@@ -6,7 +6,6 @@ import NftInfo from './NftInfo';
 
 import Typography from '@mui/material/Typography';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import { Link } from '@mui/material';
 
 import { Inter } from 'next/font/google';
 const inter = Inter({ subsets: ['latin'] });
@@ -60,8 +59,8 @@ function Dashboard() {
             }}
             className={inter.className}
           >
-            You have gained early access to My Devlet's unique Web3.0 technology
-            solutions.
+            You have gained early access to My Devlet&apos;s unique Web3.0
+            technology solutions.
           </Typography>
           <Box
             sx={{

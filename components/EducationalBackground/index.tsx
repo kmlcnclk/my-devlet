@@ -317,7 +317,7 @@ function EducationalBackground() {
               fontSize: '17px',
             }}
           >
-            You don't have any education info
+            You don&apos;t have any education info
           </Typography>
         </Box>
       )}
@@ -482,7 +482,7 @@ function EducationalBackground() {
                   fontSize: '16px',
                 }}
               >
-                You don't have any smart contract
+                You don&apos;t have any smart contract
               </Typography>
             </Box>
           )}

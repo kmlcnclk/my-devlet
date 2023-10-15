@@ -434,7 +434,7 @@ function Summary() {
                 color: '#666',
               }}
             >
-              Note: You don't have to change every data!
+              Note: You don&apos;t have to change every data!
             </Typography>
           </Box>
 

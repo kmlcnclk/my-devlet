@@ -1,4 +1,3 @@
-import html_to_pdf from 'html-pdf-node';
 import jsPDF from 'jspdf';
 
 export async function pdfCreator() {

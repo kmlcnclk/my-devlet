@@ -133,7 +133,7 @@ function VerticalItem({ item }: VerticalItemProps) {
                   pt: "4px",
                 }}
               >
-                You don't have anything
+                You don&apos;t have anything
               </Box>
             </VerticalNavItem>
           </Box>
