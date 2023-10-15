@@ -24,12 +24,11 @@ function VerticalItem({ item }: VerticalItemProps) {
     }
     return false;
   }
+  const smartContracts: SmartContractReturnType[] = useSelector(
+    (state: RootState) => state.smartContracts.values
+  ) as SmartContractReturnType[];
 
   if (item.id === 'smart-contracts') {
-    const smartContracts: SmartContractReturnType[] = useSelector(
-      (state: RootState) => state.smartContracts.values
-    ) as SmartContractReturnType[];
-
     const smartContractsConfig: RouterConfigData[] = smartContracts?.map(
       (smartContract: SmartContractReturnType) => ({
         id: smartContract._id,
