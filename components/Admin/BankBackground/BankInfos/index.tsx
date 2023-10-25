@@ -1,66 +1,72 @@
 import { getAdminAccessTokenFromLocalStorage } from '@/localstorage/adminAccessTokenStorage';
-import { Box, Button, CircularProgress, Grid, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  CircularProgress,
+  MenuItem,
+  Select,
+  Typography,
+} from '@mui/material';
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 
 interface Props {
-  schoolInfos: any;
-  setSchoolInfos: Function;
+  bankInfos: any;
+  setBankInfos: Function;
   userId: string;
   isUserSelected: boolean;
 }
 
-const SchoolInfos: React.FC<Props> = ({
-  schoolInfos,
-  setSchoolInfos,
+const BankInfos: React.FC<Props> = ({
+  bankInfos,
+  setBankInfos,
   userId,
   isUserSelected,
 }: Props) => {
-  const [schoolName, setSchoolName] = useState('');
-  const [degree, setDegree] = useState('');
-  const [startedYear, setStartedYear] = useState(0);
-  const [graduationYear, setGraduationYear] = useState(0);
+  const [bankName, setBankName] = useState('');
+  const [accountBalance, setAccountBalance] = useState(0);
+  const [accountNumber, setAccountNumber] = useState('');
+  const [accountType, setAccountType] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  const submitSchoolInfos = async (e: any) => {
+  const submitBankInfos = async (e: any) => {
     e.preventDefault();
 
     if (isUserSelected) {
-      if (schoolInfos.length > 0) {
+      if (bankInfos.length > 0) {
         setIsLoading(true);
-        const eduData = {
+        const bankData = {
           userId,
-          schoolInfos,
+          bankInfos,
         };
 
-        const res = await fetch('/api/admin/educationalBackground/create', {
+        const res = await fetch('/api/admin/bankBackground/create', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${getAdminAccessTokenFromLocalStorage()}`,
           },
-          body: JSON.stringify(eduData),
+          body: JSON.stringify(bankData),
         });
 
         const data = await res.json();
-
         if (res.ok) {
           setIsLoading(false);
           toast.success(data.message);
         } else {
-          if (data?.error?.message === 'User has already educational infos') {
-            const eduData = {
+          if (data?.error?.message === 'User has already bank infos') {
+            const bankData = {
               userId,
-              schoolInfos,
+              bankInfos,
             };
 
-            const res = await fetch('/api/admin/educationalBackground/update', {
+            const res = await fetch('/api/admin/bankBackground/update', {
               method: 'PUT',
               headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${getAdminAccessTokenFromLocalStorage()}`,
               },
-              body: JSON.stringify(eduData),
+              body: JSON.stringify(bankData),
             });
 
             const data = await res.json();
@@ -79,6 +85,10 @@ const SchoolInfos: React.FC<Props> = ({
           else if (data[0]) toast.error(data[0].message);
           setIsLoading(false);
         }
+        setBankName('');
+        setAccountBalance(0);
+        setAccountNumber('');
+        setAccountType('');
       } else {
         toast.info('You have to enter at least one school info');
       }
@@ -90,7 +100,7 @@ const SchoolInfos: React.FC<Props> = ({
   return (
     <Box
       component="form"
-      onSubmit={submitSchoolInfos}
+      onSubmit={submitBankInfos}
       sx={{
         mt: '30px',
         width: '100%',
@@ -118,12 +128,12 @@ const SchoolInfos: React.FC<Props> = ({
             className="titles-label"
             sx={{ fontWeight: '500', fontSize: { xs: '14px', sm: '18px' } }}
           >
-            School Name
+            Bank Name
           </Typography>
           <Box
             component="input"
-            value={schoolName}
-            onChange={(e: any) => setSchoolName(e.target.value)}
+            value={bankName}
+            onChange={(e: any) => setBankName(e.target.value)}
             sx={{
               width: '100%',
               height: '40px',
@@ -139,7 +149,6 @@ const SchoolInfos: React.FC<Props> = ({
             }}
           />
         </Box>
-
         <Box
           sx={{
             display: 'flex',
@@ -147,19 +156,18 @@ const SchoolInfos: React.FC<Props> = ({
             alignItems: { xs: 'flex-start' },
             flexDirection: 'column',
             width: { xs: '100%', sm: '49%' },
-            mt: { xs: '20px', sm: '0px' },
           }}
         >
           <Typography
             className="titles-label"
             sx={{ fontWeight: '500', fontSize: { xs: '14px', sm: '18px' } }}
           >
-            Degree
+            Account Balance
           </Typography>
           <Box
             component="input"
-            value={degree}
-            onChange={(e: any) => setDegree(e.target.value)}
+            value={accountBalance}
+            onChange={(e: any) => setAccountBalance(Number(e.target.value))}
             sx={{
               width: '100%',
               height: '40px',
@@ -199,13 +207,12 @@ const SchoolInfos: React.FC<Props> = ({
             className="titles-label"
             sx={{ fontWeight: '500', fontSize: { xs: '14px', sm: '18px' } }}
           >
-            Started Year
+            Account Number
           </Typography>
           <Box
             component="input"
-            value={startedYear}
-            type="number"
-            onChange={(e: any) => setStartedYear(e.target.value)}
+            value={accountNumber}
+            onChange={(e: any) => setAccountNumber(e.target.value)}
             sx={{
               width: '100%',
               height: '40px',
@@ -221,7 +228,6 @@ const SchoolInfos: React.FC<Props> = ({
             }}
           />
         </Box>
-
         <Box
           sx={{
             display: 'flex',
@@ -229,37 +235,79 @@ const SchoolInfos: React.FC<Props> = ({
             alignItems: { xs: 'flex-start' },
             flexDirection: 'column',
             width: { xs: '100%', sm: '49%' },
-            mt: { xs: '20px', sm: '0px' },
           }}
         >
           <Typography
             className="titles-label"
             sx={{ fontWeight: '500', fontSize: { xs: '14px', sm: '18px' } }}
           >
-            Graduation Year
+            Account Type
           </Typography>
-          <Box
-            component="input"
-            value={graduationYear}
-            type="number"
-            onChange={(e: any) => setGraduationYear(e.target.value)}
+          <Select
+            value={accountType}
+            onChange={(e) => setAccountType(e.target.value)}
             sx={{
-              width: '100%',
-              height: '40px',
-
               bgcolor: '#F8F9F8',
-              color: '#666666',
-              border: '0.2px solid #8F8F8F',
               boxShadow: '0px 3px 20px rgba(0, 0, 0, 0.1)',
               borderRadius: '10px',
-              px: '15px',
+              display: 'flex',
+              alignItems: 'center',
+              width: '100%',
+              justifyContent: 'space-between',
+              p: '0px',
+              color: '#666666',
+              height: '40px',
               '&:focus': {
                 outline: 'none',
               },
             }}
-          />
+          >
+            <MenuItem
+              value="Personal"
+              sx={{
+                color: '#666666',
+                fontWeight: '400',
+                fontSize: '13px',
+                display: 'flex',
+                alignItems: 'center',
+              }}
+            >
+              <Typography
+                sx={{
+                  color: '#666666',
+                  fontWeight: 500,
+                  fontSize: '12px',
+                  display: 'inline-block',
+                }}
+              >
+                Personal
+              </Typography>
+            </MenuItem>
+            <MenuItem
+              value="Business"
+              sx={{
+                color: '#666666',
+                fontWeight: '400',
+                fontSize: '13px',
+                display: 'flex',
+                alignItems: 'center',
+              }}
+            >
+              <Typography
+                sx={{
+                  color: '#666666',
+                  fontWeight: 500,
+                  fontSize: '12px',
+                  display: 'inline-block',
+                }}
+              >
+                Business
+              </Typography>
+            </MenuItem>
+          </Select>
         </Box>
       </Box>
+
       <Box
         sx={{
           display: 'flex',
@@ -271,17 +319,21 @@ const SchoolInfos: React.FC<Props> = ({
       >
         <Button
           onClick={() => {
-            setSchoolInfos((prev: any) => {
+            setBankInfos((prev: any) => {
               const updatedPrev = [...prev];
               const data = {
-                schoolName,
-                degree,
-                startedYear: Number(startedYear),
-                graduationYear: Number(graduationYear),
+                bankName,
+                accountBalance: Number(accountBalance),
+                accountNumber,
+                accountType,
               };
               updatedPrev.push(data);
               return updatedPrev;
             });
+            setBankName('');
+            setAccountBalance(0);
+            setAccountNumber('');
+            setAccountType('');
           }}
           type="button"
           sx={{
@@ -340,4 +392,4 @@ const SchoolInfos: React.FC<Props> = ({
   );
 };
 
-export default SchoolInfos;
+export default BankInfos;

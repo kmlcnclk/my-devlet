@@ -1,4 +1,4 @@
-export type AdminRole = 'admin' | 'editor' | 'minter' | 'sender' | 'creator';
+export type AdminRole = 'government' | 'school' | 'bank' | 'hospital';
 
 export type AdminStatus = 'active' | 'passive' | 'frozen' | 'suspended';
 
@@ -8,6 +8,9 @@ export interface IAdmin {
   phone?: string;
   password: string;
   ip: string;
+  uniqueID?: string;
+  address?: string;
+  privateKey?: string;
   status?: string;
   role: string;
   resetPasswordToken?: string;

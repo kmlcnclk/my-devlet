@@ -7,6 +7,8 @@ import DescriptionIcon from '@mui/icons-material/Description';
 import AnalyticsIcon from '@mui/icons-material/Analytics';
 import SchoolIcon from '@mui/icons-material/School';
 import { FaFileContract } from 'react-icons/fa';
+import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
+import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
 
 export interface RouterConfigData {
   id: string;
@@ -57,6 +59,22 @@ export const routesConfig: RouterConfigData[] = [
     type: 'item',
     icon: <SchoolIcon />,
     url: '/dashboard/educational-background',
+    children: [],
+  },
+  {
+    id: 'bank-background',
+    title: 'Bank',
+    type: 'item',
+    icon: <AccountBalanceIcon />,
+    url: '/dashboard/bank-background',
+    children: [],
+  },
+  {
+    id: 'hospital-background',
+    title: 'Hospital',
+    type: 'item',
+    icon: <LocalHospitalIcon />,
+    url: '/dashboard/hospital-background',
     children: [],
   },
   {

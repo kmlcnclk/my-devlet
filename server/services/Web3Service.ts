@@ -41,6 +41,64 @@ class Web3Service {
     await this._userContract.getEducationRecords(from, userId);
   }
 
+  async setBankRecord(
+    from: string,
+    userId: string,
+    bankNames: string[],
+    accountBalances: number[],
+    accountNumbers: string[],
+    accountTypes: string[],
+    accountOpeningDates: number[],
+    ipfsHash: string
+  ): Promise<void> {
+    await this._userContract.setBankRecord(
+      from,
+      userId,
+      bankNames,
+      accountBalances,
+      accountNumbers,
+      accountTypes,
+      accountOpeningDates,
+      ipfsHash
+    );
+  }
+
+  async getBankRecords(from: string, userId: string) {
+    await this._userContract.getBankRecords(from, userId);
+  }
+
+  async setHospitalRecord(
+    from: string,
+    userId: string,
+    hospitalNames: string[],
+    doctorNames: string[],
+    names: string[],
+    symptomss: string[],
+    diagnosticMethodss: string[],
+    dates: number[],
+    treatmentOptionss: string[],
+    importantInformations: string[],
+    ipfsHash: string
+  ): Promise<void> {
+    await this._userContract.setHospitalRecord(
+      from,
+      userId,
+      hospitalNames,
+      doctorNames,
+      names,
+      symptomss,
+      diagnosticMethodss,
+      dates,
+      treatmentOptionss,
+      importantInformations,
+      ipfsHash
+    );
+  }
+
+  async getHospitalRecords(from: string, userId: string) {
+    await this._userContract.getHospitalRecords(from, userId);
+  }
+
   async setUserData(
     from: string,
     userId: string,

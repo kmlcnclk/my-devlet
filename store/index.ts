@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import userReducer from './slices/userSlice';
 import smartContractSlice from './slices/mySmartContractsSlice';
+import smartContractForAdminSlice from './slices/mySmartContractsForAdminSlice';
 import adminReducer from './slices/adminSlice';
 
 export const store = configureStore({
@@ -8,6 +9,7 @@ export const store = configureStore({
     user: userReducer,
     admin: adminReducer,
     smartContracts: smartContractSlice,
+    smartContractForAdmin: smartContractForAdminSlice,
   },
 });
 

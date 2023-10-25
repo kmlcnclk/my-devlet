@@ -24,8 +24,13 @@ function VerticalItem({ item }: VerticalItemProps) {
     }
     return false;
   }
+
+  const role: string = useSelector(
+    (state: RootState) => state.admin.value.role
+  ) as string;
+
   const smartContracts: SmartContractReturnType[] = useSelector(
-    (state: RootState) => state.smartContracts.values
+    (state: RootState) => state.smartContractForAdmin.values
   ) as SmartContractReturnType[];
 
   if (item.id === 'smart-contracts') {
@@ -145,55 +150,167 @@ function VerticalItem({ item }: VerticalItemProps) {
     <Box id={item.id}>
       <>
         {item?.url ? (
-          <Link
-            underline="none"
-            href={item?.url === '/not-active' ? '/' : item?.url!}
-            target={
-              item.id == 'info' || item.id == 'join-us' ? '_blank' : '_self'
-            }
-          >
-            <VerticalNavItem
-              sx={{
-                // backgroundColor: isActive() ? "#54457C" : "transparent",
-                width: '75%',
-                cursor: 'pointer',
-                marginLeft: item?.ml ?? '20px',
-                borderRadius: '7px',
-                py: '5px',
-                '& svg': {
-                  marginRight: '8px',
-                  fontSize: '23px',
-
-                  color: isActive()
-                    ? 'rgba(71, 118, 230, 1)'
-                    : 'rgba(102, 102, 102, 1)',
-                  fill: isActive()
-                    ? 'rgba(71, 118, 230, 1)'
-                    : 'rgba(102, 102, 102, 1)',
-                },
-
-                background:
-                  isActive() &&
-                  'linear-gradient(90deg, #4776E6 0%, #8E54E9 100%)',
-                backgroundClip: isActive() && 'text',
-                WebkitTextFillColor: isActive() && 'transparent',
-                marginBottom: '12px',
-              }}
-            >
-              {item.icon}
-              <Box
-                component="span"
-                sx={{
-                  color: 'rgba(102, 102, 102, 1)',
-                  fontSize: '16px',
-                  fontWeight: 'bold',
-                  pt: '2px',
-                }}
+          <>
+            {role === 'government' ? (
+              <Link
+                underline="none"
+                href={item?.url === '/not-active' ? '/' : item?.url!}
+                target={
+                  item.id == 'info' || item.id == 'join-us' ? '_blank' : '_self'
+                }
               >
-                {item.title}
-              </Box>
-            </VerticalNavItem>
-          </Link>
+                <VerticalNavItem
+                  sx={{
+                    // backgroundColor: isActive() ? "#54457C" : "transparent",
+                    width: '75%',
+                    cursor: 'pointer',
+                    marginLeft: item?.ml ?? '20px',
+                    borderRadius: '7px',
+                    py: '5px',
+                    '& svg': {
+                      marginRight: '8px',
+                      fontSize: '23px',
+
+                      color: isActive()
+                        ? 'rgba(71, 118, 230, 1)'
+                        : 'rgba(102, 102, 102, 1)',
+                      fill: isActive()
+                        ? 'rgba(71, 118, 230, 1)'
+                        : 'rgba(102, 102, 102, 1)',
+                    },
+
+                    background:
+                      isActive() &&
+                      'linear-gradient(90deg, #4776E6 0%, #8E54E9 100%)',
+                    backgroundClip: isActive() && 'text',
+                    WebkitTextFillColor: isActive() && 'transparent',
+                    marginBottom: '12px',
+                  }}
+                >
+                  {item.icon}
+                  <Box
+                    component="span"
+                    sx={{
+                      color: 'rgba(102, 102, 102, 1)',
+                      fontSize: '16px',
+                      fontWeight: 'bold',
+                      pt: '2px',
+                    }}
+                  >
+                    {item.title}
+                  </Box>
+                </VerticalNavItem>
+              </Link>
+            ) : (
+              <>
+                {!item.id.includes('background') ? (
+                  <Link
+                    underline="none"
+                    href={item?.url === '/not-active' ? '/' : item?.url!}
+                    target={
+                      item.id == 'info' || item.id == 'join-us'
+                        ? '_blank'
+                        : '_self'
+                    }
+                  >
+                    <VerticalNavItem
+                      sx={{
+                        // backgroundColor: isActive() ? "#54457C" : "transparent",
+                        width: '75%',
+                        cursor: 'pointer',
+                        marginLeft: item?.ml ?? '20px',
+                        borderRadius: '7px',
+                        py: '5px',
+                        '& svg': {
+                          marginRight: '8px',
+                          fontSize: '23px',
+
+                          color: isActive()
+                            ? 'rgba(71, 118, 230, 1)'
+                            : 'rgba(102, 102, 102, 1)',
+                          fill: isActive()
+                            ? 'rgba(71, 118, 230, 1)'
+                            : 'rgba(102, 102, 102, 1)',
+                        },
+
+                        background:
+                          isActive() &&
+                          'linear-gradient(90deg, #4776E6 0%, #8E54E9 100%)',
+                        backgroundClip: isActive() && 'text',
+                        WebkitTextFillColor: isActive() && 'transparent',
+                        marginBottom: '12px',
+                      }}
+                    >
+                      {item.icon}
+                      <Box
+                        component="span"
+                        sx={{
+                          color: 'rgba(102, 102, 102, 1)',
+                          fontSize: '16px',
+                          fontWeight: 'bold',
+                          pt: '2px',
+                        }}
+                      >
+                        {item.title}
+                      </Box>
+                    </VerticalNavItem>
+                  </Link>
+                ) : null}
+              </>
+            )}
+
+            {item.title.toLowerCase() === role ? (
+              <Link
+                underline="none"
+                href={item?.url === '/not-active' ? '/' : item?.url!}
+                target={
+                  item.id == 'info' || item.id == 'join-us' ? '_blank' : '_self'
+                }
+              >
+                <VerticalNavItem
+                  sx={{
+                    // backgroundColor: isActive() ? "#54457C" : "transparent",
+                    width: '75%',
+                    cursor: 'pointer',
+                    marginLeft: item?.ml ?? '20px',
+                    borderRadius: '7px',
+                    py: '5px',
+                    '& svg': {
+                      marginRight: '8px',
+                      fontSize: '23px',
+
+                      color: isActive()
+                        ? 'rgba(71, 118, 230, 1)'
+                        : 'rgba(102, 102, 102, 1)',
+                      fill: isActive()
+                        ? 'rgba(71, 118, 230, 1)'
+                        : 'rgba(102, 102, 102, 1)',
+                    },
+
+                    background:
+                      isActive() &&
+                      'linear-gradient(90deg, #4776E6 0%, #8E54E9 100%)',
+                    backgroundClip: isActive() && 'text',
+                    WebkitTextFillColor: isActive() && 'transparent',
+                    marginBottom: '12px',
+                  }}
+                >
+                  {item.icon}
+                  <Box
+                    component="span"
+                    sx={{
+                      color: 'rgba(102, 102, 102, 1)',
+                      fontSize: '16px',
+                      fontWeight: 'bold',
+                      pt: '2px',
+                    }}
+                  >
+                    {item.title}
+                  </Box>
+                </VerticalNavItem>
+              </Link>
+            ) : null}
+          </>
         ) : (
           <Box>
             <VerticalNavItem

@@ -6,7 +6,7 @@ import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import { Button, CircularProgress } from '@mui/material';
+import { Button, CircularProgress, MenuItem, Select } from '@mui/material';
 import { useRouter } from 'next/router';
 import { addAdminAccessTokenToLocalStorage } from '@/localstorage/adminAccessTokenStorage';
 import { addAdminRefreshTokenToLocalStorage } from '@/localstorage/adminRefreshTokenStorage';
@@ -27,7 +27,7 @@ function SignUp() {
     password: '',
     passwordConfirmation: '',
     ip: '0',
-    role: 'admin',
+    role: '',
     isRemember: false,
     privacyPolicy: false,
   });
@@ -178,7 +178,111 @@ function SignUp() {
             name="email"
             onChange={onChangeFunc}
           />
-
+          <Select
+            required
+            value={signUpData.role}
+            onChange={(e: any) => {
+              setSignUpData(
+                (
+                  prev: RegisterType & {
+                    isRemember: boolean;
+                    privacyPolicy: boolean;
+                  }
+                ) => ({
+                  ...prev,
+                  role: e.target.value,
+                })
+              );
+            }}
+            className={inter.className}
+            label="Select Admin Role"
+            sx={{
+              borderRadius: '10px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              p: '0px',
+              mt: '10px',
+              color: '#666666',
+              height: '40px',
+              '&:focus': {
+                outline: 'none',
+              },
+              '*': {
+                borderColor: '#333 !important',
+              },
+            }}
+          >
+            <MenuItem
+              value="school"
+              sx={{
+                color: '#666666',
+                fontWeight: '400',
+                fontSize: '13px',
+                display: 'flex',
+                alignItems: 'center',
+              }}
+              className={inter.className}
+            >
+              <Typography
+                className={inter.className}
+                sx={{
+                  color: '#666666',
+                  fontWeight: 500,
+                  fontSize: '12px',
+                  display: 'inline-block',
+                }}
+              >
+                School
+              </Typography>
+            </MenuItem>
+            <MenuItem
+              value="hospital"
+              sx={{
+                color: '#666666',
+                fontWeight: '400',
+                fontSize: '13px',
+                display: 'flex',
+                alignItems: 'center',
+              }}
+              className={inter.className}
+            >
+              <Typography
+                className={inter.className}
+                sx={{
+                  color: '#666666',
+                  fontWeight: 500,
+                  fontSize: '12px',
+                  display: 'inline-block',
+                }}
+              >
+                Hospital
+              </Typography>
+            </MenuItem>
+            <MenuItem
+              value="bank"
+              sx={{
+                color: '#666666',
+                fontWeight: '400',
+                fontSize: '13px',
+                display: 'flex',
+                alignItems: 'center',
+              }}
+              className={inter.className}
+            >
+              <Typography
+                className={inter.className}
+                sx={{
+                  color: '#666666',
+                  fontWeight: 500,
+                  fontSize: '12px',
+                  display: 'inline-block',
+                }}
+              >
+                Bank
+              </Typography>
+            </MenuItem>
+          </Select>
           <TextField
             margin="normal"
             required

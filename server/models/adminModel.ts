@@ -1,6 +1,6 @@
-import mongoose from "mongoose";
-import bcrypt from "bcrypt";
-import { IAdmin } from "@/types/Admin";
+import mongoose from 'mongoose';
+import bcrypt from 'bcrypt';
+import { IAdmin } from '@/types/Admin';
 
 const saltWorkFactor = process.env.SALT_WORK_FACTOR as number | 10;
 
@@ -16,16 +16,19 @@ const adminSchema = new mongoose.Schema(
     email: { type: String, required: true, unique: true },
     phone: { type: String },
     password: { type: String, required: true },
-    ip: { type: String, unique: true },
+    ip: { type: String },
+    uniqueID: { type: String, required: true },
+    address: { type: String, required: true },
+    privateKey: { type: String, required: true },
     status: {
       type: String,
-      default: "active",
-      enum: ["active", "passive", "frozen", "suspended"],
+      default: 'active',
+      enum: ['active', 'passive', 'frozen', 'suspended'],
     },
     role: {
       type: String,
       required: true,
-      enum: ["admin", "editor", "minter", "sender", "creator"],
+      enum: ['government', 'school', 'bank', 'hospital'],
     },
     resetPasswordToken: {
       type: String,
@@ -39,10 +42,10 @@ const adminSchema = new mongoose.Schema(
   }
 );
 
-adminSchema.pre("save", async function (next) {
+adminSchema.pre('save', async function (next) {
   let admin = this as AdminDocument;
 
-  if (!admin.isModified("password")) {
+  if (!admin.isModified('password')) {
     return next();
   }
   const salt = await bcrypt.genSalt(saltWorkFactor);
@@ -60,6 +63,6 @@ adminSchema.methods.comparePassword = async function (
 };
 
 const AdminModel =
-  mongoose.models.Admin || mongoose.model<AdminDocument>("Admin", adminSchema);
+  mongoose.models.Admin || mongoose.model<AdminDocument>('Admin', adminSchema);
 
 export default AdminModel;

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import SchoolInfos from './SchoolInfos';
+import HospitalInfos from './HospitalInfos';
 import {
   Button,
   Paper,
@@ -15,9 +15,9 @@ import {
 } from '@mui/material';
 import { toast } from 'react-toastify';
 
-function EducationalBackground() {
+function HospitalBackground() {
   const [userId, setUserId] = useState<string>('');
-  const [schoolInfos, setSchoolInfos] = useState<any>([]);
+  const [hospitalInfos, setHospitalInfos] = useState<any>([]);
   const [isUserSelected, setIsUserSelected] = useState<boolean>(false);
 
   return (
@@ -109,7 +109,7 @@ function EducationalBackground() {
           Select
         </Button>
       </Box>
-      {schoolInfos.length > 0 ? (
+      {hospitalInfos.length > 0 ? (
         <TableContainer
           component={Paper}
           sx={{
@@ -118,7 +118,7 @@ function EducationalBackground() {
           }}
         >
           <Table
-            aria-label="Education Info Table"
+            aria-label="Hospital Info Table"
             sx={{
               minWidth: 650,
             }}
@@ -126,26 +126,26 @@ function EducationalBackground() {
             <TableHead>
               <TableRow>
                 <TableCell>
-                  <strong>Degree</strong>
+                  <strong>Hospital Name</strong>
                 </TableCell>
                 <TableCell>
-                  <strong>School Name</strong>
+                  <strong>Doctor Name</strong>
                 </TableCell>
                 <TableCell>
-                  <strong>Started Year</strong>
+                  <strong>Disease Name</strong>
                 </TableCell>
                 <TableCell>
-                  <strong>Graduation Year</strong>
+                  <strong>Symptoms</strong>
                 </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {schoolInfos.map((school: any, index: any) => (
+              {hospitalInfos.map((school: any, index: any) => (
                 <TableRow key={index}>
-                  <TableCell>{school.degree}</TableCell>
-                  <TableCell>{school.schoolName}</TableCell>
-                  <TableCell>{school.startedYear}</TableCell>
-                  <TableCell>{school.graduationYear}</TableCell>
+                  <TableCell>{school.hospitalName}</TableCell>
+                  <TableCell>{school.doctorName}</TableCell>
+                  <TableCell>{school.name}</TableCell>
+                  <TableCell>{school.symptoms}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -153,11 +153,11 @@ function EducationalBackground() {
         </TableContainer>
       ) : null}
 
-      <SchoolInfos
-        {...{ schoolInfos, setSchoolInfos, userId, isUserSelected }}
+      <HospitalInfos
+        {...{ hospitalInfos, setHospitalInfos, userId, isUserSelected }}
       />
     </Box>
   );
 }
 
-export default EducationalBackground;
+export default HospitalBackground;

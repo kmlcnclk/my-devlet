@@ -132,6 +132,7 @@ function EducationalBackground() {
         else if (data?.error) toast.error(data.error.message);
         else if (data[0]) toast.error(data[0].message);
         setOpenModalForAddBlockchain(false);
+        setIsLoading(false);
       } else {
         setOpenModalForAddBlockchain(false);
         setEducationalBackground(data.eb);

@@ -9,7 +9,7 @@ import AppScrollbar from '../AppScrollbar';
 import { useRouter } from 'next/router';
 import { routesForMenu } from '@/constants/routes';
 import { Button, Typography } from '@mui/material';
-import { sendToken } from '@/lib/sendToken';
+import { sendToken } from '@/lib/sendTokenForAdmin';
 import { Inter } from 'next/font/google';
 
 const inter = Inter({ subsets: ['latin'] });

@@ -121,6 +121,148 @@ export default class UserContract {
     }
   }
 
+  public async setBankRecord(
+    from: string,
+    userId: string,
+    bankNames: string[],
+    accountBalances: number[],
+    accountNumbers: string[],
+    accountTypes: string[],
+    accountOpeningDates: number[],
+    ipfsHash: string
+  ): Promise<void> {
+    try {
+      const mintTx = this._contract.methods.setBankRecord(
+        userId,
+        bankNames,
+        accountBalances,
+        accountNumbers,
+        accountTypes,
+        accountOpeningDates,
+        ipfsHash
+      );
+      const data = await mintTx.encodeABI();
+
+      const tx = {
+        to: this._contractAddress,
+        from: from,
+        data: data,
+      } as any;
+
+      const gas = await this._web3.eth.estimateGas(tx);
+      const gasPrice = await this._web3.eth.getGasPrice();
+      const nonce = await this._web3.eth.getTransactionCount(from);
+
+      tx.gas = this._web3.utils.toHex(gas);
+      tx.gasPrice = this._web3.utils.toHex(gasPrice);
+      tx.nonce = this._web3.utils.toHex(nonce);
+      const signedTransaction = await this._web3.eth.accounts.signTransaction(
+        tx,
+        this._privateKey
+      );
+
+      await this._web3.eth.sendSignedTransaction(
+        signedTransaction.rawTransaction
+      );
+    } catch (err: any) {
+      if (err.error.message.indexOf('insufficient funds') != -1) {
+        throw new CustomError('Web3 JS Error', 'Insufficient funds', 500);
+      } else {
+        throw new CustomError('Web3 JS Error', err.error.message, 500);
+      }
+    }
+  }
+
+  public async getBankRecords(from: string, userId: string): Promise<void> {
+    try {
+      const mintTx = await this._contract.methods.getBankRecords(userId).call();
+      console.log(Number(mintTx[0][3]));
+      console.log(mintTx[0]['schoolName']);
+    } catch (err: any) {
+      if (err.error.message.indexOf('insufficient funds') != -1) {
+        throw new CustomError('Web3 JS Error', 'Insufficient funds', 500);
+      } else {
+        throw new CustomError('Web3 JS Error', err.error.message, 500);
+      }
+    }
+  }
+
+  public async setHospitalRecord(
+    from: string,
+    userId: string,
+    hospitalNames: string[],
+    doctorNames: string[],
+    names: string[],
+    symptomss: string[],
+    diagnosticMethodss: string[],
+    dates: number[],
+    treatmentOptionss: string[],
+    importantInformations: string[],
+    ipfsHash: string
+  ): Promise<void> {
+    try {
+      const mintTx = this._contract.methods.setHospitalRecord(
+        userId,
+        hospitalNames,
+        doctorNames,
+        names,
+        symptomss,
+        diagnosticMethodss,
+        dates,
+        treatmentOptionss,
+        importantInformations,
+        ipfsHash
+      );
+
+      const data = mintTx.encodeABI();
+
+      const tx = {
+        to: this._contractAddress,
+        from: from,
+        data: data,
+      } as any;
+
+      const gas = await this._web3.eth.estimateGas(tx);
+      const gasPrice = await this._web3.eth.getGasPrice();
+      const nonce = await this._web3.eth.getTransactionCount(from);
+
+      tx.gas = this._web3.utils.toHex(gas);
+      tx.gasPrice = this._web3.utils.toHex(gasPrice);
+      tx.nonce = this._web3.utils.toHex(nonce);
+
+      const signedTransaction = await this._web3.eth.accounts.signTransaction(
+        tx,
+        this._privateKey
+      );
+
+      await this._web3.eth.sendSignedTransaction(
+        signedTransaction.rawTransaction
+      );
+    } catch (err: any) {
+      if (err.error.message.indexOf('insufficient funds') != -1) {
+        throw new CustomError('Web3 JS Error', 'Insufficient funds', 500);
+      } else {
+        throw new CustomError('Web3 JS Error', err.error.message, 500);
+      }
+    }
+  }
+
+  public async getHospitalRecords(from: string, userId: string): Promise<void> {
+    try {
+      const mintTx = await this._contract.methods
+        .getHospitalRecords(userId)
+        .call();
+      console.log(Number(mintTx[0][3]));
+      console.log(mintTx[0]['schoolName']);
+    } catch (err: any) {
+      if (err.error.message.indexOf('insufficient funds') != -1) {
+        throw new CustomError('Web3 JS Error', 'Insufficient funds', 500);
+      } else {
+        throw new CustomError('Web3 JS Error', err.error.message, 500);
+      }
+    }
+  }
+
   public async getUserData(from: string, userId: string): Promise<void> {
     try {
       const mintTx = await this._contract.methods.getUserData(userId).call();

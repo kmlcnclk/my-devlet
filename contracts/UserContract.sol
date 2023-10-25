@@ -15,12 +15,43 @@ contract UserContract {
         uint256 graduationYear;
     }
 
+    struct BankInfo {
+        string bankName;
+        uint256 accountBalance;
+        string accountNumber;
+        string accountType;
+        uint256 accountOpeningDate;
+    }
+
+    struct HospitalInfo {
+        string hospitalName;
+        string doctorName;
+        string name;
+        string symptoms;
+        string diagnosticMethods;
+        uint256 date;
+        string treatmentOptions;
+        string importantInformation;
+    }
+
     struct UserEducation {
         EducationInfo[] educationInfos;
         string ipfsHash;
     }
 
+    struct UserBank {
+        BankInfo[] bankInfos;
+        string ipfsHash;
+    }
+
+    struct UserHospital {
+        HospitalInfo[] hospitalInfos;
+        string ipfsHash;
+    }
+
     mapping(string => UserEducation) private educationRecords;
+    mapping(string => UserBank) private bankRecords;
+    mapping(string => UserHospital) private hospitalRecords;
 
     mapping(string => UserData) users;
 
@@ -34,6 +65,18 @@ contract UserContract {
     event UserEducationUpdated(
         string indexed userId,
         EducationInfo[] educationInfos,
+        string ipfsHash
+    );
+
+    event UserBankUpdated(
+        string indexed userId,
+        BankInfo[] bankInfos,
+        string ipfsHash
+    );
+
+    event UserHospitalUpdated(
+        string indexed userId,
+        HospitalInfo[] hospitalInfos,
         string ipfsHash
     );
 
@@ -121,7 +164,10 @@ contract UserContract {
         return educationRecords[userId].educationInfos;
     }
 
-    function setIPFSHash(string memory userId, string memory ipfsHash) public {
+    function setEducationIPFSHash(
+        string memory userId,
+        string memory ipfsHash
+    ) public {
         UserEducation storage userEducation = educationRecords[userId];
 
         userEducation.ipfsHash = ipfsHash;
@@ -133,9 +179,136 @@ contract UserContract {
         );
     }
 
-    function getIPFSHash(
+    function getEducationIPFSHash(
         string memory userId
     ) public view returns (string memory) {
         return educationRecords[userId].ipfsHash;
+    }
+
+    function setBankRecord(
+        string memory userId,
+        string[] memory bankNames,
+        uint256[] memory accountBalances,
+        string[] memory accountNumbers,
+        string[] memory accountTypes,
+        uint256[] memory accountOpeningDates,
+        string memory ipfsHash
+    ) public {
+        require(
+            bankNames.length == accountBalances.length &&
+                accountBalances.length == accountNumbers.length &&
+                accountNumbers.length == accountTypes.length &&
+                accountTypes.length == accountOpeningDates.length,
+            "Input arrays must have the same length"
+        );
+
+        for (uint256 i = 0; i < bankNames.length; i++) {
+            BankInfo memory newBank = BankInfo({
+                bankName: bankNames[i],
+                accountBalance: accountBalances[i],
+                accountNumber: accountNumbers[i],
+                accountType: accountTypes[i],
+                accountOpeningDate: accountOpeningDates[i]
+            });
+
+            bankRecords[userId].bankInfos.push(newBank);
+        }
+
+        bankRecords[userId].ipfsHash = ipfsHash;
+
+        emit UserBankUpdated(userId, bankRecords[userId].bankInfos, ipfsHash);
+    }
+
+    function getBankRecords(
+        string memory userId
+    ) public view returns (BankInfo[] memory) {
+        return bankRecords[userId].bankInfos;
+    }
+
+    function setBankIPFSHash(
+        string memory userId,
+        string memory ipfsHash
+    ) public {
+        UserBank storage userBank = bankRecords[userId];
+
+        userBank.ipfsHash = ipfsHash;
+
+        emit UserBankUpdated(userId, userBank.bankInfos, ipfsHash);
+    }
+
+    function getBankIPFSHash(
+        string memory userId
+    ) public view returns (string memory) {
+        return bankRecords[userId].ipfsHash;
+    }
+
+    function setHospitalRecord(
+        string memory userId,
+        string[] memory hospitalNames,
+        string[] memory doctorNames,
+        string[] memory names,
+        string[] memory symptomss,
+        string[] memory diagnosticMethodss,
+        uint256[] memory dates,
+        string[] memory treatmentOptionss,
+        string[] memory importantInformations,
+        string memory ipfsHash
+    ) public {
+        require(
+            hospitalNames.length == doctorNames.length &&
+                doctorNames.length == names.length &&
+                names.length == symptomss.length &&
+                symptomss.length == diagnosticMethodss.length &&
+                diagnosticMethodss.length == dates.length &&
+                dates.length == treatmentOptionss.length &&
+                treatmentOptionss.length == importantInformations.length,
+            "Input arrays must have the same length"
+        );
+
+        for (uint256 i = 0; i < hospitalNames.length; i++) {
+            HospitalInfo memory newHospital = HospitalInfo({
+                hospitalName: hospitalNames[i],
+                doctorName: doctorNames[i],
+                name: names[i],
+                symptoms: symptomss[i],
+                diagnosticMethods: diagnosticMethodss[i],
+                date: dates[i],
+                treatmentOptions: treatmentOptionss[i],
+                importantInformation: importantInformations[i]
+            });
+
+            hospitalRecords[userId].hospitalInfos.push(newHospital);
+        }
+
+        hospitalRecords[userId].ipfsHash = ipfsHash;
+
+        emit UserHospitalUpdated(
+            userId,
+            hospitalRecords[userId].hospitalInfos,
+            ipfsHash
+        );
+    }
+
+    function getHospitalRecords(
+        string memory userId
+    ) public view returns (HospitalInfo[] memory) {
+        return hospitalRecords[userId].hospitalInfos;
+    }
+
+    function setHospitalIPFSHash(
+        string memory userId,
+        string memory ipfsHash
+    ) public {
+        UserHospital storage userHospital = hospitalRecords[userId];
+
+        userHospital.ipfsHash = ipfsHash;
+
+        emit UserHospitalUpdated(userId, userHospital.hospitalInfos, ipfsHash);
+    }
+
+    function getHospitalIPFSHash(
+        string memory userId
+    ) public view returns (string memory) {
+        return hospitalRecords[userId].ipfsHash;
     }
 }

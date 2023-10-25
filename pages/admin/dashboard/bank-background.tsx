@@ -4,16 +4,19 @@ import type { NextPage } from 'next';
 import Sidebar from '@/components/Admin/Sidebar';
 import RequireAuth from '@/components/Admin/RequireAuth';
 import FetchUser from '@/components/Admin/FetchUser';
-import EducationalBackground from '@/components/Admin/EducationalBackground';
+import BankBackground from '@/components/Admin/BankBackground';
+import RequireAdmin from '@/components/Admin/RequireRole';
 
 const AppPage: NextPage = () => {
   return (
     <>
       <RequireAuth>
         <FetchUser>
-          <Sidebar pageTitle="Educational Background">
-            <EducationalBackground />
-          </Sidebar>
+          <RequireAdmin>
+            <Sidebar pageTitle="Bank Background">
+              <BankBackground />
+            </Sidebar>
+          </RequireAdmin>
         </FetchUser>
       </RequireAuth>
     </>

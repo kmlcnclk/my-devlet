@@ -148,21 +148,7 @@ function MyAnalytics() {
               <Legend />
               <Line
                 type="monotone"
-                dataKey="nfts"
-                stroke="#22bb33"
-                activeDot={{ r: 6 }}
-              />
-
-              <Line
-                type="monotone"
                 dataKey="sm"
-                stroke="#f0ad4e"
-                activeDot={{ r: 6 }}
-              />
-
-              <Line
-                type="monotone"
-                dataKey="cus"
                 stroke="#f0ad4e"
                 activeDot={{ r: 6 }}
               />
