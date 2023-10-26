@@ -18,14 +18,6 @@ namespace NodeJS {
 
     SALT_WORK_FACTOR: number;
 
-    NEXT_PUBLIC_S3_NFT_BUCKET: string;
-    NEXT_PUBLIC_S3_REGION_NFT: string;
-    NEXT_PUBLIC_S3_ACCESS_KEY_ID: string;
-    NEXT_PUBLIC_S3_SECRET_ACCESS_KEY: string;
-
-    GOOGLE_CLIENT_ID: string;
-    GOOGLE_CLIENT_SECRET: string;
-
     NODE_RSA_PRIVATE_KEY: string;
 
     NEXT_PUBLIC_INFURA_API_KEY_SECRET: string;
