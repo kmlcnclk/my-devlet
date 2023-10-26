@@ -13,7 +13,7 @@ const AppPage: NextPage = () => {
       <RequireAuth>
         <FetchUser>
           <FetchSmartContracts>
-            <Sidebar pageTitle="Educational Background">
+            <Sidebar pageTitle="Bank Background">
               <BankBackground />
             </Sidebar>
           </FetchSmartContracts>

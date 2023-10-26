@@ -16,7 +16,7 @@ const userSchema = new mongoose.Schema(
     name: { type: String, required: true },
     age: { type: Number, required: true },
     password: { type: String, required: true },
-    uniqueID: { type: String, required: true },
+    uniqueID: { type: String },
     address: { type: String, required: true },
     privateKey: { type: String, required: true },
     isUserDataAddedToBlockchain: { type: Boolean, default: false },

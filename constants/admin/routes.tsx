@@ -7,7 +7,7 @@ import { FaFileContract } from 'react-icons/fa';
 import DescriptionIcon from '@mui/icons-material/Description';
 import CreateIcon from '@mui/icons-material/Create';
 import BusinessIcon from '@mui/icons-material/Business';
-
+import PermIdentityIcon from '@mui/icons-material/PermIdentity';
 export interface RouterConfigData {
   id: string;
   title: string;
@@ -82,6 +82,15 @@ export const businessConfig: RouterConfigData[] = [
   //   type: 'item',
   //   icon: <LocalHospitalIcon />,
   //   url: '/admin/dashboard/add-blockchain/hospital-background',
+  //   children: [],
+  //   ml: '50px',
+  // },
+  // {
+  //   id: 'create-digital-id',
+  //   title: 'Create Digital Id',
+  //   type: 'item',
+  //   icon: <PermIdentityIcon />,
+  //   url: '/admin/dashboard/create-digital-id',
   //   children: [],
   //   ml: '50px',
   // },
