@@ -6,17 +6,20 @@ import RequireAuth from '@/components/Admin/RequireAuth';
 import FetchUser from '@/components/Admin/FetchUser';
 import BankBackground from '@/components/Admin/BankBackground';
 import RequireAdmin from '@/components/Admin/RequireRole';
+import FetchSmartContracts from '@/components/Admin/FetchSmartContracts';
 
 const AppPage: NextPage = () => {
   return (
     <>
       <RequireAuth>
         <FetchUser>
-          <RequireAdmin>
-            <Sidebar pageTitle="Bank Background">
-              <BankBackground />
-            </Sidebar>
-          </RequireAdmin>
+          <FetchSmartContracts>
+            <RequireAdmin>
+              <Sidebar pageTitle="Bank Background">
+                <BankBackground />
+              </Sidebar>
+            </RequireAdmin>
+          </FetchSmartContracts>
         </FetchUser>
       </RequireAuth>
     </>

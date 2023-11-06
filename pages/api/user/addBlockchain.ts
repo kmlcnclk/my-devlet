@@ -15,6 +15,7 @@ import { AddBlockChainType } from '@/types/User';
 import { addBlockChainSchema } from '@/server/schemas/userSchema';
 import Web3Service from '@/server/services/Web3Service';
 import { openMongooseConnection } from '@/server/middlewares/openDBConnection';
+import CustomError from '@/server/errors/CustomError';
 
 async function handler(req: NextApiRequestWithUser, res: NextApiResponse) {
   if (req.method === 'POST') {
@@ -24,6 +25,9 @@ async function handler(req: NextApiRequestWithUser, res: NextApiResponse) {
       const user: UserDocument = (await UserModel.findById(
         get(req.user, '_id')
       )) as UserDocument;
+
+      if (!user.uniqueID)
+        throw new CustomError('Bad Request', 'You do not have digital id', 400);
 
       const decryptedPrivateKey =
         await UserService.decryptHashedWalletPrivateKey(user.privateKey);

@@ -5,15 +5,18 @@ import Sidebar from '@/components/Admin/Sidebar';
 import Dashboard from '@/components/Admin/Dashboard';
 import RequireAuth from '@/components/Admin/RequireAuth';
 import FetchUser from '@/components/Admin/FetchUser';
+import FetchSmartContracts from '@/components/Admin/FetchSmartContracts';
 
 const AppPage: NextPage = () => {
   return (
     <>
       <RequireAuth>
         <FetchUser>
-          <Sidebar pageTitle="Welcome Back">
-            <Dashboard />
-          </Sidebar>
+          <FetchSmartContracts>
+            <Sidebar pageTitle="Welcome Back">
+              <Dashboard />
+            </Sidebar>
+          </FetchSmartContracts>
         </FetchUser>
       </RequireAuth>
     </>

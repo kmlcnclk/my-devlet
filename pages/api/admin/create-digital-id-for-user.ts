@@ -3,20 +3,35 @@ import { get } from 'lodash';
 import { NextApiRequestWithUser } from '../../../types/next';
 import { checkJwtAndUserExist } from '@/server/middlewares/jwt';
 import { openMongooseConnection } from '@/server/middlewares/openDBConnection';
-import UserDAO from '@/server/data/UserDAO';
 import { v4 as uuidv4 } from 'uuid';
-import { UserDocument } from '@/server/models/userModel';
+import UserModel, { UserDocument } from '@/server/models/userModel';
 import AdminDAO from '@/server/data/AdminDAO';
+import CustomError from '@/server/errors/CustomError';
 
 async function handler(req: NextApiRequestWithUser, res: NextApiResponse) {
-  if (req.method === 'GET') {
+  if (req.method === 'POST') {
     try {
-      const user: UserDocument = (await UserDAO.findByIdAndUpdate(
-        get(req.user, '_id') as string,
-        {
-          uniqueID: uuidv4(),
-        }
+      const user: UserDocument = (await UserModel.findById(
+        get(req.query, 'id') as string
       )) as UserDocument;
+
+      if (!user)
+        throw new CustomError(
+          'Bad Request',
+          'There is no user with this id',
+          400
+        );
+
+      if (user.uniqueID)
+        throw new CustomError(
+          'Bad Request',
+          'User has already digital id',
+          400
+        );
+
+      user.uniqueID = await uuidv4();
+
+      await user.save();
 
       return res.status(201).json({
         message: 'Digital Id is successfully created for this user',

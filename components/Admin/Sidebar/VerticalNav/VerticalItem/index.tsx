@@ -17,8 +17,8 @@ function VerticalItem({ item }: VerticalItemProps) {
   function isActive() {
     if (router.asPath === item?.url) return true;
     else if (
-      router.pathname === '/dashboard/my-nfts/[id]' &&
-      item?.url === '/dashboard/my-nfts'
+      router.pathname === '/admin/dashboard/my-nfts/[id]' &&
+      item?.url === '/admin/dashboard/my-nfts'
     ) {
       return true;
     }
@@ -39,7 +39,7 @@ function VerticalItem({ item }: VerticalItemProps) {
         id: smartContract._id,
         title: smartContract.name,
         type: 'item',
-        url: `/dashboard/smart-contract/${smartContract._id}`,
+        url: `/admin/dashboard/smart-contract/${smartContract._id}`,
         children: [],
         ml: '55px',
       })

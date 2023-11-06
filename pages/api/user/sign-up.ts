@@ -31,7 +31,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
       const data = {
         ...omit(userData, 'passwordConfirmation'),
-        uniqueID: uuidv4(),
         address: address,
         privateKey: hashOfPrivateKey,
       };

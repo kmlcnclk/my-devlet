@@ -6,17 +6,20 @@ import RequireAuth from '@/components/Admin/RequireAuth';
 import FetchUser from '@/components/Admin/FetchUser';
 import CreateDigitalId from '@/components/Admin/CreateDigitalId';
 import RequireAdmin from '@/components/Admin/RequireRole';
+import FetchSmartContracts from '@/components/Admin/FetchSmartContracts';
 
 const AppPage: NextPage = () => {
   return (
     <>
       <RequireAuth>
         <FetchUser>
-          <RequireAdmin>
-            <Sidebar pageTitle="Create Digital Id">
-              <CreateDigitalId />
-            </Sidebar>
-          </RequireAdmin>
+          <FetchSmartContracts>
+            <RequireAdmin>
+              <Sidebar pageTitle="Create Digital Id">
+                <CreateDigitalId />
+              </Sidebar>
+            </RequireAdmin>
+          </FetchSmartContracts>
         </FetchUser>
       </RequireAuth>
     </>

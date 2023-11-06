@@ -12,6 +12,7 @@ import { toast } from 'react-toastify';
 import { SmartContractReturnType } from '@/types/SmartContract';
 import SingleSmartContract from '@/components/Admin/SmartContract/SingleSmartContract';
 import { getAdminAccessTokenFromLocalStorage } from '@/localstorage/adminAccessTokenStorage';
+import FetchSmartContracts from '@/components/Admin/FetchSmartContracts';
 
 const AppPage: NextPage = () => {
   const router = useRouter();
@@ -22,7 +23,7 @@ const AppPage: NextPage = () => {
   useEffect(() => {
     const getSmartContractById = async () => {
       const res = await fetch(
-        `/api/user/smart-contract/getByID?id=${router.query.id}`,
+        `/api/admin/smart-contract/getByID?id=${router.query.id}`,
         {
           method: 'GET',
           headers: {
@@ -52,28 +53,30 @@ const AppPage: NextPage = () => {
     <>
       <RequireAuth>
         <FetchUser>
-          <Sidebar pageTitle="">
-            {router.query.id && smartContract?._id ? (
-              <SingleSmartContract {...{ smartContract }} />
-            ) : (
-              <Box
-                sx={{
-                  width: '100%',
-                  height: '200px',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
-              >
-                <CircularProgress
-                  size={40}
+          <FetchSmartContracts>
+            <Sidebar pageTitle="">
+              {router.query.id && smartContract?._id ? (
+                <SingleSmartContract {...{ smartContract }} />
+              ) : (
+                <Box
                   sx={{
-                    color: 'linear-gradient(90deg, #4776E6 0%, #8E54E9 100%)',
+                    width: '100%',
+                    height: '200px',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
                   }}
-                />
-              </Box>
-            )}
-          </Sidebar>
+                >
+                  <CircularProgress
+                    size={40}
+                    sx={{
+                      color: 'linear-gradient(90deg, #4776E6 0%, #8E54E9 100%)',
+                    }}
+                  />
+                </Box>
+              )}
+            </Sidebar>
+          </FetchSmartContracts>
         </FetchUser>
       </RequireAuth>
     </>

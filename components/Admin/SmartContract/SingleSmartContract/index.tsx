@@ -284,7 +284,7 @@ const SingleSmartContract: React.FC<Props> = ({ smartContract }: Props) => {
         <Button
           type="button"
           onClick={() => {
-            router.push('/dashboard/smart-contract');
+            router.push('/admin/dashboard/smart-contract');
           }}
           sx={{
             mt: '20px',
