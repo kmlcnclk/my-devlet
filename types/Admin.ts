@@ -9,8 +9,8 @@ export interface IAdmin {
   password: string;
   ip: string;
   uniqueID?: string;
-  address?: string;
-  privateKey?: string;
+  address: string;
+  privateKey: string;
   status?: string;
   role: string;
   resetPasswordToken?: string;
