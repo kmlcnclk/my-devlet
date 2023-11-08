@@ -25,11 +25,11 @@ async function handler(req: NextApiRequestWithUser, res: NextApiResponse) {
       )) as AdminDocument;
 
       const decryptedPrivateKey =
-        await UserService.decryptHashedWalletPrivateKey(user.privateKey);
+        await UserService.decryptHashedWalletPrivateKey(user?.privateKey ?? '');
 
       const contractAddressOfUser =
         await SmartContractService.deployUserContract(
-          user.address,
+          user.address ?? '',
           decryptedPrivateKey,
           smartContractData.network
         );
@@ -37,7 +37,7 @@ async function handler(req: NextApiRequestWithUser, res: NextApiResponse) {
       const smartContract = await SmartContractDAO.create({
         userId: get(req.user, '_id'),
         ...smartContractData,
-        userWallet: user.address,
+        userWallet: user.address ?? '',
         contractAddressOfUser,
       });
 
