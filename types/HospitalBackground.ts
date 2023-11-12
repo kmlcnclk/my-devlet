@@ -25,6 +25,13 @@ export type AddBlockChainType = {
   ipfsHash: string;
 };
 
+export type AddBlockChainByAdminType = {
+  userId: UserDocument['_id'];
+  id: HospitalBackgroundDocument['_id'];
+  smartContract: SmartContractDocument['_id'];
+  ipfsHash: string;
+};
+
 export type HospitalBackgroundReturnType = IHospitalBackground & {
   _id: string;
   createdAt: string;

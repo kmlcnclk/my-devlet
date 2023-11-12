@@ -6,6 +6,7 @@ import RequireAuth from '@/components/Admin/RequireAuth';
 import FetchUser from '@/components/Admin/FetchUser';
 import HospitalBackground from '@/components/Admin/AddBlockchain/HospitalBackground';
 import FetchSmartContracts from '@/components/Admin/FetchSmartContracts';
+import RequireAdmin from '@/components/Admin/RequireRole';
 
 const AppPage: NextPage = () => {
   return (
@@ -13,9 +14,11 @@ const AppPage: NextPage = () => {
       <RequireAuth>
         <FetchUser>
           <FetchSmartContracts>
-            <Sidebar pageTitle="Hospital Background">
-              <HospitalBackground />
-            </Sidebar>
+            <RequireAdmin>
+              <Sidebar pageTitle="Hospital Background">
+                <HospitalBackground />
+              </Sidebar>
+            </RequireAdmin>
           </FetchSmartContracts>
         </FetchUser>
       </RequireAuth>

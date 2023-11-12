@@ -6,6 +6,7 @@ import RequireAuth from '@/components/Admin/RequireAuth';
 import FetchUser from '@/components/Admin/FetchUser';
 import EducationalBackground from '@/components/Admin/AddBlockchain/EducationalBackground';
 import FetchSmartContracts from '@/components/Admin/FetchSmartContracts';
+import RequireAdmin from '@/components/Admin/RequireRole';
 
 const AppPage: NextPage = () => {
   return (
@@ -13,9 +14,11 @@ const AppPage: NextPage = () => {
       <RequireAuth>
         <FetchUser>
           <FetchSmartContracts>
-            <Sidebar pageTitle="Educational Background">
-              <EducationalBackground />
-            </Sidebar>
+            <RequireAdmin>
+              <Sidebar pageTitle="Educational Background">
+                <EducationalBackground />
+              </Sidebar>
+            </RequireAdmin>
           </FetchSmartContracts>
         </FetchUser>
       </RequireAuth>

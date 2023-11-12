@@ -146,6 +146,10 @@ function VerticalItem({ item }: VerticalItemProps) {
     );
   }
 
+  if (item.id === 'create-digital-id' && role !== 'government') {
+    return <></>;
+  }
+
   return (
     <Box id={item.id}>
       <>
