@@ -18,7 +18,7 @@
     "@reduxjs/toolkit": "^1.9.6",
     "@truffle/hdwallet-provider": "^2.1.15",
     "bcrypt": "^5.1.1",
-    "crypto": "^1.0.1",
+    "crypto-js": "^4.2.0",
     "dotenv": "^16.3.1",
     "ethereum-cryptography": "^2.1.2",
     "ethereumjs-util": "^7.1.5",
@@ -48,6 +48,7 @@
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
+    "@types/crypto-js": "^4.2.1",
     "@types/html-pdf": "^3.0.1",
     "@types/html-pdf-node": "^1.0.0",
     "@types/jsonwebtoken": "^9.0.3",

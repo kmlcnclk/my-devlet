@@ -1,4 +1,4 @@
-import * as crypto from 'crypto';
+import * as CryptoJS from 'crypto-js';
 
 export interface IKeyGenerator {
   generateKey(): string;
@@ -6,7 +6,8 @@ export interface IKeyGenerator {
 
 export class PrivateKeyGenerator implements IKeyGenerator {
   generateKey(): string {
-    const privateKeyBytes = crypto.randomBytes(32);
-    return `0x${privateKeyBytes.toString('hex')}`;
+    const privateKeyBytes = CryptoJS.lib.WordArray.random(32);
+    const privateKeyHex = privateKeyBytes.toString(CryptoJS.enc.Hex);
+    return `0x${privateKeyHex}`;
   }
 }
