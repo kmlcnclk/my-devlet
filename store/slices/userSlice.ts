@@ -14,6 +14,7 @@ const initialState: UserState = {
     __v: 0,
     email: '',
     name: '',
+    identityNumber: 0,
     age: 0,
     uniqueID: '',
     isUserDataAddedToBlockchain: false,
