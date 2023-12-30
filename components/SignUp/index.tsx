@@ -22,6 +22,7 @@ type SignUpDataType = {
   name: string;
   email: string;
   age: number;
+  identityNumber: number;
   password: string;
   passwordConfirmation: string;
   isRemember: boolean;
@@ -32,6 +33,7 @@ function SignUp() {
   const [signUpData, setSignUpData] = useState<SignUpDataType>({
     name: '',
     email: '',
+    identityNumber: 0,
     age: 0,
     password: '',
     passwordConfirmation: '',
@@ -51,6 +53,7 @@ function SignUp() {
       const userData: SignUpType = {
         name: signUpData.name,
         email: signUpData.email,
+        identityNumber: Number(signUpData.identityNumber),
         age: Number(signUpData.age),
         password: signUpData.password,
         passwordConfirmation: signUpData.passwordConfirmation,
@@ -183,6 +186,17 @@ function SignUp() {
             type="number"
             sx={whiteTextFieldCss}
             size="small"
+            placeholder="identityNumber"
+            name="identityNumber"
+            onChange={onChangeFunc}
+          />{' '}
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            type="number"
+            sx={whiteTextFieldCss}
+            size="small"
             placeholder="Age"
             name="age"
             onChange={onChangeFunc}
@@ -268,7 +282,6 @@ function SignUp() {
               Forgot Password?
             </Typography>
           </Box>
-
           <FormControlLabel
             sx={{
               color: 'white',
@@ -332,7 +345,6 @@ function SignUp() {
               </Typography>
             )}
           </Button>
-
           <Typography sx={{ textAlign: 'center', mt: '20px', color: 'black' }}>
             Do you have an account?
             <Link

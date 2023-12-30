@@ -34,6 +34,15 @@ contract UserContract {
         string importantInformation;
     }
 
+    struct NotaryInfo {
+        string title;
+        string description;
+        uint256 date;
+        string notaryName;
+        string typeOfDocument;
+        string partiesInvolved;
+    }
+
     struct UserEducation {
         EducationInfo[] educationInfos;
         string ipfsHash;
@@ -49,9 +58,15 @@ contract UserContract {
         string ipfsHash;
     }
 
+    struct UserNotary {
+        NotaryInfo[] notaryInfos;
+        string ipfsHash;
+    }
+
     mapping(string => UserEducation) private educationRecords;
     mapping(string => UserBank) private bankRecords;
     mapping(string => UserHospital) private hospitalRecords;
+    mapping(string => UserNotary) private notaryRecords;
 
     mapping(string => UserData) users;
 
@@ -77,6 +92,12 @@ contract UserContract {
     event UserHospitalUpdated(
         string indexed userId,
         HospitalInfo[] hospitalInfos,
+        string ipfsHash
+    );
+
+    event UserNotaryUpdated(
+        string indexed userId,
+        NotaryInfo[] notaryInfos,
         string ipfsHash
     );
 
@@ -310,5 +331,69 @@ contract UserContract {
         string memory userId
     ) public view returns (string memory) {
         return hospitalRecords[userId].ipfsHash;
+    }
+
+    function setNotaryRecord(
+        string memory userId,
+        string[] memory titles,
+        string[] memory descriptions,
+        uint256[] memory dates,
+        string[] memory notaryNames,
+        string[] memory typeOfDocuments,
+        string[] memory partiesInvolveds,
+        string memory ipfsHash
+    ) public {
+        require(
+            titles.length == descriptions.length &&
+                descriptions.length == dates.length &&
+                dates.length == notaryNames.length &&
+                notaryNames.length == typeOfDocuments.length &&
+                typeOfDocuments.length == partiesInvolveds.length,
+            "Input arrays must have the same length"
+        );
+
+        for (uint256 i = 0; i < titles.length; i++) {
+            NotaryInfo memory newNotary = NotaryInfo({
+                title: titles[i],
+                description: descriptions[i],
+                date: dates[i],
+                notaryName: notaryNames[i],
+                typeOfDocument: typeOfDocuments[i],
+                partiesInvolved: partiesInvolveds[i]
+            });
+
+            notaryRecords[userId].notaryInfos.push(newNotary);
+        }
+
+        notaryRecords[userId].ipfsHash = ipfsHash;
+
+        emit UserNotaryUpdated(
+            userId,
+            notaryRecords[userId].notaryInfos,
+            ipfsHash
+        );
+    }
+
+    function getNotaryRecords(
+        string memory userId
+    ) public view returns (NotaryInfo[] memory) {
+        return notaryRecords[userId].notaryInfos;
+    }
+
+    function setNotaryIPFSHash(
+        string memory userId,
+        string memory ipfsHash
+    ) public {
+        UserNotary storage userNotary = notaryRecords[userId];
+
+        userNotary.ipfsHash = ipfsHash;
+
+        emit UserNotaryUpdated(userId, userNotary.notaryInfos, ipfsHash);
+    }
+
+    function getNotaryIPFSHash(
+        string memory userId
+    ) public view returns (string memory) {
+        return notaryRecords[userId].ipfsHash;
     }
 }

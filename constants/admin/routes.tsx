@@ -8,6 +8,8 @@ import DescriptionIcon from '@mui/icons-material/Description';
 import CreateIcon from '@mui/icons-material/Create';
 import BusinessIcon from '@mui/icons-material/Business';
 import PermIdentityIcon from '@mui/icons-material/PermIdentity';
+import { IoDocumentsSharp } from 'react-icons/io5';
+
 export interface RouterConfigData {
   id: string;
   title: string;
@@ -47,6 +49,15 @@ export const educationConfig: RouterConfigData[] = [
     ml: '50px',
   },
   {
+    id: 'notary',
+    title: 'Notary',
+    type: 'item',
+    icon: <IoDocumentsSharp />,
+    url: '/admin/dashboard/notary',
+    children: [],
+    ml: '50px',
+  },
+  {
     id: 'smart-contract',
     title: 'Smart Contract',
     type: 'item',
@@ -82,6 +93,15 @@ export const businessConfig: RouterConfigData[] = [
     type: 'item',
     icon: <LocalHospitalIcon />,
     url: '/admin/dashboard/add-blockchain/hospital-background',
+    children: [],
+    ml: '50px',
+  },
+  {
+    id: 'notary',
+    title: 'Notary',
+    type: 'item',
+    icon: <IoDocumentsSharp />,
+    url: '/admin/dashboard/add-blockchain/notary',
     children: [],
     ml: '50px',
   },

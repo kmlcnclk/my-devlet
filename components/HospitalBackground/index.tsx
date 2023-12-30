@@ -65,8 +65,11 @@ function HospitalBackground() {
           setHospitalBackground(data.hospitalBackground);
           if (data.hospitalBackground?.ipfsHash) {
             setIsButtonVisible(false);
+            // setIPFSURL(
+            //   `https://ipfs.io/ipfs/${data.hospitalBackground.ipfsHash}`
+            // );
             setIPFSURL(
-              `https://ipfs.io/ipfs/${data.hospitalBackground.ipfsHash}`
+              `https://neu-my-devlet.s3.eu-north-1.amazonaws.com/${data.hospitalBackground.ipfsHash}`
             );
           }
         } else {
@@ -138,7 +141,10 @@ function HospitalBackground() {
         setHospitalBackground(data.eb);
         setIsLoading(false);
         setIsButtonVisible(false);
-        setIPFSURL(`https://ipfs.io/ipfs/${data.eb.ipfsHash}`);
+        // setIPFSURL(`https://ipfs.io/ipfs/${data.eb.ipfsHash}`);
+        setIPFSURL(
+          `https://neu-my-devlet.s3.eu-north-1.amazonaws.com/${data.eb.ipfsHash}`
+        );
         toast.success(data.message);
       }
     }

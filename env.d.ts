@@ -22,5 +22,10 @@ namespace NodeJS {
 
     NEXT_PUBLIC_INFURA_API_KEY_SECRET: string;
     NEXT_PUBLIC_INFURA_IPFS_PROJECT_ID: string;
+
+    NEXT_PUBLIC_S3_BUCKET: string;
+    NEXT_PUBLIC_S3_REGION: string;
+    NEXT_PUBLIC_S3_ACCESS_KEY_ID: string;
+    NEXT_PUBLIC_S3_SECRET_ACCESS_KEY: string;
   }
 }

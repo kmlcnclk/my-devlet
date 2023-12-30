@@ -9,6 +9,7 @@ import SchoolIcon from '@mui/icons-material/School';
 import { FaFileContract } from 'react-icons/fa';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
+import { IoDocumentsSharp } from 'react-icons/io5';
 
 export interface RouterConfigData {
   id: string;
@@ -75,6 +76,14 @@ export const routesConfig: RouterConfigData[] = [
     type: 'item',
     icon: <LocalHospitalIcon />,
     url: '/dashboard/hospital-background',
+    children: [],
+  },
+  {
+    id: 'notary',
+    title: 'Notary',
+    type: 'item',
+    icon: <IoDocumentsSharp />,
+    url: '/dashboard/notary',
     children: [],
   },
   {

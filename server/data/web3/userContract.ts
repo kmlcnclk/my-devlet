@@ -110,8 +110,6 @@ export default class UserContract {
       const mintTx = await this._contract.methods
         .getEducationRecords(userId)
         .call();
-      console.log(Number(mintTx[0][3]));
-      console.log(mintTx[0]['schoolName']);
     } catch (err: any) {
       if (err.error.message.indexOf('insufficient funds') != -1) {
         throw new CustomError('Web3 JS Error', 'Insufficient funds', 500);
@@ -176,8 +174,6 @@ export default class UserContract {
   public async getBankRecords(from: string, userId: string): Promise<void> {
     try {
       const mintTx = await this._contract.methods.getBankRecords(userId).call();
-      console.log(Number(mintTx[0][3]));
-      console.log(mintTx[0]['schoolName']);
     } catch (err: any) {
       if (err.error.message.indexOf('insufficient funds') != -1) {
         throw new CustomError('Web3 JS Error', 'Insufficient funds', 500);
@@ -252,8 +248,76 @@ export default class UserContract {
       const mintTx = await this._contract.methods
         .getHospitalRecords(userId)
         .call();
-      console.log(Number(mintTx[0][3]));
-      console.log(mintTx[0]['schoolName']);
+    } catch (err: any) {
+      if (err.error.message.indexOf('insufficient funds') != -1) {
+        throw new CustomError('Web3 JS Error', 'Insufficient funds', 500);
+      } else {
+        throw new CustomError('Web3 JS Error', err.error.message, 500);
+      }
+    }
+  }
+
+  public async setNotaryRecord(
+    from: string,
+    userId: string,
+    titles: string[],
+    descriptions: string[],
+    dates: number[],
+    notaryNames: string[],
+    typeOfDocuments: string[],
+    partiesInvolveds: string[],
+    ipfsHash: string
+  ): Promise<void> {
+    try {
+      const mintTx = await this._contract.methods.setNotaryRecord(
+        userId,
+        titles,
+        descriptions,
+        dates,
+        notaryNames,
+        typeOfDocuments,
+        partiesInvolveds,
+        ipfsHash
+      );
+
+      const data = await mintTx.encodeABI();
+
+      const tx = {
+        to: this._contractAddress,
+        from: from,
+        data: data,
+      } as any;
+
+      const gasPrice = await this._web3.eth.getGasPrice();
+      const gas = await this._web3.eth.estimateGas(tx);
+      const nonce = await this._web3.eth.getTransactionCount(from);
+
+      tx.gas = this._web3.utils.toHex(gas);
+      tx.gasPrice = this._web3.utils.toHex(gasPrice);
+      tx.nonce = this._web3.utils.toHex(nonce);
+
+      const signedTransaction = await this._web3.eth.accounts.signTransaction(
+        tx,
+        this._privateKey
+      );
+
+      await this._web3.eth.sendSignedTransaction(
+        signedTransaction.rawTransaction
+      );
+    } catch (err: any) {
+      if (err.error.message.indexOf('insufficient funds') != -1) {
+        throw new CustomError('Web3 JS Error', 'Insufficient funds', 500);
+      } else {
+        throw new CustomError('Web3 JS Error', err.error.message, 500);
+      }
+    }
+  }
+
+  public async getNotaryRecords(from: string, userId: string): Promise<void> {
+    try {
+      const mintTx = await this._contract.methods
+        .getNotaryRecords(userId)
+        .call();
     } catch (err: any) {
       if (err.error.message.indexOf('insufficient funds') != -1) {
         throw new CustomError('Web3 JS Error', 'Insufficient funds', 500);
@@ -266,7 +330,6 @@ export default class UserContract {
   public async getUserData(from: string, userId: string): Promise<void> {
     try {
       const mintTx = await this._contract.methods.getUserData(userId).call();
-      console.log(mintTx);
     } catch (err: any) {
       if (err.error.message.indexOf('insufficient funds') != -1) {
         throw new CustomError('Web3 JS Error', 'Insufficient funds', 500);

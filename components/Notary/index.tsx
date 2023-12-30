@@ -11,14 +11,11 @@ import {
 } from '@mui/material';
 import React, { useEffect, useRef, useState } from 'react';
 import { toast } from 'react-toastify';
-import BankInfoTable from './BankInfoTable';
+import NotaryInfoTable from './NotaryInfoTable';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import { ipfsUploader } from '@/src/ipfsUploader';
-import {
-  AddBlockChainType,
-  BankBackgroundReturnType,
-} from '@/types/BankBackground';
+import { AddBlockChainType, NotaryReturnType } from '@/types/Notary';
 import { Inter } from 'next/font/google';
 import { RootState } from '@/store';
 import { useSelector } from 'react-redux';
@@ -26,10 +23,9 @@ import { SmartContractReturnType } from '@/types/SmartContract';
 
 const inter = Inter({ subsets: ['latin'] });
 
-function BankBackground() {
-  const [bankBackground, setBankBackground] =
-    useState<BankBackgroundReturnType | null>(null);
-  const bankTableRef = useRef(null);
+function Notary() {
+  const [notary, setNotary] = useState<NotaryReturnType | null>(null);
+  const notaryTableRef = useRef(null);
 
   const [isLoading, setIsLoading] = useState(false);
   const [isButtonVisible, setIsButtonVisible] = useState(true);
@@ -37,7 +33,7 @@ function BankBackground() {
   const [openModalForAddBlockchain, setOpenModalForAddBlockchain] =
     useState(false);
   const [ipfsURL, setIPFSURL] = useState('');
-  const [isBankInfoExists, setIsBankInfoExists] = useState(true);
+  const [isNotaryInfoExists, setIsNotaryInfoExists] = useState(true);
   const [smartContract, setSmartContract] = useState<string>('');
 
   const smartContracts: SmartContractReturnType[] = useSelector(
@@ -45,8 +41,8 @@ function BankBackground() {
   ) as SmartContractReturnType[];
 
   useEffect(() => {
-    const getBankBackground = async () => {
-      const res = await fetch('/api/user/bankBackground/getByUserId', {
+    const getNotary = async () => {
+      const res = await fetch('/api/user/notary/getByUserId', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -61,25 +57,25 @@ function BankBackground() {
         else if (data?.error) toast.error(data.error.message);
         else if (data[0]) toast.error(data[0].message);
       } else {
-        if (data.bankBackground) {
-          setBankBackground(data.bankBackground);
-          if (data.bankBackground?.ipfsHash) {
+        if (data.notary) {
+          setNotary(data.notary);
+          if (data.notary?.ipfsHash) {
             setIsButtonVisible(false);
-            // setIPFSURL(`https://ipfs.io/ipfs/${data.bankBackground.ipfsHash}`);
+            // setIPFSURL(`https://ipfs.io/ipfs/${data.notary.ipfsHash}`);
             setIPFSURL(
-              `https://neu-my-devlet.s3.eu-north-1.amazonaws.com/${data.bankBackground.ipfsHash}`
+              `https://neu-my-devlet.s3.eu-north-1.amazonaws.com/${data.notary.ipfsHash}`
             );
           }
         } else {
-          setIsBankInfoExists(false);
+          setIsNotaryInfoExists(false);
         }
       }
     };
-    getBankBackground();
+    getNotary();
   }, []);
 
   const addIPFS = async () => {
-    const input = bankTableRef.current;
+    const input = notaryTableRef.current;
     if (input)
       return html2canvas(input).then(async (canvas) => {
         const imgData = canvas.toDataURL('image/png');
@@ -113,12 +109,12 @@ function BankBackground() {
     const ipfsHash = await addIPFS();
     if (ipfsHash) {
       const addBlockchainData: AddBlockChainType = {
-        id: bankBackground?._id,
+        id: notary?._id,
         smartContract: smartContract,
         ipfsHash,
       };
 
-      const res = await fetch('/api/user/bankBackground/addBlockchain', {
+      const res = await fetch('/api/user/notary/addBlockchain', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -136,7 +132,7 @@ function BankBackground() {
         setIsLoading(false);
       } else {
         setOpenModalForAddBlockchain(false);
-        setBankBackground(data.eb);
+        setNotary(data.eb);
         setIsLoading(false);
         setIsButtonVisible(false);
         // setIPFSURL(`https://ipfs.io/ipfs/${data.eb.ipfsHash}`);
@@ -154,9 +150,9 @@ function BankBackground() {
         mt: '20px',
       }}
     >
-      {isBankInfoExists ? (
+      {isNotaryInfoExists ? (
         <>
-          {bankBackground?.bankInfos ? (
+          {notary?.notaryInfos ? (
             <Box
               sx={{
                 flexDirection: 'column',
@@ -165,7 +161,7 @@ function BankBackground() {
                 alignItems: 'center',
               }}
             >
-              <BankInfoTable {...{ bankBackground, bankTableRef }} />
+              <NotaryInfoTable {...{ notary, notaryTableRef }} />
               {isButtonVisible ? (
                 <Button
                   onClick={() => setOpenModalForAddBlockchain(true)}
@@ -180,7 +176,7 @@ function BankBackground() {
                     mt: '30px',
                     display: 'inline',
                     borderRadius: '15px',
-                    bgcolor: '#317DED',
+                    backgroundColor: '#317DED',
                     border: '2px solid #317DED',
                     boxShadow: '0px 4px 10px 0px #00000040',
                     '&:hover': {
@@ -320,7 +316,7 @@ function BankBackground() {
               fontSize: '17px',
             }}
           >
-            You don&apos;t have any bank info
+            You don&apos;t have any notary info
           </Typography>
         </Box>
       )}
@@ -334,11 +330,11 @@ function BankBackground() {
             border: 'none',
             position: 'absolute' as 'absolute',
             top: '50%',
+            bgcolor: 'background.paper',
             left: '50%',
             transform: 'translate(-50%, -50%)',
             width: { xs: '90%', md: 400 },
             height: { xs: '60%', md: 250 },
-            bgcolor: 'background.paper',
             boxShadow: 24,
           }}
         >
@@ -495,4 +491,4 @@ function BankBackground() {
   );
 }
 
-export default BankBackground;
+export default Notary;
