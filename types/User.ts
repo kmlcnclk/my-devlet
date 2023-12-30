@@ -5,6 +5,7 @@ export interface IUser {
   name: string;
   password: string;
   uniqueID?: string;
+  identityNumber: number;
   age: number;
   address: string;
   privateKey: string;

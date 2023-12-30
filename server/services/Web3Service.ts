@@ -26,15 +26,19 @@ class Web3Service {
     graduationYears: number[],
     ipfsHash: string
   ): Promise<void> {
-    await this._userContract.setEducationRecord(
-      from,
-      userId,
-      schoolNames,
-      degrees,
-      startedYears,
-      graduationYears,
-      ipfsHash
-    );
+    try {
+      await this._userContract.setEducationRecord(
+        from,
+        userId,
+        schoolNames,
+        degrees,
+        startedYears,
+        graduationYears,
+        ipfsHash
+      );
+    } catch (err: any) {
+      console.log(err);
+    }
   }
 
   async getEducationRecords(from: string, userId: string) {
@@ -51,16 +55,20 @@ class Web3Service {
     accountOpeningDates: number[],
     ipfsHash: string
   ): Promise<void> {
-    await this._userContract.setBankRecord(
-      from,
-      userId,
-      bankNames,
-      accountBalances,
-      accountNumbers,
-      accountTypes,
-      accountOpeningDates,
-      ipfsHash
-    );
+    try {
+      await this._userContract.setBankRecord(
+        from,
+        userId,
+        bankNames,
+        accountBalances,
+        accountNumbers,
+        accountTypes,
+        accountOpeningDates,
+        ipfsHash
+      );
+    } catch (err: any) {
+      console.log(err);
+    }
   }
 
   async getBankRecords(from: string, userId: string) {
@@ -80,23 +88,59 @@ class Web3Service {
     importantInformations: string[],
     ipfsHash: string
   ): Promise<void> {
-    await this._userContract.setHospitalRecord(
-      from,
-      userId,
-      hospitalNames,
-      doctorNames,
-      names,
-      symptomss,
-      diagnosticMethodss,
-      dates,
-      treatmentOptionss,
-      importantInformations,
-      ipfsHash
-    );
+    try {
+      await this._userContract.setHospitalRecord(
+        from,
+        userId,
+        hospitalNames,
+        doctorNames,
+        names,
+        symptomss,
+        diagnosticMethodss,
+        dates,
+        treatmentOptionss,
+        importantInformations,
+        ipfsHash
+      );
+    } catch (err: any) {
+      console.log(err);
+    }
   }
 
   async getHospitalRecords(from: string, userId: string) {
     await this._userContract.getHospitalRecords(from, userId);
+  }
+
+  async setNotaryRecord(
+    from: string,
+    userId: string,
+    titles: string[],
+    descriptions: string[],
+    dates: number[],
+    notaryNames: string[],
+    typeOfDocuments: string[],
+    partiesInvolveds: string[],
+    ipfsHash: string
+  ): Promise<void> {
+    try {
+      await this._userContract.setNotaryRecord(
+        from,
+        userId,
+        titles,
+        descriptions,
+        dates,
+        notaryNames,
+        typeOfDocuments,
+        partiesInvolveds,
+        ipfsHash
+      );
+    } catch (err: any) {
+      console.log(err);
+    }
+  }
+
+  async getNotaryRecords(from: string, userId: string) {
+    await this._userContract.getNotaryRecords(from, userId);
   }
 
   async setUserData(
@@ -104,7 +148,11 @@ class Web3Service {
     userId: string,
     setUserData: any
   ): Promise<void> {
-    await this._userContract.setUserData(from, userId, setUserData);
+    try {
+      await this._userContract.setUserData(from, userId, setUserData);
+    } catch (err: any) {
+      console.log(err);
+    }
   }
 }
 

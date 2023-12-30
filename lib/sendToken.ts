@@ -1,12 +1,12 @@
-import { getAccessTokenFromLocalStorage } from "@/localstorage/accessTokenStorage";
-import { get } from "lodash";
-import { toast } from "react-toastify";
+import { getAccessTokenFromLocalStorage } from '@/localstorage/accessTokenStorage';
+import { get } from 'lodash';
+import { toast } from 'react-toastify';
 
 export const getAddress = async () => {
-  const res = await fetch("/api/user/getAddress", {
-    method: "GET",
+  const res = await fetch('/api/user/getAddress', {
+    method: 'GET',
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       Authorization: `Bearer ${getAccessTokenFromLocalStorage()}`,
     },
   });
@@ -23,27 +23,31 @@ export const getAddress = async () => {
 };
 
 export const sendToken = async () => {
-  const address = await getAddress();
+  if (typeof get(window, 'ethereum') === 'undefined') {
+    toast.info('Please install Metamask Extension');
+  } else {
+    const address = await getAddress();
 
-  if (address) {
-    if (get(window, "ethereum")) {
-      const ethereum = get(window, "ethereum") as any;
-      const accounts = await ethereum.request({
-        method: "eth_requestAccounts",
-      });
+    if (address) {
+      if (get(window, 'ethereum')) {
+        const ethereum = get(window, 'ethereum') as any;
+        const accounts = await ethereum.request({
+          method: 'eth_requestAccounts',
+        });
 
-      ethereum.request({
-        method: "eth_sendTransaction",
-        params: [
-          {
-            from: accounts[0],
-            to: address,
-            value: Number(1000000000000000000).toString(16),
-            gas: Number(21000).toString(16),
-            gasPrice: Number(21000).toString(16),
-          },
-        ],
-      });
+        ethereum.request({
+          method: 'eth_sendTransaction',
+          params: [
+            {
+              from: accounts[0],
+              to: address,
+              value: Number(1000000000000000000).toString(16),
+              gas: Number(21000).toString(16),
+              gasPrice: Number(21000).toString(16),
+            },
+          ],
+        });
+      }
     }
   }
 };

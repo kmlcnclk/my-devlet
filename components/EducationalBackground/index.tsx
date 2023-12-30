@@ -65,8 +65,11 @@ function EducationalBackground() {
           setEducationalBackground(data.educationalBackground);
           if (data.educationalBackground?.ipfsHash) {
             setIsButtonVisible(false);
+            // setIPFSURL(
+            //   `https://ipfs.io/ipfs/${data.educationalBackground.ipfsHash}`
+            // );
             setIPFSURL(
-              `https://ipfs.io/ipfs/${data.educationalBackground.ipfsHash}`
+              `https://neu-my-devlet.s3.eu-north-1.amazonaws.com/${data.educationalBackground.ipfsHash}`
             );
           }
         } else {
@@ -138,7 +141,10 @@ function EducationalBackground() {
         setEducationalBackground(data.eb);
         setIsLoading(false);
         setIsButtonVisible(false);
-        setIPFSURL(`https://ipfs.io/ipfs/${data.eb.ipfsHash}`);
+        // setIPFSURL(`https://ipfs.io/ipfs/${data.eb.ipfsHash}`);
+        setIPFSURL(
+          `https://neu-my-devlet.s3.eu-north-1.amazonaws.com/${data.eb.ipfsHash}`
+        );
         toast.success(data.message);
       }
     }
