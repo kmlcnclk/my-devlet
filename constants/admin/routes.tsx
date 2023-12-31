@@ -49,7 +49,7 @@ export const educationConfig: RouterConfigData[] = [
     ml: '50px',
   },
   {
-    id: 'notary',
+    id: 'notary-background',
     title: 'Notary',
     type: 'item',
     icon: <IoDocumentsSharp />,
@@ -97,7 +97,7 @@ export const businessConfig: RouterConfigData[] = [
     ml: '50px',
   },
   {
-    id: 'notary',
+    id: 'notary-background',
     title: 'Notary',
     type: 'item',
     icon: <IoDocumentsSharp />,

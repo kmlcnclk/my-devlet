@@ -28,7 +28,7 @@ const adminSchema = new mongoose.Schema(
     role: {
       type: String,
       required: true,
-      enum: ['government', 'school', 'bank', 'hospital'],
+      enum: ['government', 'school', 'bank', 'hospital', 'notary'],
     },
     resetPasswordToken: {
       type: String,

@@ -79,7 +79,7 @@ export const routesConfig: RouterConfigData[] = [
     children: [],
   },
   {
-    id: 'notary',
+    id: 'notary-background',
     title: 'Notary',
     type: 'item',
     icon: <IoDocumentsSharp />,
