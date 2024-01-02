@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import NotaryInfos from './NotaryInfos';
+import TaxDebtInfos from './TaxDebtInfos';
 import {
   Button,
   Paper,
@@ -15,9 +15,9 @@ import {
 } from '@mui/material';
 import { toast } from 'react-toastify';
 
-function Notary() {
+function TaxDebt() {
   const [userId, setUserId] = useState<string>('');
-  const [notaryInfos, setNotaryInfos] = useState<any>([]);
+  const [taxDebtInfos, setTaxDebtInfos] = useState<any>([]);
   const [isUserSelected, setIsUserSelected] = useState<boolean>(false);
 
   return (
@@ -109,7 +109,7 @@ function Notary() {
           Select
         </Button>
       </Box>
-      {notaryInfos.length > 0 ? (
+      {taxDebtInfos.length > 0 ? (
         <TableContainer
           component={Paper}
           sx={{
@@ -118,7 +118,7 @@ function Notary() {
           }}
         >
           <Table
-            aria-label="Notary Info Table"
+            aria-label="TaxDebt Info Table"
             sx={{
               minWidth: 650,
             }}
@@ -126,34 +126,38 @@ function Notary() {
             <TableHead>
               <TableRow>
                 <TableCell>
-                  <strong>Notary Name</strong>
+                  <strong>Taxpayer</strong>
                 </TableCell>
                 <TableCell>
-                  <strong>Title</strong>
+                  <strong>Debt Amount</strong>
                 </TableCell>
                 <TableCell>
-                  <strong>Description</strong>
+                  <strong>Expiry Date</strong>
                 </TableCell>
                 <TableCell>
-                  <strong>Type of Document</strong>
+                  <strong>Type of Tax</strong>
                 </TableCell>
                 <TableCell>
-                  <strong>Parties Involved</strong>
+                  <strong>Is Paid</strong>
                 </TableCell>
                 <TableCell>
-                  <strong>Date</strong>
+                  <strong>Payment Date</strong>
+                </TableCell>
+                <TableCell>
+                  <strong>Payment Amount</strong>
                 </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {notaryInfos.map((notary: any, index: any) => (
+              {taxDebtInfos.map((taxDebt: any, index: any) => (
                 <TableRow key={index}>
-                  <TableCell>{notary.notaryName}</TableCell>
-                  <TableCell>{notary.title}</TableCell>
-                  <TableCell>{notary.description}</TableCell>
-                  <TableCell>{notary.typeOfDocument}</TableCell>
-                  <TableCell>{notary.partiesInvolved}</TableCell>
-                  <TableCell>{notary.date}</TableCell>
+                  <TableCell>{taxDebt.taxpayer}</TableCell>
+                  <TableCell>{taxDebt.debtAmount}</TableCell>
+                  <TableCell>{taxDebt.expiryDate}</TableCell>
+                  <TableCell>{taxDebt.typeOfTax}</TableCell>
+                  <TableCell>{taxDebt.isPaid.toString()}</TableCell>
+                  <TableCell>{taxDebt.paymentDate}</TableCell>
+                  <TableCell>{taxDebt.paymentAmount}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -161,11 +165,11 @@ function Notary() {
         </TableContainer>
       ) : null}
 
-      <NotaryInfos
-        {...{ notaryInfos, setNotaryInfos, userId, isUserSelected }}
+      <TaxDebtInfos
+        {...{ taxDebtInfos, setTaxDebtInfos, userId, isUserSelected }}
       />
     </Box>
   );
 }
 
-export default Notary;
+export default TaxDebt;

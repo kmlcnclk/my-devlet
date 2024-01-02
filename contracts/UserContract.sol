@@ -43,6 +43,16 @@ contract UserContract {
         string partiesInvolved;
     }
 
+    struct TaxDebtInfo {
+        string taxpayer;
+        uint256 debtAmount;
+        uint256 expiryDate;
+        string typeOfTax;
+        bool isPaid;
+        uint256 paymentDate;
+        uint256 paymentAmount;
+    }
+
     struct UserEducation {
         EducationInfo[] educationInfos;
         string ipfsHash;
@@ -63,10 +73,16 @@ contract UserContract {
         string ipfsHash;
     }
 
+    struct UserTaxDebt {
+        TaxDebtInfo[] taxDebtInfos;
+        string ipfsHash;
+    }
+
     mapping(string => UserEducation) private educationRecords;
     mapping(string => UserBank) private bankRecords;
     mapping(string => UserHospital) private hospitalRecords;
     mapping(string => UserNotary) private notaryRecords;
+    mapping(string => UserTaxDebt) private taxDebtRecords;
 
     mapping(string => UserData) users;
 
@@ -98,6 +114,12 @@ contract UserContract {
     event UserNotaryUpdated(
         string indexed userId,
         NotaryInfo[] notaryInfos,
+        string ipfsHash
+    );
+
+    event UserTaxDebtUpdated(
+        string indexed userId,
+        TaxDebtInfo[] taxDebtInfos,
         string ipfsHash
     );
 
@@ -395,5 +417,72 @@ contract UserContract {
         string memory userId
     ) public view returns (string memory) {
         return notaryRecords[userId].ipfsHash;
+    }
+
+    function setTaxDebtRecord(
+        string memory userId,
+        string[] memory taxpayers,
+        uint256[] memory debtAmounts,
+        uint256[] memory expiryDates,
+        string[] memory typeOfTaxs,
+        bool[] memory isPaids,
+        uint256[] memory paymentDates,
+        uint256[] memory paymentAmounts,
+        string memory ipfsHash
+    ) public {
+        require(
+            taxpayers.length == debtAmounts.length &&
+                debtAmounts.length == expiryDates.length &&
+                expiryDates.length == typeOfTaxs.length &&
+                typeOfTaxs.length == isPaids.length &&
+                isPaids.length == paymentDates.length &&
+                paymentDates.length == paymentAmounts.length,
+            "Input arrays must have the same length"
+        );
+
+        for (uint256 i = 0; i < taxpayers.length; i++) {
+            TaxDebtInfo memory newTaxDebt = TaxDebtInfo({
+                taxpayer: taxpayers[i],
+                debtAmount: debtAmounts[i],
+                expiryDate: expiryDates[i],
+                typeOfTax: typeOfTaxs[i],
+                isPaid: isPaids[i],
+                paymentDate: paymentDates[i],
+                paymentAmount: paymentAmounts[i]
+            });
+
+            taxDebtRecords[userId].taxDebtInfos.push(newTaxDebt);
+        }
+
+        taxDebtRecords[userId].ipfsHash = ipfsHash;
+
+        emit UserTaxDebtUpdated(
+            userId,
+            taxDebtRecords[userId].taxDebtInfos,
+            ipfsHash
+        );
+    }
+
+    function getTaxDebtRecords(
+        string memory userId
+    ) public view returns (TaxDebtInfo[] memory) {
+        return taxDebtRecords[userId].taxDebtInfos;
+    }
+
+    function setTaxDebtIPFSHash(
+        string memory userId,
+        string memory ipfsHash
+    ) public {
+        UserTaxDebt storage userTaxDebt = taxDebtRecords[userId];
+
+        userTaxDebt.ipfsHash = ipfsHash;
+
+        emit UserTaxDebtUpdated(userId, userTaxDebt.taxDebtInfos, ipfsHash);
+    }
+
+    function getTaxDebtIPFSHash(
+        string memory userId
+    ) public view returns (string memory) {
+        return taxDebtRecords[userId].ipfsHash;
     }
 }

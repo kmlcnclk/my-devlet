@@ -9,6 +9,7 @@ import CreateIcon from '@mui/icons-material/Create';
 import BusinessIcon from '@mui/icons-material/Business';
 import PermIdentityIcon from '@mui/icons-material/PermIdentity';
 import { IoDocumentsSharp } from 'react-icons/io5';
+import { FaMoneyBills } from 'react-icons/fa6';
 
 export interface RouterConfigData {
   id: string;
@@ -58,6 +59,15 @@ export const educationConfig: RouterConfigData[] = [
     ml: '50px',
   },
   {
+    id: 'tax-debt-background',
+    title: 'Tax Debt',
+    type: 'item',
+    icon: <FaMoneyBills />,
+    url: '/admin/dashboard/tax-debt',
+    children: [],
+    ml: '50px',
+  },
+  {
     id: 'smart-contract',
     title: 'Smart Contract',
     type: 'item',
@@ -102,6 +112,15 @@ export const businessConfig: RouterConfigData[] = [
     type: 'item',
     icon: <IoDocumentsSharp />,
     url: '/admin/dashboard/add-blockchain/notary',
+    children: [],
+    ml: '50px',
+  },
+  {
+    id: 'tax-debt-background',
+    title: 'Tax Debt',
+    type: 'item',
+    icon: <FaMoneyBills />,
+    url: '/admin/dashboard/add-blockchain/tax-debt',
     children: [],
     ml: '50px',
   },

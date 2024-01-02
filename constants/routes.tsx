@@ -10,6 +10,7 @@ import { FaFileContract } from 'react-icons/fa';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
 import { IoDocumentsSharp } from 'react-icons/io5';
+import { FaMoneyBills } from 'react-icons/fa6';
 
 export interface RouterConfigData {
   id: string;
@@ -84,6 +85,14 @@ export const routesConfig: RouterConfigData[] = [
     type: 'item',
     icon: <IoDocumentsSharp />,
     url: '/dashboard/notary',
+    children: [],
+  },
+  {
+    id: 'tax-debt-background',
+    title: 'Tax Debt',
+    type: 'item',
+    icon: <FaMoneyBills />,
+    url: '/dashboard/tax-debt',
     children: [],
   },
   {
