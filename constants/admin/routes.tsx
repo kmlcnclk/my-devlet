@@ -10,6 +10,7 @@ import BusinessIcon from '@mui/icons-material/Business';
 import PermIdentityIcon from '@mui/icons-material/PermIdentity';
 import { IoDocumentsSharp } from 'react-icons/io5';
 import { FaMoneyBills } from 'react-icons/fa6';
+import GavelIcon from '@mui/icons-material/Gavel';
 
 export interface RouterConfigData {
   id: string;
@@ -68,6 +69,15 @@ export const educationConfig: RouterConfigData[] = [
     ml: '50px',
   },
   {
+    id: 'criminal-record-background',
+    title: 'Criminal Record',
+    type: 'item',
+    icon: <GavelIcon />,
+    url: '/admin/dashboard/criminal-record',
+    children: [],
+    ml: '50px',
+  },
+  {
     id: 'smart-contract',
     title: 'Smart Contract',
     type: 'item',
@@ -121,6 +131,15 @@ export const businessConfig: RouterConfigData[] = [
     type: 'item',
     icon: <FaMoneyBills />,
     url: '/admin/dashboard/add-blockchain/tax-debt',
+    children: [],
+    ml: '50px',
+  },
+  {
+    id: 'criminal-record-background',
+    title: 'Criminal Record',
+    type: 'item',
+    icon: <GavelIcon />,
+    url: '/admin/dashboard/add-blockchain/criminal-record',
     children: [],
     ml: '50px',
   },

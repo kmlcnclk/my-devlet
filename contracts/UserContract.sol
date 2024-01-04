@@ -53,6 +53,18 @@ contract UserContract {
         uint256 paymentAmount;
     }
 
+    struct CriminalRecordInfo {
+        string caseNumber;
+        string court;
+        string prosecutor;
+        string defendant;
+        uint256 incidentDate;
+        uint256 trialDate;
+        string trialOutcome;
+        string evidence;
+        string lawyers;
+    }
+
     struct UserEducation {
         EducationInfo[] educationInfos;
         string ipfsHash;
@@ -78,11 +90,17 @@ contract UserContract {
         string ipfsHash;
     }
 
+    struct UserCriminalRecord {
+        CriminalRecordInfo[] criminalRecordInfos;
+        string ipfsHash;
+    }
+
     mapping(string => UserEducation) private educationRecords;
     mapping(string => UserBank) private bankRecords;
     mapping(string => UserHospital) private hospitalRecords;
     mapping(string => UserNotary) private notaryRecords;
     mapping(string => UserTaxDebt) private taxDebtRecords;
+    mapping(string => UserCriminalRecord) private criminalRecordRecords;
 
     mapping(string => UserData) users;
 
@@ -120,6 +138,12 @@ contract UserContract {
     event UserTaxDebtUpdated(
         string indexed userId,
         TaxDebtInfo[] taxDebtInfos,
+        string ipfsHash
+    );
+
+    event UserCriminalRecordUpdated(
+        string indexed userId,
+        CriminalRecordInfo[] criminalRecordInfos,
         string ipfsHash
     );
 
@@ -484,5 +508,86 @@ contract UserContract {
         string memory userId
     ) public view returns (string memory) {
         return taxDebtRecords[userId].ipfsHash;
+    }
+
+    function setCriminalRecordRecord(
+        string memory userId,
+        string[] memory caseNumbers,
+        string[] memory courts,
+        string[] memory prosecutors,
+        string[] memory defendants,
+        uint256[] memory incidentDates,
+        uint256[] memory trialDates,
+        string[] memory trialOutcomes,
+        string[] memory evidences,
+        string[] memory lawyerss,
+        string memory ipfsHash
+    ) public {
+        require(
+            caseNumbers.length == courts.length &&
+                courts.length == prosecutors.length &&
+                prosecutors.length == defendants.length &&
+                defendants.length == incidentDates.length &&
+                incidentDates.length == trialDates.length &&
+                trialDates.length == trialOutcomes.length &&
+                trialOutcomes.length == evidences.length &&
+                evidences.length == lawyerss.length,
+            "Input arrays must have the same length"
+        );
+
+        for (uint256 i = 0; i < caseNumbers.length; i++) {
+            CriminalRecordInfo memory newcriminalRecord = CriminalRecordInfo({
+                caseNumber: caseNumbers[i],
+                court: courts[i],
+                prosecutor: prosecutors[i],
+                defendant: defendants[i],
+                incidentDate: incidentDates[i],
+                trialDate: trialDates[i],
+                trialOutcome: trialOutcomes[i],
+                evidence: evidences[i],
+                lawyers: lawyerss[i]
+            });
+
+            criminalRecordRecords[userId].criminalRecordInfos.push(
+                newcriminalRecord
+            );
+        }
+
+        criminalRecordRecords[userId].ipfsHash = ipfsHash;
+
+        emit UserCriminalRecordUpdated(
+            userId,
+            criminalRecordRecords[userId].criminalRecordInfos,
+            ipfsHash
+        );
+    }
+
+    function getCriminalRecordRecords(
+        string memory userId
+    ) public view returns (CriminalRecordInfo[] memory) {
+        return criminalRecordRecords[userId].criminalRecordInfos;
+    }
+
+    function setCriminalRecordIPFSHash(
+        string memory userId,
+        string memory ipfsHash
+    ) public {
+        UserCriminalRecord storage userCriminalRecord = criminalRecordRecords[
+            userId
+        ];
+
+        userCriminalRecord.ipfsHash = ipfsHash;
+
+        emit UserCriminalRecordUpdated(
+            userId,
+            userCriminalRecord.criminalRecordInfos,
+            ipfsHash
+        );
+    }
+
+    function getCriminalRecordIPFSHash(
+        string memory userId
+    ) public view returns (string memory) {
+        return criminalRecordRecords[userId].ipfsHash;
     }
 }
