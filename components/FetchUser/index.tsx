@@ -38,7 +38,7 @@ const FetchUser: React.FC<FetchUserProps> = ({ children }) => {
       ) {
         deleteAccessTokenFromLocalStorage();
         deleteRefreshTokenFromLocalStorage();
-        router.push('/signin');
+        router.push('/sign-in');
       } else {
         toast.error(user.error);
       }

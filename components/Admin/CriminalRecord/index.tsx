@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import NotaryInfos from './NotaryInfos';
+import CriminalRecordInfos from './CriminalRecordInfos';
 import {
   Button,
   Paper,
@@ -15,9 +15,9 @@ import {
 } from '@mui/material';
 import { toast } from 'react-toastify';
 
-function Notary() {
+function CriminalRecord() {
   const [userId, setUserId] = useState<string>('');
-  const [notaryInfos, setNotaryInfos] = useState<any>([]);
+  const [criminalRecordInfos, setCriminalRecordInfos] = useState<any>([]);
   const [isUserSelected, setIsUserSelected] = useState<boolean>(false);
 
   return (
@@ -109,7 +109,7 @@ function Notary() {
           Select
         </Button>
       </Box>
-      {notaryInfos.length > 0 ? (
+      {criminalRecordInfos.length > 0 ? (
         <TableContainer
           component={Paper}
           sx={{
@@ -118,7 +118,7 @@ function Notary() {
           }}
         >
           <Table
-            aria-label="Notary Info Table"
+            aria-label="Criminal Record Info Table"
             sx={{
               minWidth: 650,
             }}
@@ -126,34 +126,38 @@ function Notary() {
             <TableHead>
               <TableRow>
                 <TableCell>
-                  <strong>Notary Name</strong>
+                  <strong>Case Number</strong>
                 </TableCell>
                 <TableCell>
-                  <strong>Title</strong>
+                  <strong>Court</strong>
                 </TableCell>
                 <TableCell>
-                  <strong>Description</strong>
+                  <strong>Prosecutor</strong>
                 </TableCell>
                 <TableCell>
-                  <strong>Type of Document</strong>
+                  <strong>Incident Date</strong>
                 </TableCell>
                 <TableCell>
-                  <strong>Parties Involved</strong>
+                  <strong>Trial Outcome</strong>
                 </TableCell>
                 <TableCell>
-                  <strong>Date</strong>
+                  <strong>Evidence</strong>
+                </TableCell>
+                <TableCell>
+                  <strong>Lawyers</strong>
                 </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {notaryInfos.map((notary: any, index: any) => (
+              {criminalRecordInfos.map((criminalRecord: any, index: any) => (
                 <TableRow key={index}>
-                  <TableCell>{notary.notaryName}</TableCell>
-                  <TableCell>{notary.title}</TableCell>
-                  <TableCell>{notary.description}</TableCell>
-                  <TableCell>{notary.typeOfDocument}</TableCell>
-                  <TableCell>{notary.partiesInvolved}</TableCell>
-                  <TableCell>{notary.date}</TableCell>
+                  <TableCell>{criminalRecord.caseNumber}</TableCell>
+                  <TableCell>{criminalRecord.court}</TableCell>
+                  <TableCell>{criminalRecord.prosecutor}</TableCell>
+                  <TableCell>{criminalRecord.incidentDate}</TableCell>
+                  <TableCell>{criminalRecord.trialOutcome}</TableCell>
+                  <TableCell>{criminalRecord.evidence}</TableCell>
+                  <TableCell>{criminalRecord.lawyers}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -161,11 +165,16 @@ function Notary() {
         </TableContainer>
       ) : null}
 
-      <NotaryInfos
-        {...{ notaryInfos, setNotaryInfos, userId, isUserSelected }}
+      <CriminalRecordInfos
+        {...{
+          criminalRecordInfos,
+          setCriminalRecordInfos,
+          userId,
+          isUserSelected,
+        }}
       />
     </Box>
   );
 }
 
-export default Notary;
+export default CriminalRecord;

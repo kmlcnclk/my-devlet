@@ -143,6 +143,78 @@ class Web3Service {
     await this._userContract.getNotaryRecords(from, userId);
   }
 
+  async setTaxDebtRecord(
+    from: string,
+    userId: string,
+    taxpayers: string[],
+    debtAmounts: number[],
+    expiryDates: number[],
+    typeOfTaxs: string[],
+    isPaids: boolean[],
+    paymentDates: number[],
+    paymentAmounts: number[],
+    ipfsHash: string
+  ): Promise<void> {
+    try {
+      await this._userContract.setTaxDebtRecord(
+        from,
+        userId,
+        taxpayers,
+        debtAmounts,
+        expiryDates,
+        typeOfTaxs,
+        isPaids,
+        paymentDates,
+        paymentAmounts,
+        ipfsHash
+      );
+    } catch (err: any) {
+      console.log(err);
+    }
+  }
+
+  async getTaxDebtRecords(from: string, userId: string) {
+    await this._userContract.getTaxDebtRecords(from, userId);
+  }
+
+  async setCriminalRecordRecord(
+    from: string,
+    userId: string,
+    caseNumbers: string[],
+    courts: string[],
+    prosecutors: string[],
+    defendants: string[],
+    incidentDates: number[],
+    trialDates: number[],
+    trialOutcomes: string[],
+    evidences: string[],
+    lawyerss: string[],
+    ipfsHash: string
+  ): Promise<void> {
+    try {
+      await this._userContract.setCriminalRecordRecord(
+        from,
+        userId,
+        caseNumbers,
+        courts,
+        prosecutors,
+        defendants,
+        incidentDates,
+        trialDates,
+        trialOutcomes,
+        evidences,
+        lawyerss,
+        ipfsHash
+      );
+    } catch (err: any) {
+      console.log(err);
+    }
+  }
+
+  async getCriminalRecordRecords(from: string, userId: string) {
+    await this._userContract.getCriminalRecordRecords(from, userId);
+  }
+
   async setUserData(
     from: string,
     userId: string,
