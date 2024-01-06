@@ -8,6 +8,8 @@ interface Props {
   setHospitalInfos: Function;
   userId: string;
   isUserSelected: boolean;
+  setFile: Function;
+  setRatio: Function;
 }
 
 const HospitalInfos: React.FC<Props> = ({
@@ -15,6 +17,8 @@ const HospitalInfos: React.FC<Props> = ({
   setHospitalInfos,
   userId,
   isUserSelected,
+  setFile,
+  setRatio,
 }: Props) => {
   const [hospitalName, setHospitalName] = useState('');
   const [doctorName, setDoctorName] = useState('');
@@ -88,6 +92,9 @@ const HospitalInfos: React.FC<Props> = ({
         setDiagnosticMethods('');
         setTreatmentOptions('');
         setImportantInformation('');
+        setFile(null);
+        setHospitalInfos([]);
+        setRatio(0);
       } else {
         toast.info('You have to enter at least one school info');
       }

@@ -15,6 +15,8 @@ interface Props {
   setCriminalRecordInfos: Function;
   userId: string;
   isUserSelected: boolean;
+  setFile: Function;
+  setRatio: Function;
 }
 
 const CriminalRecordInfos: React.FC<Props> = ({
@@ -22,6 +24,8 @@ const CriminalRecordInfos: React.FC<Props> = ({
   setCriminalRecordInfos,
   userId,
   isUserSelected,
+  setFile,
+  setRatio,
 }: Props) => {
   const [caseNumber, setCaseNumber] = useState('');
   const [court, setCourt] = useState('');
@@ -59,7 +63,9 @@ const CriminalRecordInfos: React.FC<Props> = ({
           setIsLoading(false);
           toast.success(data.message);
         } else {
-          if (data?.error?.message === 'User has already tax debt infos') {
+          if (
+            data?.error?.message === 'User has already criminal record infos'
+          ) {
             const criminalRecordData = {
               userId,
               criminalRecordInfos: criminalRecordInfos,
@@ -99,6 +105,9 @@ const CriminalRecordInfos: React.FC<Props> = ({
         setTrialOutcome('');
         setEvidence('');
         setLawyers('');
+        setFile(null);
+        setCriminalRecordInfos([]);
+        setRatio(0);
       } else {
         toast.info('You have to enter at least one criminalRecord info');
       }

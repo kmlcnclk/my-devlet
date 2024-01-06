@@ -15,6 +15,8 @@ interface Props {
   setTaxDebtInfos: Function;
   userId: string;
   isUserSelected: boolean;
+  setFile: Function;
+  setRatio: Function;
 }
 
 const TaxDebtInfos: React.FC<Props> = ({
@@ -22,6 +24,8 @@ const TaxDebtInfos: React.FC<Props> = ({
   setTaxDebtInfos,
   userId,
   isUserSelected,
+  setFile,
+  setRatio,
 }: Props) => {
   const [taxpayer, setTaxpayer] = useState('');
   const [debtAmount, setDebtAmount] = useState(0);
@@ -95,6 +99,9 @@ const TaxDebtInfos: React.FC<Props> = ({
         setIsPaid(false);
         setPaymentAmount(0);
         setPaymentDate('');
+        setFile(null);
+        setTaxDebtInfos([]);
+        setRatio(0);
       } else {
         toast.info('You have to enter at least one taxDebt info');
       }

@@ -8,6 +8,8 @@ interface Props {
   setSchoolInfos: Function;
   userId: string;
   isUserSelected: boolean;
+  setFile: Function;
+  setRatio: Function;
 }
 
 const SchoolInfos: React.FC<Props> = ({
@@ -15,6 +17,8 @@ const SchoolInfos: React.FC<Props> = ({
   setSchoolInfos,
   userId,
   isUserSelected,
+  setFile,
+  setRatio,
 }: Props) => {
   const [schoolName, setSchoolName] = useState('');
   const [degree, setDegree] = useState('');
@@ -83,6 +87,9 @@ const SchoolInfos: React.FC<Props> = ({
         setDegree('');
         setStartedYear(0);
         setGraduationYear(0);
+        setFile(null);
+        setSchoolInfos([]);
+        setRatio(0);
       } else {
         toast.info('You have to enter at least one school info');
       }
