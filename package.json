@@ -46,6 +46,7 @@
     "truffle": "^5.11.5",
     "uuid": "^9.0.1",
     "web3": "^4.1.1-dev.86f0cdb.0",
+    "xlsx": "^0.18.5",
     "zod": "^3.22.2"
   },
   "devDependencies": {

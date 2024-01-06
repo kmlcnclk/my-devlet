@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -14,12 +14,28 @@ import {
   TableRow,
 } from '@mui/material';
 import { toast } from 'react-toastify';
+import { File } from 'buffer';
+import Upload from '../Upload';
+import { createXLSXFileForNotary } from '@/lib/fileCreators';
+import Fonts from '@/constants/fonts';
 
 function Notary() {
   const [userId, setUserId] = useState<string>('');
   const [notaryInfos, setNotaryInfos] = useState<any>([]);
   const [isUserSelected, setIsUserSelected] = useState<boolean>(false);
 
+  const [file, setFile] = useState<File | null>(null);
+
+  const [ratio, setRatio] = useState<number>(0);
+
+  const [fileURL, setFileURL] = useState<string>('');
+  useEffect(() => {
+    if (typeof window != 'undefined') {
+      const { url } = createXLSXFileForNotary();
+
+      setFileURL(url);
+    }
+  }, []);
   return (
     <Box
       id="title-inputs"
@@ -161,8 +177,95 @@ function Notary() {
         </TableContainer>
       ) : null}
 
+      <Box
+        sx={{
+          height: '130px',
+          bgcolor: '#f3f3f3',
+          width: '100%',
+          display: 'flex',
+          justifyContent: 'space-between',
+          p: '20px',
+          alignItems: 'center',
+          flexDirection: 'column',
+          borderRadius: '20px',
+          mt: '20px',
+        }}
+      >
+        <Typography
+          sx={{
+            color: '#333',
+            fontSize: { xs: '16px', md: '18px' },
+            fontWeight: Fonts.REGULAR,
+          }}
+        >
+          Excel File
+        </Typography>
+        <a
+          href={fileURL}
+          download="my-devlet-sample.xlsx"
+          style={{
+            textDecoration: 'none',
+          }}
+        >
+          <Button
+            sx={{
+              color: '#FFFDFF',
+              fontWeight: '500',
+              height: '40px',
+              display: 'inline',
+              borderRadius: '15px',
+              bgcolor: '#317DED',
+              border: '2px solid #317DED',
+              boxShadow: '0px 4px 10px 0px #00000040',
+              '&:hover': {
+                scale: '1.02',
+                transition: 'transform 0.3s ease',
+              },
+            }}
+            variant="contained"
+          >
+            <Typography
+              sx={{
+                color: '#f3f3f3',
+                fontSize: { xs: '11px', sm: '13px' },
+                fontWeight: Fonts.REGULAR,
+              }}
+            >
+              Download Your Sample File
+            </Typography>
+          </Button>
+        </a>
+      </Box>
+      <Upload
+        {...{
+          file,
+          setFile,
+          setRatio,
+          ratio,
+        }}
+        whichProperty="notary"
+        setFileData={setNotaryInfos}
+      />
+      <Typography
+        sx={{
+          color: '#666',
+          fontWeight: 600,
+          fontSize: '18px',
+          mt: { xs: '14px', md: '30px' },
+        }}
+      >
+        or
+      </Typography>
+
       <NotaryInfos
-        {...{ notaryInfos, setNotaryInfos, userId, isUserSelected }}
+        {...{
+          notaryInfos,
+          setNotaryInfos,
+          userId,
+          isUserSelected,
+          setFile,
+          setRatio,
+        }}
       />
     </Box>
   );

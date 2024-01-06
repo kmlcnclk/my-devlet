@@ -15,6 +15,8 @@ interface Props {
   setBankInfos: Function;
   userId: string;
   isUserSelected: boolean;
+  setFile: Function;
+  setRatio: Function;
 }
 
 const BankInfos: React.FC<Props> = ({
@@ -22,6 +24,8 @@ const BankInfos: React.FC<Props> = ({
   setBankInfos,
   userId,
   isUserSelected,
+  setFile,
+  setRatio,
 }: Props) => {
   const [bankName, setBankName] = useState('');
   const [accountBalance, setAccountBalance] = useState(0);
@@ -89,6 +93,9 @@ const BankInfos: React.FC<Props> = ({
         setAccountBalance(0);
         setAccountNumber('');
         setAccountType('');
+        setFile(null);
+        setBankInfos([]);
+        setRatio(0);
       } else {
         toast.info('You have to enter at least one school info');
       }

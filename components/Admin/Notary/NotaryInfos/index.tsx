@@ -8,6 +8,8 @@ interface Props {
   setNotaryInfos: Function;
   userId: string;
   isUserSelected: boolean;
+  setFile: Function;
+  setRatio: Function;
 }
 
 const NotaryInfos: React.FC<Props> = ({
@@ -15,6 +17,8 @@ const NotaryInfos: React.FC<Props> = ({
   setNotaryInfos,
   userId,
   isUserSelected,
+  setFile,
+  setRatio,
 }: Props) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -84,6 +88,9 @@ const NotaryInfos: React.FC<Props> = ({
         setDescription('');
         setPartiesInvolved('');
         setTypeOfDocument('');
+        setFile(null);
+        setNotaryInfos([]);
+        setRatio(0);
       } else {
         toast.info('You have to enter at least one notary info');
       }
