@@ -4,7 +4,7 @@ export interface ISmartContract {
   userId: UserDocument['_id'];
   name: string;
   network: string;
-  contractAddressOfUser: string;
+  contractAddressOfUser: string[];
   userWallet: string;
 }
 

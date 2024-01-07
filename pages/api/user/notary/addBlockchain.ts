@@ -44,7 +44,7 @@ async function handler(req: NextApiRequestWithUser, res: NextApiResponse) {
 
       const notaryService = new Web3Service(
         smartContract.network,
-        smartContract.contractAddressOfUser,
+        smartContract.contractAddressOfUser[0],
         decryptedPrivateKey,
         user.address
       );

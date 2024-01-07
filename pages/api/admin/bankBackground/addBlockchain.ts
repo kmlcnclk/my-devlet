@@ -57,7 +57,7 @@ async function handler(req: NextApiRequestWithUser, res: NextApiResponse) {
       // TODO: user address must be admin
       const bankBackgroundService = new Web3Service(
         smartContract.network,
-        smartContract.contractAddressOfUser,
+        smartContract.contractAddressOfUser[0],
         decryptedPrivateKey,
         user.address ?? ''
       );

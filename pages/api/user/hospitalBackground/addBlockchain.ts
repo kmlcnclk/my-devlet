@@ -47,7 +47,7 @@ async function handler(req: NextApiRequestWithUser, res: NextApiResponse) {
 
       const hospitalBackgroundService = new Web3Service(
         smartContract.network,
-        smartContract.contractAddressOfUser,
+        smartContract.contractAddressOfUser[0],
         decryptedPrivateKey,
         user.address
       );

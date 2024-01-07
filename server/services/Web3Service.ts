@@ -214,6 +214,39 @@ class Web3Service {
   async getCriminalRecordRecords(from: string, userId: string) {
     await this._userContract.getCriminalRecordRecords(from, userId);
   }
+  async setAssetRecord(
+    from: string,
+    userId: string,
+    names: string[],
+    typeOfAssets: string[],
+    descriptions: string[],
+    locations: string[],
+    purchaseDates: number[],
+    purchasePrices: number[],
+    previousOwners: string[],
+    ipfsHash: string
+  ): Promise<void> {
+    try {
+      await this._userContract.setAssetRecord(
+        from,
+        userId,
+        names,
+        typeOfAssets,
+        descriptions,
+        locations,
+        purchaseDates,
+        purchasePrices,
+        previousOwners,
+        ipfsHash
+      );
+    } catch (err: any) {
+      console.log(err);
+    }
+  }
+
+  async getAssetRecords(from: string, userId: string) {
+    await this._userContract.getAssetRecords(from, userId);
+  }
 
   async setUserData(
     from: string,

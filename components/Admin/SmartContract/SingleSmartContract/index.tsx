@@ -227,11 +227,11 @@ const SingleSmartContract: React.FC<Props> = ({ smartContract }: Props) => {
                     <Link
                       href={
                         smartContract.network == 'Binance Smart Chain'
-                          ? `https://testnet.bscscan.com/address/${smartContract.contractAddressOfUser}`
+                          ? `https://testnet.bscscan.com/address/${smartContract.contractAddressOfUser[0]}`
                           : smartContract.network === 'ethereum'
-                          ? `https://sepolia.etherscan.io/address/${smartContract.contractAddressOfUser}`
+                          ? `https://sepolia.etherscan.io/address/${smartContract.contractAddressOfUser[0]}`
                           : smartContract.network === 'polygon'
-                          ? `https://mumbai.polygonscan.com/address/${smartContract.contractAddressOfUser}`
+                          ? `https://mumbai.polygonscan.com/address/${smartContract.contractAddressOfUser[0]}`
                           : ''
                       }
                       target="_blank"
