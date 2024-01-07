@@ -49,7 +49,8 @@ async function handler(req: NextApiRequestWithUser, res: NextApiResponse) {
         smartContract.network,
         smartContract.contractAddressOfUser[1],
         decryptedPrivateKey,
-        user.address
+        user.address,
+        '1'
       );
 
       const names = assetBackground.assetInfos.map((item) => item.name);

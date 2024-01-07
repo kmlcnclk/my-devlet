@@ -41,7 +41,7 @@ async function handler(req: NextApiRequestWithUser, res: NextApiResponse) {
 
       // TODO: user private key must be admin
       const decryptedPrivateKey =
-        await UserService.decryptHashedWalletPrivateKey(user.privateKey ?? '');
+        await UserService.decryptHashedWalletPrivateKey(admin.privateKey ?? '');
 
       const taxDebt: TaxDebtDocument = (await taxDebtModel.findById(
         addBlockchainData.id
@@ -57,7 +57,8 @@ async function handler(req: NextApiRequestWithUser, res: NextApiResponse) {
         smartContract.network,
         smartContract.contractAddressOfUser[0],
         decryptedPrivateKey,
-        user.address ?? ''
+        admin.address ?? '',
+        '0'
       );
 
       const taxpayers = taxDebt.taxDebtInfos.map((item) => item.taxpayer);
@@ -75,7 +76,7 @@ async function handler(req: NextApiRequestWithUser, res: NextApiResponse) {
       );
 
       await taxDebtService.setTaxDebtRecord(
-        user.address,
+        admin.address as string,
         user.uniqueID,
         taxpayers,
         debtAmounts,

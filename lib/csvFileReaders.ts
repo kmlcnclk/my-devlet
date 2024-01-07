@@ -331,7 +331,7 @@ export const readCSVFileForTaxDebt = (file: any, setFileData: Function) => {
         } else if (headers[j] === 'Type of Tax') {
           row.typeOfTax = values[j];
         } else if (headers[j] === 'Is Paid') {
-          row.isPaid = values[j];
+          row.isPaid = Boolean(values[j]);
         } else if (headers[j] === 'Payment Date') {
           row.paymentDate = values[j];
         } else if (headers[j] === 'Payment Amount') {

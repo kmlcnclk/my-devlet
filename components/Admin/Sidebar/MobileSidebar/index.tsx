@@ -54,13 +54,42 @@ function MobileSidebar({
               <AppScrollbar
                 sx={{
                   py: 2,
-                  height: 'calc(100vh) !important',
+                  height: 'calc(100vh - 70px) !important',
                 }}
               >
                 <VerticalNav />
               </AppScrollbar>
             </MainSidebar>
           </SidebarWrapper>
+          <Button
+            type="button"
+            onClick={sendToken}
+            id="buy-token"
+            sx={{
+              position: 'fixed',
+              bottom: 10,
+              left: 10,
+              zIndex: 1300,
+              background: 'linear-gradient(90deg, #2563eb 2.08%, #1e40af 100%)',
+              width: '260px',
+              height: '50px',
+              textTransform: 'initial',
+              borderRadius: '20px',
+              color: '#fff',
+              cursor: 'pointer',
+            }}
+          >
+            <Typography
+              className={inter.className}
+              sx={{
+                color: '#f3f3f3',
+                fontSize: '16px',
+                fontWeight: 600,
+              }}
+            >
+              Buy Token
+            </Typography>
+          </Button>
         </Drawer>
       </Box>
       <Box
@@ -76,13 +105,42 @@ function MobileSidebar({
             <AppScrollbar
               sx={{
                 py: 2,
-                height: 'calc(100vh) !important',
+                height: 'calc(100vh - 70px) !important',
               }}
             >
               <VerticalNav />
             </AppScrollbar>
           </MainSidebar>
         </SidebarWrapper>
+        <Button
+          type="button"
+          onClick={sendToken}
+          id="buy-token"
+          sx={{
+            position: 'fixed',
+            bottom: 10,
+            left: 10,
+            zIndex: 1300,
+            background: 'linear-gradient(90deg, #2563eb 2.08%, #1e40af 100%)',
+            width: '260px',
+            height: '50px',
+            textTransform: 'initial',
+            borderRadius: '20px',
+            color: '#fff',
+            cursor: 'pointer',
+          }}
+        >
+          <Typography
+            className={inter.className}
+            sx={{
+              color: '#f3f3f3',
+              fontSize: '16px',
+              fontWeight: 600,
+            }}
+          >
+            Buy Token
+          </Typography>
+        </Button>
       </Box>
     </>
   );

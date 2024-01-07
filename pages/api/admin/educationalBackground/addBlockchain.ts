@@ -42,7 +42,7 @@ async function handler(req: NextApiRequestWithUser, res: NextApiResponse) {
         );
       // TODO: user private key must be admin
       const decryptedPrivateKey =
-        await UserService.decryptHashedWalletPrivateKey(user.privateKey ?? '');
+        await UserService.decryptHashedWalletPrivateKey(admin.privateKey ?? '');
 
       const educationalBackground: EducationalBackgroundDocument =
         (await educationalBackgroundModel.findById(
@@ -59,7 +59,8 @@ async function handler(req: NextApiRequestWithUser, res: NextApiResponse) {
         smartContract.network,
         smartContract.contractAddressOfUser[0],
         decryptedPrivateKey,
-        user.address ?? ''
+        admin.address ?? '',
+        '0'
       );
 
       const schoolNames = educationalBackground.schoolInfos.map(
@@ -76,7 +77,7 @@ async function handler(req: NextApiRequestWithUser, res: NextApiResponse) {
       );
 
       await educationalBackgroundService.setEducationRecord(
-        user.address,
+        admin.address as string,
         user.uniqueID,
         schoolNames,
         degrees,

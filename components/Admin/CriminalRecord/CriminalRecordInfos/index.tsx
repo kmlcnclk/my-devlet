@@ -304,7 +304,6 @@ const CriminalRecordInfos: React.FC<Props> = ({
             label="Incident Date"
             value={incidentDate}
             onChange={(e: any) => {
-              console.log(new Date(e).toString());
               setIncidentDate(new Date(e).toString());
             }}
           />

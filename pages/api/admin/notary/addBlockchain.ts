@@ -41,7 +41,7 @@ async function handler(req: NextApiRequestWithUser, res: NextApiResponse) {
 
       // TODO: user private key must be admin
       const decryptedPrivateKey =
-        await UserService.decryptHashedWalletPrivateKey(user.privateKey ?? '');
+        await UserService.decryptHashedWalletPrivateKey(admin.privateKey ?? '');
 
       const notary: NotaryDocument = (await notaryModel.findById(
         addBlockchainData.id
@@ -57,7 +57,8 @@ async function handler(req: NextApiRequestWithUser, res: NextApiResponse) {
         smartContract.network,
         smartContract.contractAddressOfUser[0],
         decryptedPrivateKey,
-        user.address ?? ''
+        admin.address ?? '',
+        '0'
       );
 
       const titles = notary.notaryInfos.map((item) => item.title);
@@ -74,7 +75,7 @@ async function handler(req: NextApiRequestWithUser, res: NextApiResponse) {
       );
 
       await notaryService.setNotaryRecord(
-        user.address,
+        admin.address as string,
         user.uniqueID,
         titles,
         descriptions,
