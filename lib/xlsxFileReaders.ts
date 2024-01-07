@@ -14,8 +14,10 @@ export const readXLSXFileForEducation = (file: any, setFileData: Function) => {
     const extractedData = data.slice(1).map((row: any) => ({
       degree: row[headers.indexOf('Degree')]?.toString(),
       schoolName: row[headers.indexOf('School Name')]?.toString(),
-      startedYear: row[headers.indexOf('Started Year')]?.toString(),
-      graduationYear: row[headers.indexOf('Graduation Year')]?.toString(),
+      startedYear: Number(row[headers.indexOf('Started Year')]?.toString()),
+      graduationYear: Number(
+        row[headers.indexOf('Graduation Year')]?.toString()
+      ),
     }));
 
     const newED = extractedData.filter((data: any) => {
@@ -31,7 +33,6 @@ export const readXLSXFileForEducation = (file: any, setFileData: Function) => {
 
     setFileData((prev: any) => {
       if (prev.length > 0) {
-        console.log(prev);
         const updatedPrev = [...prev, ...newED];
         return updatedPrev;
       }
@@ -80,7 +81,6 @@ export const readXLSXFileForHospital = (file: any, setFileData: Function) => {
 
     setFileData((prev: any) => {
       if (prev.length > 0) {
-        console.log(prev);
         const updatedPrev = [...prev, ...newED];
         return updatedPrev;
       }
@@ -104,7 +104,9 @@ export const readXLSXFileForBank = (file: any, setFileData: Function) => {
 
     const extractedData = data.slice(1).map((row: any) => ({
       bankName: row[headers.indexOf('Bank Name')]?.toString(),
-      accountBalance: row[headers.indexOf('Account Balance')]?.toString(),
+      accountBalance: Number(
+        row[headers.indexOf('Account Balance')]?.toString()
+      ),
       accountNumber: row[headers.indexOf('Account Number')]?.toString(),
       accountType: row[headers.indexOf('Account Type')]?.toString(),
     }));
@@ -122,7 +124,6 @@ export const readXLSXFileForBank = (file: any, setFileData: Function) => {
 
     setFileData((prev: any) => {
       if (prev.length > 0) {
-        console.log(prev);
         const updatedPrev = [...prev, ...newED];
         return updatedPrev;
       }
@@ -177,7 +178,6 @@ export const readXLSXFileForCriminalRecord = (
 
     setFileData((prev: any) => {
       if (prev.length > 0) {
-        console.log(prev);
         const updatedPrev = [...prev, ...newED];
         return updatedPrev;
       }
@@ -221,7 +221,6 @@ export const readXLSXFileForNotary = (file: any, setFileData: Function) => {
 
     setFileData((prev: any) => {
       if (prev.length > 0) {
-        console.log(prev);
         const updatedPrev = [...prev, ...newED];
         return updatedPrev;
       }
@@ -245,12 +244,12 @@ export const readXLSXFileForTaxDebt = (file: any, setFileData: Function) => {
 
     const extractedData = data.slice(1).map((row: any) => ({
       taxpayer: row[headers.indexOf('Taxpayer')]?.toString(),
-      debtAmount: row[headers.indexOf('Debt Amount')]?.toString(),
+      debtAmount: Number(row[headers.indexOf('Debt Amount')]?.toString()),
       expiryDate: row[headers.indexOf('Expiry Date')]?.toString(),
       typeOfTax: row[headers.indexOf('Type of Tax')]?.toString(),
       isPaid: row[headers.indexOf('Is Paid')]?.toString(),
       paymentDate: row[headers.indexOf('Payment Date')]?.toString(),
-      paymentAmount: row[headers.indexOf('Payment Amount')]?.toString(),
+      paymentAmount: Number(row[headers.indexOf('Payment Amount')]?.toString()),
     }));
 
     const newED = extractedData.filter((data: any) => {
@@ -269,7 +268,6 @@ export const readXLSXFileForTaxDebt = (file: any, setFileData: Function) => {
 
     setFileData((prev: any) => {
       if (prev.length > 0) {
-        console.log(prev);
         const updatedPrev = [...prev, ...newED];
         return updatedPrev;
       }
@@ -297,7 +295,7 @@ export const readXLSXFileForAsset = (file: any, setFileData: Function) => {
       description: row[headers.indexOf('Description')]?.toString(),
       location: row[headers.indexOf('Location')]?.toString(),
       purchaseDate: row[headers.indexOf('Purchase Date')]?.toString(),
-      purchasePrice: row[headers.indexOf('Purchase Price')]?.toString(),
+      purchasePrice: Number(row[headers.indexOf('Purchase Price')]?.toString()),
       previousOwner: row[headers.indexOf('Previous Owner')]?.toString(),
     }));
 
@@ -317,7 +315,6 @@ export const readXLSXFileForAsset = (file: any, setFileData: Function) => {
 
     setFileData((prev: any) => {
       if (prev.length > 0) {
-        console.log(prev);
         const updatedPrev = [...prev, ...newED];
         return updatedPrev;
       }
