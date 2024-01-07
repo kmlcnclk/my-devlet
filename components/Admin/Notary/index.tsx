@@ -16,8 +16,10 @@ import {
 import { toast } from 'react-toastify';
 import { File } from 'buffer';
 import Upload from '../Upload';
-import { createXLSXFileForNotary } from '@/lib/fileCreators';
+import { createXLSXFileForNotary } from '@/lib/xlsxFileCreators';
 import Fonts from '@/constants/fonts';
+import { createCSVFileForNotary } from '@/lib/csvFileCreators';
+import { createJSONFileForNotary } from '@/lib/jsonFileCreators';
 
 function Notary() {
   const [userId, setUserId] = useState<string>('');
@@ -28,14 +30,22 @@ function Notary() {
 
   const [ratio, setRatio] = useState<number>(0);
 
-  const [fileURL, setFileURL] = useState<string>('');
+  const [xlsxFileURL, setXLSXFileURL] = useState<string>('');
+  const [csvFileURL, setCSVFileURL] = useState<string>('');
+  const [jsonFileURL, setJSONFileURL] = useState<string>('');
+
   useEffect(() => {
     if (typeof window != 'undefined') {
-      const { url } = createXLSXFileForNotary();
+      const { url: xlsxURL } = createXLSXFileForNotary();
+      const { url: csvURL } = createCSVFileForNotary();
+      const { url: jsonURL } = createJSONFileForNotary();
 
-      setFileURL(url);
+      setXLSXFileURL(xlsxURL);
+      setCSVFileURL(csvURL);
+      setJSONFileURL(jsonURL);
     }
   }, []);
+
   return (
     <Box
       id="title-inputs"
@@ -179,62 +189,172 @@ function Notary() {
 
       <Box
         sx={{
-          height: '130px',
+          height: { xs: 'auto', md: '130px' },
           bgcolor: '#f3f3f3',
           width: '100%',
           display: 'flex',
           justifyContent: 'space-between',
           p: '20px',
           alignItems: 'center',
-          flexDirection: 'column',
+          flexDirection: { xs: 'column', md: 'row' },
           borderRadius: '20px',
           mt: '20px',
         }}
       >
-        <Typography
+        <Box
           sx={{
-            color: '#333',
-            fontSize: { xs: '16px', md: '18px' },
-            fontWeight: Fonts.REGULAR,
+            textAlign: 'center',
+            mt: { xs: '10px', md: '0px' },
           }}
         >
-          Excel File
-        </Typography>
-        <a
-          href={fileURL}
-          download="my-devlet-sample.xlsx"
-          style={{
-            textDecoration: 'none',
-          }}
-        >
-          <Button
+          <Typography
             sx={{
-              color: '#FFFDFF',
-              fontWeight: '500',
-              height: '40px',
-              display: 'inline',
-              borderRadius: '15px',
-              bgcolor: '#317DED',
-              border: '2px solid #317DED',
-              boxShadow: '0px 4px 10px 0px #00000040',
-              '&:hover': {
-                scale: '1.02',
-                transition: 'transform 0.3s ease',
-              },
+              color: '#333',
+              fontSize: { xs: '16px', md: '18px' },
+              fontWeight: Fonts.REGULAR,
             }}
-            variant="contained"
           >
-            <Typography
+            CSV File
+          </Typography>
+          <a
+            href={csvFileURL}
+            download="my-devlet-sample.csv"
+            style={{
+              textDecoration: 'none',
+            }}
+          >
+            <Button
               sx={{
-                color: '#f3f3f3',
-                fontSize: { xs: '11px', sm: '13px' },
-                fontWeight: Fonts.REGULAR,
+                color: '#FFFDFF',
+                fontWeight: '500',
+                height: '40px',
+                display: 'inline',
+                borderRadius: '15px',
+                bgcolor: '#317DED',
+                border: '2px solid #317DED',
+                boxShadow: '0px 4px 10px 0px #00000040',
+                '&:hover': {
+                  scale: '1.02',
+                  transition: 'transform 0.3s ease',
+                },
               }}
+              variant="contained"
             >
-              Download Your Sample File
-            </Typography>
-          </Button>
-        </a>
+              <Typography
+                sx={{
+                  color: '#f3f3f3',
+                  fontSize: { xs: '11px', sm: '13px' },
+                  fontWeight: Fonts.REGULAR,
+                }}
+              >
+                Download Your Sample File
+              </Typography>
+            </Button>
+          </a>
+        </Box>
+
+        <Box
+          sx={{
+            textAlign: 'center',
+            mt: { xs: '20px', md: '0px' },
+          }}
+        >
+          <Typography
+            sx={{
+              color: '#333',
+              fontSize: { xs: '16px', md: '18px' },
+              fontWeight: Fonts.REGULAR,
+            }}
+          >
+            Excel File
+          </Typography>
+          <a
+            href={xlsxFileURL}
+            download="my-devlet-sample.xlsx"
+            style={{
+              textDecoration: 'none',
+            }}
+          >
+            <Button
+              sx={{
+                color: '#FFFDFF',
+                fontWeight: '500',
+                height: '40px',
+                display: 'inline',
+                borderRadius: '15px',
+                bgcolor: '#317DED',
+                border: '2px solid #317DED',
+                boxShadow: '0px 4px 10px 0px #00000040',
+                '&:hover': {
+                  scale: '1.02',
+                  transition: 'transform 0.3s ease',
+                },
+              }}
+              variant="contained"
+            >
+              <Typography
+                sx={{
+                  color: '#f3f3f3',
+                  fontSize: { xs: '11px', sm: '13px' },
+                  fontWeight: Fonts.REGULAR,
+                }}
+              >
+                Download Your Sample File
+              </Typography>
+            </Button>
+          </a>
+        </Box>
+        <Box
+          sx={{
+            textAlign: 'center',
+            mt: { xs: '20px', md: '0px' },
+          }}
+        >
+          <Typography
+            sx={{
+              color: '#333',
+              fontSize: { xs: '16px', md: '18px' },
+              fontWeight: Fonts.REGULAR,
+            }}
+          >
+            JSON File
+          </Typography>
+          <a
+            href={jsonFileURL}
+            download="my-devlet-sample.json"
+            style={{
+              textDecoration: 'none',
+            }}
+          >
+            <Button
+              sx={{
+                color: '#FFFDFF',
+                fontWeight: '500',
+                height: '40px',
+                display: 'inline',
+                borderRadius: '15px',
+                bgcolor: '#317DED',
+                border: '2px solid #317DED',
+                boxShadow: '0px 4px 10px 0px #00000040',
+                '&:hover': {
+                  scale: '1.02',
+                  transition: 'transform 0.3s ease',
+                },
+              }}
+              variant="contained"
+            >
+              <Typography
+                sx={{
+                  color: '#f3f3f3',
+                  fontSize: { xs: '11px', sm: '13px' },
+                  fontWeight: Fonts.REGULAR,
+                }}
+              >
+                Download Your Sample File
+              </Typography>
+            </Button>
+          </a>
+        </Box>
       </Box>
       <Upload
         {...{

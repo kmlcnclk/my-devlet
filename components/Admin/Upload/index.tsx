@@ -11,9 +11,27 @@ import {
   readXLSXFileForHospital,
   readXLSXFileForNotary,
   readXLSXFileForTaxDebt,
-} from '@/lib/fileReaders';
+} from '@/lib/xlsxFileReaders';
 import { File } from 'buffer';
 import { toast } from 'react-toastify';
+import {
+  readCSVFileForAsset,
+  readCSVFileForBank,
+  readCSVFileForCriminalRecord,
+  readCSVFileForEducation,
+  readCSVFileForHospital,
+  readCSVFileForNotary,
+  readCSVFileForTaxDebt,
+} from '@/lib/csvFileReaders';
+import {
+  readJSONFileForAsset,
+  readJSONFileForBank,
+  readJSONFileForCriminalRecord,
+  readJSONFileForEducation,
+  readJSONFileForHospital,
+  readJSONFileForNotary,
+  readJSONFileForTaxDebt,
+} from '@/lib/jsonFileReaders';
 
 interface Props {
   setFile: Function;
@@ -100,6 +118,38 @@ const Upload: React.FC<Props> = ({
           } else if (whichProperty === 'asset') {
             readXLSXFileForAsset(e.dataTransfer.files[0], setFileData);
           }
+        } else if (res == 'text/csv') {
+          if (whichProperty === 'education') {
+            readCSVFileForEducation(e.dataTransfer.files[0], setFileData);
+          } else if (whichProperty === 'bank') {
+            readCSVFileForBank(e.dataTransfer.files[0], setFileData);
+          } else if (whichProperty === 'notary') {
+            readCSVFileForNotary(e.dataTransfer.files[0], setFileData);
+          } else if (whichProperty === 'taxDebt') {
+            readCSVFileForTaxDebt(e.dataTransfer.files[0], setFileData);
+          } else if (whichProperty === 'criminalRecord') {
+            readCSVFileForCriminalRecord(e.dataTransfer.files[0], setFileData);
+          } else if (whichProperty === 'hospital') {
+            readCSVFileForHospital(e.dataTransfer.files[0], setFileData);
+          } else if (whichProperty === 'asset') {
+            readCSVFileForAsset(e.dataTransfer.files[0], setFileData);
+          }
+        } else if (res == 'application/json') {
+          if (whichProperty === 'education') {
+            readJSONFileForEducation(e.dataTransfer.files[0], setFileData);
+          } else if (whichProperty === 'bank') {
+            readJSONFileForBank(e.dataTransfer.files[0], setFileData);
+          } else if (whichProperty === 'notary') {
+            readJSONFileForNotary(e.dataTransfer.files[0], setFileData);
+          } else if (whichProperty === 'taxDebt') {
+            readJSONFileForTaxDebt(e.dataTransfer.files[0], setFileData);
+          } else if (whichProperty === 'criminalRecord') {
+            readJSONFileForCriminalRecord(e.dataTransfer.files[0], setFileData);
+          } else if (whichProperty === 'hospital') {
+            readJSONFileForHospital(e.dataTransfer.files[0], setFileData);
+          } else if (whichProperty === 'asset') {
+            readJSONFileForAsset(e.dataTransfer.files[0], setFileData);
+          }
         }
         setFile(e.dataTransfer.files[0]);
         setRatio(1);
@@ -151,6 +201,38 @@ const Upload: React.FC<Props> = ({
             readXLSXFileForHospital(e.target.files[0], setFileData);
           } else if (whichProperty === 'asset') {
             readXLSXFileForAsset(e.target.files[0], setFileData);
+          }
+        } else if (res == 'text/csv') {
+          if (whichProperty === 'education') {
+            readCSVFileForEducation(e.target.files[0], setFileData);
+          } else if (whichProperty === 'bank') {
+            readCSVFileForBank(e.target.files[0], setFileData);
+          } else if (whichProperty === 'notary') {
+            readCSVFileForNotary(e.target.files[0], setFileData);
+          } else if (whichProperty === 'taxDebt') {
+            readCSVFileForTaxDebt(e.target.files[0], setFileData);
+          } else if (whichProperty === 'criminalRecord') {
+            readCSVFileForCriminalRecord(e.target.files[0], setFileData);
+          } else if (whichProperty === 'hospital') {
+            readCSVFileForHospital(e.target.files[0], setFileData);
+          } else if (whichProperty === 'asset') {
+            readCSVFileForAsset(e.target.files[0], setFileData);
+          }
+        } else if (res == 'application/json') {
+          if (whichProperty === 'education') {
+            readJSONFileForEducation(e.target.files[0], setFileData);
+          } else if (whichProperty === 'bank') {
+            readJSONFileForBank(e.target.files[0], setFileData);
+          } else if (whichProperty === 'notary') {
+            readJSONFileForNotary(e.target.files[0], setFileData);
+          } else if (whichProperty === 'taxDebt') {
+            readJSONFileForTaxDebt(e.target.files[0], setFileData);
+          } else if (whichProperty === 'criminalRecord') {
+            readJSONFileForCriminalRecord(e.target.files[0], setFileData);
+          } else if (whichProperty === 'hospital') {
+            readJSONFileForHospital(e.target.files[0], setFileData);
+          } else if (whichProperty === 'asset') {
+            readJSONFileForAsset(e.target.files[0], setFileData);
           }
         }
         setFile(e.target.files[0]);
