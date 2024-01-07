@@ -300,7 +300,6 @@ const TaxDebtInfos: React.FC<Props> = ({
             label="Expiry Date"
             value={expiryDate}
             onChange={(e: any) => {
-              console.log(new Date(e).toString());
               setExpiryDate(new Date(e).toString());
             }}
           />

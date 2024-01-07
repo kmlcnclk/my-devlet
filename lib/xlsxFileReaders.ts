@@ -247,7 +247,7 @@ export const readXLSXFileForTaxDebt = (file: any, setFileData: Function) => {
       debtAmount: Number(row[headers.indexOf('Debt Amount')]?.toString()),
       expiryDate: row[headers.indexOf('Expiry Date')]?.toString(),
       typeOfTax: row[headers.indexOf('Type of Tax')]?.toString(),
-      isPaid: row[headers.indexOf('Is Paid')]?.toString(),
+      isPaid: Boolean(row[headers.indexOf('Is Paid')]?.toString()),
       paymentDate: row[headers.indexOf('Payment Date')]?.toString(),
       paymentAmount: Number(row[headers.indexOf('Payment Amount')]?.toString()),
     }));

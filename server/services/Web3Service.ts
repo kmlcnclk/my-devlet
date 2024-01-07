@@ -7,13 +7,15 @@ class Web3Service {
     network: string,
     contractAddress: string,
     privateKey: string,
-    account: string
+    account: string,
+    whichContract: string
   ) {
     this._userContract = new UserContract(
       network,
       contractAddress,
       privateKey,
-      account
+      account,
+      whichContract
     );
   }
 
@@ -26,19 +28,15 @@ class Web3Service {
     graduationYears: number[],
     ipfsHash: string
   ): Promise<void> {
-    try {
-      await this._userContract.setEducationRecord(
-        from,
-        userId,
-        schoolNames,
-        degrees,
-        startedYears,
-        graduationYears,
-        ipfsHash
-      );
-    } catch (err: any) {
-      console.log(err);
-    }
+    await this._userContract.setEducationRecord(
+      from,
+      userId,
+      schoolNames,
+      degrees,
+      startedYears,
+      graduationYears,
+      ipfsHash
+    );
   }
 
   async getEducationRecords(from: string, userId: string) {
@@ -55,20 +53,16 @@ class Web3Service {
     accountOpeningDates: number[],
     ipfsHash: string
   ): Promise<void> {
-    try {
-      await this._userContract.setBankRecord(
-        from,
-        userId,
-        bankNames,
-        accountBalances,
-        accountNumbers,
-        accountTypes,
-        accountOpeningDates,
-        ipfsHash
-      );
-    } catch (err: any) {
-      console.log(err);
-    }
+    await this._userContract.setBankRecord(
+      from,
+      userId,
+      bankNames,
+      accountBalances,
+      accountNumbers,
+      accountTypes,
+      accountOpeningDates,
+      ipfsHash
+    );
   }
 
   async getBankRecords(from: string, userId: string) {
@@ -88,23 +82,19 @@ class Web3Service {
     importantInformations: string[],
     ipfsHash: string
   ): Promise<void> {
-    try {
-      await this._userContract.setHospitalRecord(
-        from,
-        userId,
-        hospitalNames,
-        doctorNames,
-        names,
-        symptomss,
-        diagnosticMethodss,
-        dates,
-        treatmentOptionss,
-        importantInformations,
-        ipfsHash
-      );
-    } catch (err: any) {
-      console.log(err);
-    }
+    await this._userContract.setHospitalRecord(
+      from,
+      userId,
+      hospitalNames,
+      doctorNames,
+      names,
+      symptomss,
+      diagnosticMethodss,
+      dates,
+      treatmentOptionss,
+      importantInformations,
+      ipfsHash
+    );
   }
 
   async getHospitalRecords(from: string, userId: string) {
@@ -122,21 +112,17 @@ class Web3Service {
     partiesInvolveds: string[],
     ipfsHash: string
   ): Promise<void> {
-    try {
-      await this._userContract.setNotaryRecord(
-        from,
-        userId,
-        titles,
-        descriptions,
-        dates,
-        notaryNames,
-        typeOfDocuments,
-        partiesInvolveds,
-        ipfsHash
-      );
-    } catch (err: any) {
-      console.log(err);
-    }
+    await this._userContract.setNotaryRecord(
+      from,
+      userId,
+      titles,
+      descriptions,
+      dates,
+      notaryNames,
+      typeOfDocuments,
+      partiesInvolveds,
+      ipfsHash
+    );
   }
 
   async getNotaryRecords(from: string, userId: string) {
@@ -155,22 +141,18 @@ class Web3Service {
     paymentAmounts: number[],
     ipfsHash: string
   ): Promise<void> {
-    try {
-      await this._userContract.setTaxDebtRecord(
-        from,
-        userId,
-        taxpayers,
-        debtAmounts,
-        expiryDates,
-        typeOfTaxs,
-        isPaids,
-        paymentDates,
-        paymentAmounts,
-        ipfsHash
-      );
-    } catch (err: any) {
-      console.log(err);
-    }
+    await this._userContract.setTaxDebtRecord(
+      from,
+      userId,
+      taxpayers,
+      debtAmounts,
+      expiryDates,
+      typeOfTaxs,
+      isPaids,
+      paymentDates,
+      paymentAmounts,
+      ipfsHash
+    );
   }
 
   async getTaxDebtRecords(from: string, userId: string) {
@@ -191,24 +173,20 @@ class Web3Service {
     lawyerss: string[],
     ipfsHash: string
   ): Promise<void> {
-    try {
-      await this._userContract.setCriminalRecordRecord(
-        from,
-        userId,
-        caseNumbers,
-        courts,
-        prosecutors,
-        defendants,
-        incidentDates,
-        trialDates,
-        trialOutcomes,
-        evidences,
-        lawyerss,
-        ipfsHash
-      );
-    } catch (err: any) {
-      console.log(err);
-    }
+    await this._userContract.setCriminalRecordRecord(
+      from,
+      userId,
+      caseNumbers,
+      courts,
+      prosecutors,
+      defendants,
+      incidentDates,
+      trialDates,
+      trialOutcomes,
+      evidences,
+      lawyerss,
+      ipfsHash
+    );
   }
 
   async getCriminalRecordRecords(from: string, userId: string) {
@@ -226,22 +204,18 @@ class Web3Service {
     previousOwners: string[],
     ipfsHash: string
   ): Promise<void> {
-    try {
-      await this._userContract.setAssetRecord(
-        from,
-        userId,
-        names,
-        typeOfAssets,
-        descriptions,
-        locations,
-        purchaseDates,
-        purchasePrices,
-        previousOwners,
-        ipfsHash
-      );
-    } catch (err: any) {
-      console.log(err);
-    }
+    await this._userContract.setAssetRecord(
+      from,
+      userId,
+      names,
+      typeOfAssets,
+      descriptions,
+      locations,
+      purchaseDates,
+      purchasePrices,
+      previousOwners,
+      ipfsHash
+    );
   }
 
   async getAssetRecords(from: string, userId: string) {

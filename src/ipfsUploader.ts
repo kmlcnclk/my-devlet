@@ -10,10 +10,7 @@ export async function ipfsUploader(pdfByte: any) {
     ContentDisposition: 'inline',
     ContentType: 'application/pdf',
   };
-  console.log(
-    process.env.NEXT_PUBLIC_S3_ACCESS_KEY_ID,
-    process.env.NEXT_PUBLIC_S3_SECRET_ACCESS_KEY
-  );
+
   const client = new S3Client({
     region: 'eu-north-1',
     credentials: {
@@ -24,7 +21,6 @@ export async function ipfsUploader(pdfByte: any) {
   const command = new PutObjectCommand(params);
 
   const response = await client.send(command);
-  console.log(response);
 
   return pdf_uuid + '.pdf';
 }

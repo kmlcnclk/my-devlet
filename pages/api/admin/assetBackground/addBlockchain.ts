@@ -42,7 +42,7 @@ async function handler(req: NextApiRequestWithUser, res: NextApiResponse) {
 
       // TODO: user private key must be admin
       const decryptedPrivateKey =
-        await UserService.decryptHashedWalletPrivateKey(user.privateKey ?? '');
+        await UserService.decryptHashedWalletPrivateKey(admin.privateKey ?? '');
 
       const assetBackground: AssetBackgroundDocument =
         (await assetBackgroundModel.findById(
@@ -59,7 +59,8 @@ async function handler(req: NextApiRequestWithUser, res: NextApiResponse) {
         smartContract.network,
         smartContract.contractAddressOfUser[1],
         decryptedPrivateKey,
-        user.address ?? ''
+        admin.address ?? '',
+        '1'
       );
 
       const names = assetBackground.assetInfos.map((item) => item.name);
@@ -81,7 +82,7 @@ async function handler(req: NextApiRequestWithUser, res: NextApiResponse) {
       );
 
       await assetBackgroundService.setAssetRecord(
-        user.address,
+        admin.address as string,
         user.uniqueID,
         names,
         typeOfAssets,

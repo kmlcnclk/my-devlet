@@ -1,5 +1,6 @@
 import Web3, { EthExecutionAPI, SupportedProviders } from 'web3';
-import erc721ContractArtifact from '../../contracts/UserContract.json';
+import userContractArtifact from '../../contracts/UserContract.json';
+import userContractArtifact1 from '../../contracts/UserContract1.json';
 import HDWalletProvider from '@truffle/hdwallet-provider';
 import CustomError from '@/server/errors/CustomError';
 
@@ -14,7 +15,8 @@ export default class UserContract {
     network: string,
     contractAddress: string,
     privateKey: string,
-    account: string
+    account: string,
+    whichContract: string
   ) {
     const currentNetwork = this.whichNetwork(network);
 
@@ -27,10 +29,17 @@ export default class UserContract {
 
     this._web3 = new Web3(provider);
 
-    this._contract = new this._web3.eth.Contract(
-      erc721ContractArtifact.abi,
-      contractAddress
-    );
+    if (whichContract === '0') {
+      this._contract = new this._web3.eth.Contract(
+        userContractArtifact.abi,
+        contractAddress
+      );
+    } else if (whichContract === '1') {
+      this._contract = new this._web3.eth.Contract(
+        userContractArtifact1.abi,
+        contractAddress
+      );
+    }
 
     this._contractAddress = contractAddress;
     this._privateKey = privateKey;
@@ -387,7 +396,7 @@ export default class UserContract {
   public async getTaxDebtRecords(from: string, userId: string): Promise<void> {
     try {
       const mintTx = await this._contract.methods
-        .getNotaryRecords(userId)
+        .getTaxDebtRecords(userId)
         .call();
     } catch (err: any) {
       if (err.error.message.indexOf('insufficient funds') != -1) {
@@ -527,6 +536,7 @@ export default class UserContract {
         signedTransaction.rawTransaction
       );
     } catch (err: any) {
+      throw err;
       if (err.error.message.indexOf('insufficient funds') != -1) {
         throw new CustomError('Web3 JS Error', 'Insufficient funds', 500);
       } else {

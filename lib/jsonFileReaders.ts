@@ -210,7 +210,7 @@ export const readJSONFileForTaxDebt = (file: any, setFileData: Function) => {
       debtAmount: Number(item['Debt Amount']?.toString()),
       expiryDate: item['Expiry Date']?.toString(),
       typeOfTax: item['Type of Tax']?.toString(),
-      isPaid: item['Is Paid']?.toString(),
+      isPaid: Boolean(item['Is Paid']?.toString()),
       paymentDate: item['Payment Date']?.toString(),
       paymentAmount: Number(item['Payment Amount']?.toString()),
     }));

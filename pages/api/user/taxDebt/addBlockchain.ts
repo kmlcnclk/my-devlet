@@ -46,7 +46,8 @@ async function handler(req: NextApiRequestWithUser, res: NextApiResponse) {
         smartContract.network,
         smartContract.contractAddressOfUser[0],
         decryptedPrivateKey,
-        user.address
+        user.address,
+        '0'
       );
 
       const taxpayers = taxDebt.taxDebtInfos.map((item) => item.taxpayer);

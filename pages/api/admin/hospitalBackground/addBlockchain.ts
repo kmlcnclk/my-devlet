@@ -43,7 +43,7 @@ async function handler(req: NextApiRequestWithUser, res: NextApiResponse) {
 
       // TODO: user private key must be admin
       const decryptedPrivateKey =
-        await UserService.decryptHashedWalletPrivateKey(user.privateKey ?? '');
+        await UserService.decryptHashedWalletPrivateKey(admin.privateKey ?? '');
 
       const hospitalBackground: HospitalBackgroundDocument =
         (await hospitalBackgroundModel.findById(
@@ -60,7 +60,8 @@ async function handler(req: NextApiRequestWithUser, res: NextApiResponse) {
         smartContract.network,
         smartContract.contractAddressOfUser[0],
         decryptedPrivateKey,
-        user.address ?? ''
+        admin.address ?? '',
+        '0'
       );
 
       const hospitalNames = hospitalBackground.diseaseInfos.map(
@@ -87,7 +88,7 @@ async function handler(req: NextApiRequestWithUser, res: NextApiResponse) {
       );
 
       await hospitalBackgroundService.setHospitalRecord(
-        user.address,
+        admin.address as string,
         user.uniqueID,
         hospitalNames,
         doctorNames,
