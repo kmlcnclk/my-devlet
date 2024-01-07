@@ -33,14 +33,20 @@ async function handler(req: NextApiRequestWithUser, res: NextApiResponse) {
           decryptedPrivateKey,
           smartContractData.network
         );
-     
+
+      const contractAddressOfUser1 =
+        await SmartContractService.deployUserContract1(
+          user.address ?? '',
+          decryptedPrivateKey,
+          smartContractData.network
+        );
+
       const smartContract = await SmartContractDAO.create({
         userId: get(req.user, '_id'),
         ...smartContractData,
         userWallet: user.address,
-        contractAddressOfUser,
+        contractAddressOfUser: [contractAddressOfUser, contractAddressOfUser1],
       });
-    
 
       const sc = await smartContract.populate({
         path: 'userId',

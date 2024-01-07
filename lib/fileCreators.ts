@@ -135,3 +135,30 @@ export const createXLSXFileForTaxDebt = () => {
 
   return { url };
 };
+
+export const createXLSXFileForAsset = () => {
+  let newData = [
+    [
+      'Name',
+      'Type of Asset',
+      'Description',
+      'Location',
+      'Purchase Date',
+      'Purchase Price',
+      'Previous Owner',
+    ],
+    [
+      'John Doe',
+      '13123',
+      'sfsdfsdfs',
+      'Istanbul',
+      'Sat Jan 06 2024 19:18:19 GMT+0200 (GMT+02:00)',
+      '2323232',
+      'Jack Doe',
+    ],
+  ];
+
+  const url = xlsxCreator(newData);
+
+  return { url };
+};

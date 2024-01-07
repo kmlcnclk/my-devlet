@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 import Normal from './Normal';
 import Uploading from './Uploading';
 import {
+  readXLSXFileForAsset,
   readXLSXFileForBank,
   readXLSXFileForCriminalRecord,
   readXLSXFileForEducation,
@@ -96,6 +97,8 @@ const Upload: React.FC<Props> = ({
             readXLSXFileForCriminalRecord(e.dataTransfer.files[0], setFileData);
           } else if (whichProperty === 'hospital') {
             readXLSXFileForHospital(e.dataTransfer.files[0], setFileData);
+          } else if (whichProperty === 'asset') {
+            readXLSXFileForAsset(e.dataTransfer.files[0], setFileData);
           }
         }
         setFile(e.dataTransfer.files[0]);
@@ -146,6 +149,8 @@ const Upload: React.FC<Props> = ({
             readXLSXFileForCriminalRecord(e.target.files[0], setFileData);
           } else if (whichProperty === 'hospital') {
             readXLSXFileForHospital(e.target.files[0], setFileData);
+          } else if (whichProperty === 'asset') {
+            readXLSXFileForAsset(e.target.files[0], setFileData);
           }
         }
         setFile(e.target.files[0]);

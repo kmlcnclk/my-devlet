@@ -5,11 +5,11 @@ import validateResource from '@/server/middlewares/validateResource';
 import { checkJwtAndUserExist } from '@/server/middlewares/jwt';
 import UserDAO from '@/server/data/UserDAO';
 
-import { AddBlockChainType } from '@/types/BankBackground';
-import { addBlockChainSchema } from '@/server/schemas/bankBackgroundSchema';
-import bankBackgroundModel, {
-  BankBackgroundDocument,
-} from '@/server/models/bankBackgroundModel';
+import { AddBlockChainType } from '@/types/AssetBackground';
+import { addBlockChainSchema } from '@/server/schemas/assetBackgroundSchema';
+import assetBackgroundModel, {
+  AssetBackgroundDocument,
+} from '@/server/models/assetModel';
 import { get } from 'lodash';
 import SmartContractModel, {
   SmartContractDocument,
@@ -35,59 +35,65 @@ async function handler(req: NextApiRequestWithUser, res: NextApiResponse) {
       const decryptedPrivateKey =
         await UserService.decryptHashedWalletPrivateKey(user.privateKey);
 
-      const bankBackground: BankBackgroundDocument =
-        (await bankBackgroundModel.findById(
+      const assetBackground: AssetBackgroundDocument =
+        (await assetBackgroundModel.findById(
           addBlockchainData.id
-        )) as BankBackgroundDocument;
+        )) as AssetBackgroundDocument;
 
       const smartContract: SmartContractDocument =
         (await SmartContractModel.findById(
           addBlockchainData.smartContract
         )) as SmartContractDocument;
 
-      const bankBackgroundService = new Web3Service(
+      const assetBackgroundService = new Web3Service(
         smartContract.network,
-        smartContract.contractAddressOfUser[0],
+        smartContract.contractAddressOfUser[1],
         decryptedPrivateKey,
         user.address
       );
 
-      const bankNames = bankBackground.bankInfos.map((item) => item.bankName);
-      const accountBalances = bankBackground.bankInfos.map((item) =>
-        Number(item.accountBalance)
+      const names = assetBackground.assetInfos.map((item) => item.name);
+      const typeOfAssets = assetBackground.assetInfos.map(
+        (item) => item.typeOfAsset
       );
-      const accountNumbers = bankBackground.bankInfos.map(
-        (item) => item.accountNumber
+      const descriptions = assetBackground.assetInfos.map(
+        (item) => item.description
       );
-      const accountTypes = bankBackground.bankInfos.map(
-        (item) => item.accountType
+      const locations = assetBackground.assetInfos.map((item) => item.location);
+      const purchaseDates = assetBackground.assetInfos.map((item) =>
+        new Date(item.purchaseDate).getTime()
       );
-      const accountOpeningDates = bankBackground.bankInfos.map((item) =>
-        new Date(item.accountOpeningDate).getTime()
+      const purchasePrices = assetBackground.assetInfos.map((item) =>
+        Number(item.purchasePrice)
+      );
+      const previousOwners = assetBackground.assetInfos.map(
+        (item) => item.previousOwner
       );
 
-      await bankBackgroundService.setBankRecord(
+      await assetBackgroundService.setAssetRecord(
         user.address,
         user.uniqueID,
-        bankNames,
-        accountBalances,
-        accountNumbers,
-        accountTypes,
-        accountOpeningDates,
+        names,
+        typeOfAssets,
+        descriptions,
+        locations,
+        purchaseDates,
+        purchasePrices,
+        previousOwners,
         addBlockchainData.ipfsHash
       );
 
-      bankBackground.ipfsHash = await addBlockchainData.ipfsHash;
-      await bankBackground.save();
+      assetBackground.ipfsHash = await addBlockchainData.ipfsHash;
+      await assetBackground.save();
 
-      const newBankBackground: BankBackgroundDocument =
-        (await bankBackgroundModel.findById(
-          bankBackground._id
-        )) as BankBackgroundDocument;
+      const newAssetBackground: AssetBackgroundDocument =
+        (await assetBackgroundModel.findById(
+          assetBackground._id
+        )) as AssetBackgroundDocument;
 
       return res.status(200).json({
-        message: 'Bank Background successfully added to blockchain',
-        eb: newBankBackground,
+        message: 'Asset Background successfully added to blockchain',
+        eb: newAssetBackground,
       });
     } catch (err: any) {
       if (err.status) {

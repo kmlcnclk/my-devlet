@@ -3,12 +3,11 @@ import { NextApiRequestWithUser } from '@/types/next';
 
 import validateResource from '@/server/middlewares/validateResource';
 import { checkJwtAndUserExist } from '@/server/middlewares/jwt';
-
-import { AddBlockChainByAdminType } from '@/types/HospitalBackground';
-import { addBlockChainByAdminSchema } from '@/server/schemas/hospitalBackgroundSchema';
-import hospitalBackgroundModel, {
-  HospitalBackgroundDocument,
-} from '@/server/models/hospitalBackgroundModel';
+import { AddBlockChainByAdminType } from '@/types/AssetBackground';
+import { addBlockChainByAdminSchema } from '@/server/schemas/assetBackgroundSchema';
+import assetBackgroundModel, {
+  AssetBackgroundDocument,
+} from '@/server/models/assetModel';
 import { get } from 'lodash';
 import SmartContractModel, {
   SmartContractDocument,
@@ -45,10 +44,10 @@ async function handler(req: NextApiRequestWithUser, res: NextApiResponse) {
       const decryptedPrivateKey =
         await UserService.decryptHashedWalletPrivateKey(user.privateKey ?? '');
 
-      const hospitalBackground: HospitalBackgroundDocument =
-        (await hospitalBackgroundModel.findById(
+      const assetBackground: AssetBackgroundDocument =
+        (await assetBackgroundModel.findById(
           addBlockchainData.id
-        )) as HospitalBackgroundDocument;
+        )) as AssetBackgroundDocument;
 
       const smartContract: SmartContractDocument =
         (await SmartContractModel.findById(
@@ -56,61 +55,55 @@ async function handler(req: NextApiRequestWithUser, res: NextApiResponse) {
         )) as SmartContractDocument;
 
       // TODO: user address must be admin
-      const hospitalBackgroundService = new Web3Service(
+      const assetBackgroundService = new Web3Service(
         smartContract.network,
-        smartContract.contractAddressOfUser[0],
+        smartContract.contractAddressOfUser[1],
         decryptedPrivateKey,
         user.address ?? ''
       );
 
-      const hospitalNames = hospitalBackground.diseaseInfos.map(
-        (item) => item.hospitalName
+      const names = assetBackground.assetInfos.map((item) => item.name);
+      const typeOfAssets = assetBackground.assetInfos.map(
+        (item) => item.typeOfAsset
       );
-      const doctorNames = hospitalBackground.diseaseInfos.map(
-        (item) => item.doctorName
+      const descriptions = assetBackground.assetInfos.map(
+        (item) => item.description
       );
-      const names = hospitalBackground.diseaseInfos.map((item) => item.name);
-      const symptomss = hospitalBackground.diseaseInfos.map(
-        (item) => item.symptoms
+      const locations = assetBackground.assetInfos.map((item) => item.location);
+      const purchaseDates = assetBackground.assetInfos.map((item) =>
+        new Date(item.purchaseDate).getTime()
       );
-      const diagnosticMethodss = hospitalBackground.diseaseInfos.map(
-        (item) => item.diagnosticMethods
+      const purchasePrices = assetBackground.assetInfos.map((item) =>
+        Number(item.purchasePrice)
       );
-      const dates = hospitalBackground.diseaseInfos.map((item) =>
-        new Date(item.date).getTime()
-      );
-      const treatmentOptionss = hospitalBackground.diseaseInfos.map(
-        (item) => item.treatmentOptions
-      );
-      const importantInformations = hospitalBackground.diseaseInfos.map(
-        (item) => item.importantInformation
+      const previousOwners = assetBackground.assetInfos.map(
+        (item) => item.previousOwner
       );
 
-      await hospitalBackgroundService.setHospitalRecord(
+      await assetBackgroundService.setAssetRecord(
         user.address,
         user.uniqueID,
-        hospitalNames,
-        doctorNames,
         names,
-        symptomss,
-        diagnosticMethodss,
-        dates,
-        treatmentOptionss,
-        importantInformations,
+        typeOfAssets,
+        descriptions,
+        locations,
+        purchaseDates,
+        purchasePrices,
+        previousOwners,
         addBlockchainData.ipfsHash
       );
 
-      hospitalBackground.ipfsHash = await addBlockchainData.ipfsHash;
-      await hospitalBackground.save();
+      assetBackground.ipfsHash = await addBlockchainData.ipfsHash;
+      await assetBackground.save();
 
-      const newHospitalBackground: HospitalBackgroundDocument =
-        (await hospitalBackgroundModel.findById(
-          hospitalBackground._id
-        )) as HospitalBackgroundDocument;
+      const newAssetBackground: AssetBackgroundDocument =
+        (await assetBackgroundModel.findById(
+          assetBackground._id
+        )) as AssetBackgroundDocument;
 
       return res.status(200).json({
-        message: 'Hospital Background successfully added to blockchain',
-        eb: newHospitalBackground,
+        message: 'Asset Background successfully added to blockchain',
+        eb: newAssetBackground,
       });
     } catch (err: any) {
       if (err.status) {

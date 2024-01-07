@@ -12,6 +12,7 @@ import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
 import { IoDocumentsSharp } from 'react-icons/io5';
 import { FaMoneyBills } from 'react-icons/fa6';
 import GavelIcon from '@mui/icons-material/Gavel';
+import WebAssetIcon from '@mui/icons-material/WebAsset';
 
 export interface RouterConfigData {
   id: string;
@@ -102,6 +103,14 @@ export const routesConfig: RouterConfigData[] = [
     type: 'item',
     icon: <GavelIcon />,
     url: '/dashboard/criminal-record',
+    children: [],
+  },
+  {
+    id: 'asset-background',
+    title: 'Asset',
+    type: 'item',
+    icon: <WebAssetIcon />,
+    url: '/dashboard/asset',
     children: [],
   },
   {

@@ -279,3 +279,51 @@ export const readXLSXFileForTaxDebt = (file: any, setFileData: Function) => {
 
   reader.readAsBinaryString(file as any);
 };
+
+export const readXLSXFileForAsset = (file: any, setFileData: Function) => {
+  const reader = new FileReader();
+
+  reader.onload = (e: any) => {
+    const content = e.target.result;
+    const workbook = XLSX.read(content, { type: 'binary' });
+    const firstSheetName = workbook.SheetNames[0];
+    const worksheet = workbook.Sheets[firstSheetName];
+    const data = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+    const headers: any = data[0];
+
+    const extractedData = data.slice(1).map((row: any) => ({
+      name: row[headers.indexOf('Name')]?.toString(),
+      typeOfAsset: row[headers.indexOf('Type of Asset')]?.toString(),
+      description: row[headers.indexOf('Description')]?.toString(),
+      location: row[headers.indexOf('Location')]?.toString(),
+      purchaseDate: row[headers.indexOf('Purchase Date')]?.toString(),
+      purchasePrice: row[headers.indexOf('Purchase Price')]?.toString(),
+      previousOwner: row[headers.indexOf('Previous Owner')]?.toString(),
+    }));
+
+    const newED = extractedData.filter((data: any) => {
+      if (
+        data?.name?.toString().trim() ||
+        data?.typeOfAsset?.toString().trim() ||
+        data?.description?.toString().trim() ||
+        data?.location?.toString().trim() ||
+        data?.purchaseDate?.toString().trim() ||
+        data?.purchasePrice?.toString().trim() ||
+        data?.previousOwner?.toString().trim()
+      ) {
+        return data;
+      }
+    });
+
+    setFileData((prev: any) => {
+      if (prev.length > 0) {
+        console.log(prev);
+        const updatedPrev = [...prev, ...newED];
+        return updatedPrev;
+      }
+      return newED;
+    });
+  };
+
+  reader.readAsBinaryString(file as any);
+};
