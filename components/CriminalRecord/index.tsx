@@ -15,7 +15,10 @@ import CriminalRecordInfoTable from './CriminalRecordInfoTable';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import { ipfsUploader } from '@/src/ipfsUploader';
-import { AddBlockChainType, CriminalRecordReturnType } from '@/types/CriminalRecord';
+import {
+  AddBlockChainType,
+  CriminalRecordReturnType,
+} from '@/types/CriminalRecord';
 import { Inter } from 'next/font/google';
 import { RootState } from '@/store';
 import { useSelector } from 'react-redux';
@@ -24,7 +27,8 @@ import { SmartContractReturnType } from '@/types/SmartContract';
 const inter = Inter({ subsets: ['latin'] });
 
 function CriminalRecord() {
-  const [criminalRecord, setCriminalRecord] = useState<CriminalRecordReturnType | null>(null);
+  const [criminalRecord, setCriminalRecord] =
+    useState<CriminalRecordReturnType | null>(null);
   const criminalRecordTableRef = useRef(null);
 
   const [isLoading, setIsLoading] = useState(false);
@@ -33,7 +37,8 @@ function CriminalRecord() {
   const [openModalForAddBlockchain, setOpenModalForAddBlockchain] =
     useState(false);
   const [ipfsURL, setIPFSURL] = useState('');
-  const [isCriminalRecordInfoExists, setIsCriminalRecordInfoExists] = useState(true);
+  const [isCriminalRecordInfoExists, setIsCriminalRecordInfoExists] =
+    useState(true);
   const [smartContract, setSmartContract] = useState<string>('');
 
   const smartContracts: SmartContractReturnType[] = useSelector(
@@ -161,7 +166,9 @@ function CriminalRecord() {
                 alignItems: 'center',
               }}
             >
-              <CriminalRecordInfoTable {...{ criminalRecord, criminalRecordTableRef }} />
+              <CriminalRecordInfoTable
+                {...{ criminalRecord, criminalRecordTableRef }}
+              />
               {isButtonVisible ? (
                 <Button
                   onClick={() => setOpenModalForAddBlockchain(true)}
@@ -305,7 +312,10 @@ function CriminalRecord() {
       ) : (
         <Box
           sx={{
-            textAlign: 'center',
+            height: '70vh',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
           }}
         >
           <Typography
@@ -466,8 +476,7 @@ function CriminalRecord() {
           ) : (
             <Box
               sx={{
-                with: '100%',
-                height: '100%',
+                height: '70vh',
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',

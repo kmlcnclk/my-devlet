@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import clsx from 'clsx';
 import MainSidebar from './MainSidebar';
 import Drawer from '@mui/material/Drawer';
@@ -9,8 +9,8 @@ import AppScrollbar from '../AppScrollbar';
 import { useRouter } from 'next/router';
 import { routesForMenu } from '@/constants/routes';
 import { Button, Typography } from '@mui/material';
-import { sendToken } from '@/lib/sendToken';
 import { Inter } from 'next/font/google';
+import SendTokenModal from '@/lib/sendTokenModal';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -28,6 +28,7 @@ function MobileSidebar({
   setCollapsed,
 }: MobileSidebarProps) {
   const router = useRouter();
+  const [openTokenModal, setOpenTokenModal] = useState(false);
 
   return (
     <>
@@ -63,7 +64,7 @@ function MobileSidebar({
           </SidebarWrapper>
           <Button
             type="button"
-            onClick={sendToken}
+            onClick={() => setOpenTokenModal(true)}
             id="buy-token"
             sx={{
               position: 'fixed',
@@ -114,7 +115,7 @@ function MobileSidebar({
         </SidebarWrapper>
         <Button
           type="button"
-          onClick={sendToken}
+          onClick={() => setOpenTokenModal(true)}
           id="buy-token"
           sx={{
             position: 'fixed',
@@ -142,6 +143,10 @@ function MobileSidebar({
           </Typography>
         </Button>
       </Box>
+      <SendTokenModal
+        {...{ openTokenModal, setOpenTokenModal }}
+        whichState="user"
+      />
     </>
   );
 }

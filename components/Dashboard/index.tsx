@@ -7,6 +7,7 @@ import NftInfo from './NftInfo';
 import Typography from '@mui/material/Typography';
 
 import { Inter } from 'next/font/google';
+
 const inter = Inter({ subsets: ['latin'] });
 
 function Dashboard() {
@@ -58,8 +59,8 @@ function Dashboard() {
             }}
             className={inter.className}
           >
-            You have gained early access to My Devlet&apos;s unique Web3.0 technology
-            solutions.
+            You have gained early access to My Devlet&apos;s unique Web3.0
+            technology solutions.
           </Typography>
         </Box>
       </Box>

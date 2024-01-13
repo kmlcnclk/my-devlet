@@ -19,6 +19,16 @@ import { RegisterType } from '@/types/Admin';
 const inter = Inter({ subsets: ['latin'] });
 
 function SignUp() {
+  const admins = [
+    { text: 'School', value: 'school' },
+    { text: 'Hospital', value: 'hospital' },
+    { text: 'Bank', value: 'bank' },
+    { text: 'Notary', value: 'notary' },
+    { text: 'Tax Debt', value: 'taxDebt' },
+    { text: 'Criminal Record', value: 'criminalRecord' },
+    { text: 'Asset', value: 'asset' },
+  ];
+
   const [signUpData, setSignUpData] = useState<
     RegisterType & { isRemember: boolean; privacyPolicy: boolean }
   >({
@@ -213,75 +223,32 @@ function SignUp() {
               },
             }}
           >
-            <MenuItem
-              value="school"
-              sx={{
-                color: '#666666',
-                fontWeight: '400',
-                fontSize: '13px',
-                display: 'flex',
-                alignItems: 'center',
-              }}
-              className={inter.className}
-            >
-              <Typography
-                className={inter.className}
+            {admins.map((admin, index) => (
+              <MenuItem
+                key={index}
+                value={admin.value}
                 sx={{
                   color: '#666666',
-                  fontWeight: 500,
-                  fontSize: '12px',
-                  display: 'inline-block',
+                  fontWeight: '400',
+                  fontSize: '13px',
+                  display: 'flex',
+                  alignItems: 'center',
                 }}
-              >
-                School
-              </Typography>
-            </MenuItem>
-            <MenuItem
-              value="hospital"
-              sx={{
-                color: '#666666',
-                fontWeight: '400',
-                fontSize: '13px',
-                display: 'flex',
-                alignItems: 'center',
-              }}
-              className={inter.className}
-            >
-              <Typography
                 className={inter.className}
-                sx={{
-                  color: '#666666',
-                  fontWeight: 500,
-                  fontSize: '12px',
-                  display: 'inline-block',
-                }}
               >
-                Hospital
-              </Typography>
-            </MenuItem>
-            <MenuItem
-              value="bank"
-              sx={{
-                color: '#666666',
-                fontWeight: '400',
-                fontSize: '13px',
-                display: 'flex',
-                alignItems: 'center',
-              }}
-              className={inter.className}
-            >
-              <Typography
-                className={inter.className}
-                sx={{
-                  color: '#666666',
-                  fontWeight: 500,
-                  fontSize: '12px',
-                  display: 'inline-block',
-                }}
-              >
-                Bank
-              </Typography>
-            </MenuItem>
+                <Typography
+                  className={inter.className}
+                  sx={{
+                    color: '#666666',
+                    fontWeight: 500,
+                    fontSize: '12px',
+                    display: 'inline-block',
+                  }}
+                >
+                  {admin.text}
+                </Typography>
+              </MenuItem>
+            ))}
           </Select>
           <TextField
             margin="normal"
