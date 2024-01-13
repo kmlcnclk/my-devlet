@@ -7,7 +7,7 @@ import { getAdminAccessTokenFromLocalStorage } from '@/localstorage/adminAccessT
 import { AppDispatch } from '@/store';
 import { useDispatch } from 'react-redux';
 import { getSmartContracts } from '@/store/slices/mySmartContractsForAdminSlice';
-import { sendToken } from '@/lib/sendTokenForAdmin';
+import SendTokenModal from '@/lib/sendTokenModal';
 
 interface Props {}
 
@@ -19,6 +19,7 @@ const OnBoarding: React.FC<Props> = ({}: Props) => {
   });
 
   const [ratio, setRatio] = useState(0);
+  const [openTokenModal, setOpenTokenModal] = useState(false);
 
   const dispatch = useDispatch<AppDispatch>();
 
@@ -43,7 +44,7 @@ const OnBoarding: React.FC<Props> = ({}: Props) => {
           toast.error(
             'Insufficient funds. You should send some token to your wallet'
           );
-          sendToken();
+          setOpenTokenModal(true);
         } else if (data?.message) toast.error(data.message);
         else if (data?.error) toast.error(data.error.message);
         else if (data[0]) toast.error(data[0].message);
@@ -125,6 +126,10 @@ const OnBoarding: React.FC<Props> = ({}: Props) => {
           }}
         />
       )}
+      <SendTokenModal
+        {...{ openTokenModal, setOpenTokenModal }}
+        whichState="admin"
+      />
     </Box>
   );
 };

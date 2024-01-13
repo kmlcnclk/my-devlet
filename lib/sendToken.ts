@@ -1,6 +1,7 @@
 import { getAccessTokenFromLocalStorage } from '@/localstorage/accessTokenStorage';
 import { get } from 'lodash';
 import { toast } from 'react-toastify';
+import Web3 from 'web3';
 
 export const getAddress = async () => {
   const res = await fetch('/api/user/getAddress', {
@@ -22,7 +23,7 @@ export const getAddress = async () => {
   }
 };
 
-export const sendToken = async () => {
+export const sendToken = async (value: number) => {
   if (typeof get(window, 'ethereum') === 'undefined') {
     toast.info('Please install Metamask Extension');
   } else {
@@ -35,13 +36,15 @@ export const sendToken = async () => {
           method: 'eth_requestAccounts',
         });
 
-        ethereum.request({
+        const amount = Web3.utils.toWei(value.toString(), 'ether');
+
+        await ethereum.request({
           method: 'eth_sendTransaction',
           params: [
             {
               from: accounts[0],
               to: address,
-              value: Number(1000000000000000000).toString(16),
+              value: Number(amount).toString(16),
               gas: Number(21000).toString(16),
               gasPrice: Number(21000).toString(16),
             },

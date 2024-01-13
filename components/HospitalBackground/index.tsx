@@ -313,7 +313,10 @@ function HospitalBackground() {
       ) : (
         <Box
           sx={{
-            textAlign: 'center',
+            height: '70vh',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
           }}
         >
           <Typography
@@ -474,8 +477,7 @@ function HospitalBackground() {
           ) : (
             <Box
               sx={{
-                with: '100%',
-                height: '100%',
+                height: '70vh',
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',

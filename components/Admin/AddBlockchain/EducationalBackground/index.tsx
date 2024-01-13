@@ -354,8 +354,7 @@ function EducationalBackground() {
       ) : (
         <Box
           sx={{
-            with: '100%',
-            height: '100%',
+            height: '70vh',
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
