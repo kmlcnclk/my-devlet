@@ -27,6 +27,7 @@ function SignUp() {
     { text: 'Tax Debt', value: 'taxDebt' },
     { text: 'Criminal Record', value: 'criminalRecord' },
     { text: 'Asset', value: 'asset' },
+    { text: 'Military', value: 'military' },
   ];
 
   const [signUpData, setSignUpData] = useState<

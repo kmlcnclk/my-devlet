@@ -282,3 +282,41 @@ export const readJSONFileForAsset = (file: any, setFileData: Function) => {
 
   reader.readAsText(file as any);
 };
+
+export const readJSONFileForMilitary = (file: any, setFileData: Function) => {
+  const reader = new FileReader();
+
+  reader.onload = (e: any) => {
+    const content = e.target.result;
+    const jsonData = JSON.parse(content);
+    const extractedData = jsonData.map((item: any) => ({
+      name: item['Name']?.toString(),
+      dateOfBirth: item['Date of Birth']?.toString(),
+      stateOfMilitary: item['State of Military']?.toString(),
+      postponementDate: item['Postponement Date']?.toString(),
+      dateOfConstruction: item['Date of Construction']?.toString(),
+    }));
+
+    const newED = extractedData.filter((data: any) => {
+      if (
+        data.name ||
+        data.dateOfBirth ||
+        data.stateOfMilitary ||
+        data.postponementDate ||
+        data.dateOfConstruction
+      ) {
+        return data;
+      }
+    });
+
+    setFileData((prev: any) => {
+      if (prev.length > 0) {
+        const updatedPrev = [...prev, ...newED];
+        return updatedPrev;
+      }
+      return newED;
+    });
+  };
+
+  reader.readAsText(file as any);
+};

@@ -35,6 +35,10 @@ function Card1() {
       value: 'Asset',
       url: '/dashboard/asset',
     },
+    {
+      value: 'Military',
+      url: '/dashboard/military',
+    },
   ];
   return (
     <Box

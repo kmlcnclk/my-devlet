@@ -18,12 +18,26 @@ contract UserContract1 {
         string previousOwner;
     }
 
+    struct MilitaryInfo {
+        string name;
+        uint256 dateOfBirth;
+        string stateOfMilitary;
+        uint256 postponementDate;
+        uint256 dateOfConstruction;
+    }
+
     struct UserAsset {
         AssetInfo[] assetInfos;
         string ipfsHash;
     }
 
+    struct UserMilitary {
+        MilitaryInfo[] militaryInfos;
+        string ipfsHash;
+    }
+
     mapping(string => UserAsset) private assetRecords;
+    mapping(string => UserMilitary) private militaryRecords;
 
     mapping(string => UserData) users;
 
@@ -37,6 +51,11 @@ contract UserContract1 {
     event UserAssetUpdated(
         string indexed userId,
         AssetInfo[] assetInfos,
+        string ipfsHash
+    );
+    event UserMilitaryUpdated(
+        string indexed userId,
+        MilitaryInfo[] militrayInfos,
         string ipfsHash
     );
 
@@ -129,5 +148,66 @@ contract UserContract1 {
         string memory userId
     ) public view returns (string memory) {
         return assetRecords[userId].ipfsHash;
+    }
+
+    function setMilitaryRecord(
+        string memory userId,
+        string[] memory names,
+        uint256[] memory dateOfBirths,
+        string[] memory stateOfMilitarys,
+        uint256[] memory postponementDates,
+        uint256[] memory dateOfConstructions,
+        string memory ipfsHash
+    ) public {
+        require(
+            names.length == dateOfBirths.length &&
+                dateOfBirths.length == stateOfMilitarys.length &&
+                stateOfMilitarys.length == postponementDates.length &&
+                postponementDates.length == dateOfConstructions.length,
+            "Input arrays must have the same length"
+        );
+
+        for (uint256 i = 0; i < names.length; i++) {
+            MilitaryInfo memory newMilitary = MilitaryInfo({
+                name: names[i],
+                dateOfBirth: dateOfBirths[i],
+                stateOfMilitary: stateOfMilitarys[i],
+                postponementDate: postponementDates[i],
+                dateOfConstruction: dateOfConstructions[i]
+            });
+
+            militaryRecords[userId].militaryInfos.push(newMilitary);
+        }
+
+        militaryRecords[userId].ipfsHash = ipfsHash;
+
+        emit UserMilitaryUpdated(
+            userId,
+            militaryRecords[userId].militaryInfos,
+            ipfsHash
+        );
+    }
+
+    function getMilitaryRecords(
+        string memory userId
+    ) public view returns (MilitaryInfo[] memory) {
+        return militaryRecords[userId].militaryInfos;
+    }
+
+    function setMilitaryIPFSHash(
+        string memory userId,
+        string memory ipfsHash
+    ) public {
+        UserMilitary storage userMilitary = militaryRecords[userId];
+
+        userMilitary.ipfsHash = ipfsHash;
+
+        emit UserMilitaryUpdated(userId, userMilitary.militaryInfos, ipfsHash);
+    }
+
+    function getMilitaryIPFSHash(
+        string memory userId
+    ) public view returns (string memory) {
+        return militaryRecords[userId].ipfsHash;
     }
 }

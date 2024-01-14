@@ -154,3 +154,26 @@ export const createCSVFileForAsset = () => {
 
   return { url };
 };
+
+export const createCSVFileForMilitary = () => {
+  let newData = [
+    [
+      'Name',
+      'Date of Birth',
+      'State of Military',
+      'Postponement Date',
+      'Date of Construction',
+    ],
+    [
+      'John Doe',
+      'Sat Jan 06 2001 19:18:19 GMT+0200 (GMT+02:00)',
+      'Postponed',
+      'Sat Jan 06 2024 19:18:19 GMT+0200 (GMT+02:00)',
+      '',
+    ],
+  ];
+
+  const url = csvCreator(newData);
+
+  return { url };
+};

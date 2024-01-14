@@ -91,7 +91,7 @@ const OnBoarding: React.FC<Props> = ({}: Props) => {
         } else {
           clearInterval(intervalId);
         }
-      }, 200);
+      }, 500);
 
       if (ratio > 100) {
         setRatio(100);

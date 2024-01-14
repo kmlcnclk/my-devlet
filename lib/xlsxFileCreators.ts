@@ -162,3 +162,26 @@ export const createXLSXFileForAsset = () => {
 
   return { url };
 };
+
+export const createXLSXFileForMilitary = () => {
+  let newData = [
+    [
+      'Name',
+      'Date of Birth',
+      'State of Military',
+      'Postponement Date',
+      'Date of Construction',
+    ],
+    [
+      'John Doe',
+      'Sat Jan 06 2001 19:18:19 GMT+0200 (GMT+02:00)',
+      'Postponed',
+      'Sat Jan 06 2024 19:18:19 GMT+0200 (GMT+02:00)',
+      '',
+    ],
+  ];
+
+  const url = xlsxCreator(newData);
+
+  return { url };
+};

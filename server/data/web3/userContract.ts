@@ -536,7 +536,6 @@ export default class UserContract {
         signedTransaction.rawTransaction
       );
     } catch (err: any) {
-      throw err;
       if (err.error.message.indexOf('insufficient funds') != -1) {
         throw new CustomError('Web3 JS Error', 'Insufficient funds', 500);
       } else {
@@ -549,6 +548,74 @@ export default class UserContract {
     try {
       const mintTx = await this._contract.methods
         .getAssetRecords(userId)
+        .call();
+    } catch (err: any) {
+      if (err.error.message.indexOf('insufficient funds') != -1) {
+        throw new CustomError('Web3 JS Error', 'Insufficient funds', 500);
+      } else {
+        throw new CustomError('Web3 JS Error', err.error.message, 500);
+      }
+    }
+  }
+
+  public async setMilitaryRecord(
+    from: string,
+    userId: string,
+    names: string[],
+    dateOfBirths: number[],
+    stateOfMilitarys: string[],
+    postponementDates: number[],
+    dateOfConstructions: number[],
+    ipfsHash: string
+  ): Promise<void> {
+    try {
+      const mintTx = await this._contract.methods.setMilitaryRecord(
+        userId,
+        names,
+        dateOfBirths,
+        stateOfMilitarys,
+        postponementDates,
+        dateOfConstructions,
+        ipfsHash
+      );
+
+      const data = await mintTx.encodeABI();
+
+      const tx = {
+        to: this._contractAddress,
+        from: from,
+        data: data,
+      } as any;
+
+      const gasPrice = await this._web3.eth.getGasPrice();
+      const gas = await this._web3.eth.estimateGas(tx);
+      const nonce = await this._web3.eth.getTransactionCount(from);
+
+      tx.gas = this._web3.utils.toHex(gas);
+      tx.gasPrice = this._web3.utils.toHex(gasPrice);
+      tx.nonce = this._web3.utils.toHex(nonce);
+
+      const signedTransaction = await this._web3.eth.accounts.signTransaction(
+        tx,
+        this._privateKey
+      );
+
+      await this._web3.eth.sendSignedTransaction(
+        signedTransaction.rawTransaction
+      );
+    } catch (err: any) {
+      if (err.error.message.indexOf('insufficient funds') != -1) {
+        throw new CustomError('Web3 JS Error', 'Insufficient funds', 500);
+      } else {
+        throw new CustomError('Web3 JS Error', err.error.message, 500);
+      }
+    }
+  }
+
+  public async getMilitaryRecords(from: string, userId: string): Promise<void> {
+    try {
+      const mintTx = await this._contract.methods
+        .getMilitaryRecords(userId)
         .call();
     } catch (err: any) {
       if (err.error.message.indexOf('insufficient funds') != -1) {

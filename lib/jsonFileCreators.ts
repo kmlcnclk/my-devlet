@@ -128,3 +128,19 @@ export const createJSONFileForAsset = () => {
 
   return { url };
 };
+
+export const createJSONFileForMilitary = () => {
+  let newData = [
+    {
+      Name: 'John Doe',
+      'Date of Birth': 'Sat Jan 06 2001 19:18:19 GMT+0200 (GMT+02:00)',
+      'State of Military': 'Postponed',
+      'Postponement Date': 'Sat Jan 06 2024 19:18:19 GMT+0200 (GMT+02:00)',
+      'Date of Construction': '',
+    },
+  ];
+
+  const url = jsonCreator(newData);
+
+  return { url };
+};

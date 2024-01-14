@@ -192,6 +192,7 @@ class Web3Service {
   async getCriminalRecordRecords(from: string, userId: string) {
     await this._userContract.getCriminalRecordRecords(from, userId);
   }
+
   async setAssetRecord(
     from: string,
     userId: string,
@@ -220,6 +221,32 @@ class Web3Service {
 
   async getAssetRecords(from: string, userId: string) {
     await this._userContract.getAssetRecords(from, userId);
+  }
+
+  async setMilitaryRecord(
+    from: string,
+    userId: string,
+    names: string[],
+    dateOfBirths: number[],
+    stateOfMilitarys: string[],
+    postponementDates: number[],
+    dateOfConstructions: number[],
+    ipfsHash: string
+  ): Promise<void> {
+    await this._userContract.setMilitaryRecord(
+      from,
+      userId,
+      names,
+      dateOfBirths,
+      stateOfMilitarys,
+      postponementDates,
+      dateOfConstructions,
+      ipfsHash
+    );
+  }
+
+  async getMilitaryRecords(from: string, userId: string) {
+    await this._userContract.getMilitaryRecords(from, userId);
   }
 
   async setUserData(

@@ -324,3 +324,47 @@ export const readXLSXFileForAsset = (file: any, setFileData: Function) => {
 
   reader.readAsBinaryString(file as any);
 };
+
+export const readXLSXFileForMilitary = (file: any, setFileData: Function) => {
+  const reader = new FileReader();
+
+  reader.onload = (e: any) => {
+    const content = e.target.result;
+    const workbook = XLSX.read(content, { type: 'binary' });
+    const firstSheetName = workbook.SheetNames[0];
+    const worksheet = workbook.Sheets[firstSheetName];
+    const data = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+    const headers: any = data[0];
+
+    const extractedData = data.slice(1).map((row: any) => ({
+      name: row[headers.indexOf('Name')]?.toString(),
+      dateOfBirth: row[headers.indexOf('Date of Birth')]?.toString(),
+      stateOfMilitary: row[headers.indexOf('State of Military')]?.toString(),
+      postponementDate: row[headers.indexOf('Postponement Date')]?.toString(),
+      dateOfConstruction:
+        row[headers.indexOf('Date of Construction')]?.toString(),
+    }));
+
+    const newED = extractedData.filter((data: any) => {
+      if (
+        data?.name?.toString().trim() ||
+        data?.dateOfBirth?.toString().trim() ||
+        data?.stateOfMilitary?.toString().trim() ||
+        data?.postponementDate?.toString().trim() ||
+        data?.dateOfConstruction?.toString().trim()
+      ) {
+        return data;
+      }
+    });
+
+    setFileData((prev: any) => {
+      if (prev.length > 0) {
+        const updatedPrev = [...prev, ...newED];
+        return updatedPrev;
+      }
+      return newED;
+    });
+  };
+
+  reader.readAsBinaryString(file as any);
+};

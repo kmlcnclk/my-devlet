@@ -9,6 +9,7 @@ import {
   readXLSXFileForCriminalRecord,
   readXLSXFileForEducation,
   readXLSXFileForHospital,
+  readXLSXFileForMilitary,
   readXLSXFileForNotary,
   readXLSXFileForTaxDebt,
 } from '@/lib/xlsxFileReaders';
@@ -20,6 +21,7 @@ import {
   readCSVFileForCriminalRecord,
   readCSVFileForEducation,
   readCSVFileForHospital,
+  readCSVFileForMilitary,
   readCSVFileForNotary,
   readCSVFileForTaxDebt,
 } from '@/lib/csvFileReaders';
@@ -29,6 +31,7 @@ import {
   readJSONFileForCriminalRecord,
   readJSONFileForEducation,
   readJSONFileForHospital,
+  readJSONFileForMilitary,
   readJSONFileForNotary,
   readJSONFileForTaxDebt,
 } from '@/lib/jsonFileReaders';
@@ -117,6 +120,8 @@ const Upload: React.FC<Props> = ({
             readXLSXFileForHospital(e.dataTransfer.files[0], setFileData);
           } else if (whichProperty === 'asset') {
             readXLSXFileForAsset(e.dataTransfer.files[0], setFileData);
+          } else if (whichProperty === 'military') {
+            readXLSXFileForMilitary(e.dataTransfer.files[0], setFileData);
           }
         } else if (res == 'text/csv') {
           if (whichProperty === 'education') {
@@ -133,6 +138,8 @@ const Upload: React.FC<Props> = ({
             readCSVFileForHospital(e.dataTransfer.files[0], setFileData);
           } else if (whichProperty === 'asset') {
             readCSVFileForAsset(e.dataTransfer.files[0], setFileData);
+          } else if (whichProperty === 'military') {
+            readCSVFileForMilitary(e.dataTransfer.files[0], setFileData);
           }
         } else if (res == 'application/json') {
           if (whichProperty === 'education') {
@@ -149,6 +156,8 @@ const Upload: React.FC<Props> = ({
             readJSONFileForHospital(e.dataTransfer.files[0], setFileData);
           } else if (whichProperty === 'asset') {
             readJSONFileForAsset(e.dataTransfer.files[0], setFileData);
+          } else if (whichProperty === 'military') {
+            readJSONFileForMilitary(e.dataTransfer.files[0], setFileData);
           }
         }
         setFile(e.dataTransfer.files[0]);
@@ -201,6 +210,8 @@ const Upload: React.FC<Props> = ({
             readXLSXFileForHospital(e.target.files[0], setFileData);
           } else if (whichProperty === 'asset') {
             readXLSXFileForAsset(e.target.files[0], setFileData);
+          } else if (whichProperty === 'military') {
+            readXLSXFileForMilitary(e.target.files[0], setFileData);
           }
         } else if (res == 'text/csv') {
           if (whichProperty === 'education') {
@@ -217,6 +228,8 @@ const Upload: React.FC<Props> = ({
             readCSVFileForHospital(e.target.files[0], setFileData);
           } else if (whichProperty === 'asset') {
             readCSVFileForAsset(e.target.files[0], setFileData);
+          } else if (whichProperty === 'military') {
+            readCSVFileForMilitary(e.target.files[0], setFileData);
           }
         } else if (res == 'application/json') {
           if (whichProperty === 'education') {
@@ -233,6 +246,8 @@ const Upload: React.FC<Props> = ({
             readJSONFileForHospital(e.target.files[0], setFileData);
           } else if (whichProperty === 'asset') {
             readJSONFileForAsset(e.target.files[0], setFileData);
+          } else if (whichProperty === 'military') {
+            readJSONFileForMilitary(e.target.files[0], setFileData);
           }
         }
         setFile(e.target.files[0]);
