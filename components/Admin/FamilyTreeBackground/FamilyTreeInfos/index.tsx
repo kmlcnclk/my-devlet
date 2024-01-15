@@ -313,7 +313,7 @@ const FamilyTreeInfos: React.FC<Props> = ({
             className="titles-label"
             sx={{ fontWeight: '500', fontSize: { xs: '14px', sm: '18px' } }}
           >
-            Father's Name
+            Father&apos;s Name
           </Typography>
           <Box
             component="input"
@@ -347,7 +347,7 @@ const FamilyTreeInfos: React.FC<Props> = ({
             className="titles-label"
             sx={{ fontWeight: '500', fontSize: { xs: '14px', sm: '18px' } }}
           >
-            Mother's Name
+            Mother&apos;s Name
           </Typography>
           <Box
             component="input"
