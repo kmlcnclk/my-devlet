@@ -26,6 +26,18 @@ contract UserContract1 {
         uint256 dateOfConstruction;
     }
 
+    struct FamilyTreeInfo {
+        string gender;
+        string degreeOfRelationship;
+        string name;
+        string surname;
+        string fathersName;
+        string mothersName;
+        uint256 dateOfBirth;
+        string status;
+        uint256 dateOfDeath;
+    }
+
     struct UserAsset {
         AssetInfo[] assetInfos;
         string ipfsHash;
@@ -36,8 +48,14 @@ contract UserContract1 {
         string ipfsHash;
     }
 
+    struct UserFamilyTree {
+        FamilyTreeInfo[] familyTreeInfos;
+        string ipfsHash;
+    }
+
     mapping(string => UserAsset) private assetRecords;
     mapping(string => UserMilitary) private militaryRecords;
+    mapping(string => UserFamilyTree) private familyTreeRecords;
 
     mapping(string => UserData) users;
 
@@ -53,9 +71,16 @@ contract UserContract1 {
         AssetInfo[] assetInfos,
         string ipfsHash
     );
+
     event UserMilitaryUpdated(
         string indexed userId,
         MilitaryInfo[] militrayInfos,
+        string ipfsHash
+    );
+
+    event UserFamilyTreeUpdated(
+        string indexed userId,
+        FamilyTreeInfo[] familyTreeInfos,
         string ipfsHash
     );
 
@@ -209,5 +234,82 @@ contract UserContract1 {
         string memory userId
     ) public view returns (string memory) {
         return militaryRecords[userId].ipfsHash;
+    }
+
+    function setFamilyTreeRecord(
+        string memory userId,
+        string[] memory genders,
+        string[] memory degreeOfRelationships,
+        string[] memory names,
+        string[] memory surnames,
+        string[] memory fathersNames,
+        string[] memory mothersNames,
+        uint256[] memory dateOfBirths,
+        string[] memory statuss,
+        uint256[] memory dateOfDeaths,
+        string memory ipfsHash
+    ) public {
+        require(
+            genders.length == degreeOfRelationships.length &&
+                degreeOfRelationships.length == names.length &&
+                names.length == surnames.length &&
+                surnames.length == fathersNames.length &&
+                fathersNames.length == mothersNames.length &&
+                mothersNames.length == dateOfBirths.length &&
+                dateOfBirths.length == statuss.length &&
+                statuss.length == dateOfDeaths.length,
+            "Input arrays must have the same length"
+        );
+
+        for (uint256 i = 0; i < genders.length; i++) {
+            FamilyTreeInfo memory newFamilyTree = FamilyTreeInfo({
+                gender: genders[i],
+                degreeOfRelationship: degreeOfRelationships[i],
+                name: names[i],
+                surname: surnames[i],
+                fathersName: fathersNames[i],
+                mothersName: mothersNames[i],
+                dateOfBirth: dateOfBirths[i],
+                status: statuss[i],
+                dateOfDeath: dateOfDeaths[i]
+            });
+
+            familyTreeRecords[userId].familyTreeInfos.push(newFamilyTree);
+        }
+
+        familyTreeRecords[userId].ipfsHash = ipfsHash;
+
+        emit UserFamilyTreeUpdated(
+            userId,
+            familyTreeRecords[userId].familyTreeInfos,
+            ipfsHash
+        );
+    }
+
+    function getFamilyTreeRecords(
+        string memory userId
+    ) public view returns (FamilyTreeInfo[] memory) {
+        return familyTreeRecords[userId].familyTreeInfos;
+    }
+
+    function setFamilyTreeIPFSHash(
+        string memory userId,
+        string memory ipfsHash
+    ) public {
+        UserFamilyTree storage userFamilyTree = familyTreeRecords[userId];
+
+        userFamilyTree.ipfsHash = ipfsHash;
+
+        emit UserFamilyTreeUpdated(
+            userId,
+            userFamilyTree.familyTreeInfos,
+            ipfsHash
+        );
+    }
+
+    function getFamilyTreeIPFSHash(
+        string memory userId
+    ) public view returns (string memory) {
+        return familyTreeRecords[userId].ipfsHash;
     }
 }

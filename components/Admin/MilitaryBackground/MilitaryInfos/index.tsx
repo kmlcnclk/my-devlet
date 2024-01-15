@@ -100,7 +100,7 @@ const MilitaryInfos: React.FC<Props> = ({
         setMilitaryInfos([]);
         setRatio(0);
       } else {
-        toast.info('You have to enter at least one bank info');
+        toast.info('You have to enter at least one military info');
       }
     } else {
       toast.info('You have to enter a user id');

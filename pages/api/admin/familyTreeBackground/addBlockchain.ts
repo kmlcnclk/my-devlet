@@ -3,11 +3,11 @@ import { NextApiRequestWithUser } from '@/types/next';
 
 import validateResource from '@/server/middlewares/validateResource';
 import { checkJwtAndUserExist } from '@/server/middlewares/jwt';
-import { AddBlockChainByAdminType } from '@/types/MilitaryBackground';
-import { addBlockChainByAdminSchema } from '@/server/schemas/militaryBackgroundSchema';
-import militaryBackgroundModel, {
-  MilitaryBackgroundDocument,
-} from '@/server/models/militaryModel';
+import { AddBlockChainByAdminType } from '@/types/FamilyTreeBackground';
+import { addBlockChainByAdminSchema } from '@/server/schemas/familyTreeBackgroundSchema';
+import familyTreeBackgroundModel, {
+  FamilyTreeBackgroundDocument,
+} from '@/server/models/familyTreeModel';
 import { get } from 'lodash';
 import SmartContractModel, {
   SmartContractDocument,
@@ -44,10 +44,10 @@ async function handler(req: NextApiRequestWithUser, res: NextApiResponse) {
       const decryptedPrivateKey =
         await UserService.decryptHashedWalletPrivateKey(user.privateKey ?? '');
 
-      const militaryBackground: MilitaryBackgroundDocument =
-        (await militaryBackgroundModel.findById(
+      const familyTreeBackground: FamilyTreeBackgroundDocument =
+        (await familyTreeBackgroundModel.findById(
           addBlockchainData.id
-        )) as MilitaryBackgroundDocument;
+        )) as FamilyTreeBackgroundDocument;
 
       const smartContract: SmartContractDocument =
         (await SmartContractModel.findById(
@@ -55,7 +55,7 @@ async function handler(req: NextApiRequestWithUser, res: NextApiResponse) {
         )) as SmartContractDocument;
 
       // TODO: user address must be admin
-      const militaryBackgroundService = new Web3Service(
+      const familyTreeBackgroundService = new Web3Service(
         smartContract.network,
         smartContract.contractAddressOfUser[1],
         decryptedPrivateKey,
@@ -63,44 +63,63 @@ async function handler(req: NextApiRequestWithUser, res: NextApiResponse) {
         '1'
       );
 
-      const names = militaryBackground.militaryInfos.map((item) => item.name);
+      const genders = familyTreeBackground.familyTreeInfos.map(
+        (item) => item.gender
+      );
+      const degreeOfRelationships = familyTreeBackground.familyTreeInfos.map(
+        (item) => item.degreeOfRelationship
+      );
+      const names = familyTreeBackground.familyTreeInfos.map(
+        (item) => item.name
+      );
+      const surnames = familyTreeBackground.familyTreeInfos.map(
+        (item) => item.surname
+      );
+      const fathersNames = familyTreeBackground.familyTreeInfos.map(
+        (item) => item.fathersName
+      );
+      const mothersNames = familyTreeBackground.familyTreeInfos.map(
+        (item) => item.mothersName
+      );
 
-      const dateOfBirths = militaryBackground.militaryInfos.map((item) =>
+      const dateOfBirths = familyTreeBackground.familyTreeInfos.map((item) =>
         new Date(item.dateOfBirth).getTime()
       );
 
-      const stateOfMilitarys = militaryBackground.militaryInfos.map(
-        (item) => item.stateOfMilitary
-      );
-      const postponementDates = militaryBackground.militaryInfos.map((item) =>
-        new Date(item.postponementDate).getTime()
-      );
-      const dateOfConstructions = militaryBackground.militaryInfos.map((item) =>
-        new Date(item.dateOfConstruction).getTime()
+      const statuss = familyTreeBackground.familyTreeInfos.map(
+        (item) => item.status
       );
 
-      await militaryBackgroundService.setMilitaryRecord(
+      const dateOfDeaths = familyTreeBackground.familyTreeInfos.map((item) =>
+        new Date(item.dateOfDeath).getTime()
+      );
+
+      await familyTreeBackgroundService.setFamilyTreeRecord(
         user.address,
         user.uniqueID,
+        genders,
+        degreeOfRelationships,
         names,
+        surnames,
+        fathersNames,
+        mothersNames,
         dateOfBirths,
-        stateOfMilitarys,
-        postponementDates,
-        dateOfConstructions,
+        statuss,
+        dateOfDeaths,
         addBlockchainData.ipfsHash
       );
 
-      militaryBackground.ipfsHash = await addBlockchainData.ipfsHash;
-      await militaryBackground.save();
+      familyTreeBackground.ipfsHash = await addBlockchainData.ipfsHash;
+      await familyTreeBackground.save();
 
-      const newMilitaryBackground: MilitaryBackgroundDocument =
-        (await militaryBackgroundModel.findById(
-          militaryBackground._id
-        )) as MilitaryBackgroundDocument;
+      const newFamilyTreeBackground: FamilyTreeBackgroundDocument =
+        (await familyTreeBackgroundModel.findById(
+          familyTreeBackground._id
+        )) as FamilyTreeBackgroundDocument;
 
       return res.status(200).json({
-        message: 'Military Background successfully added to blockchain',
-        eb: newMilitaryBackground,
+        message: 'Family Tree Background successfully added to blockchain',
+        eb: newFamilyTreeBackground,
       });
     } catch (err: any) {
       if (err.status) {

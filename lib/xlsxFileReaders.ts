@@ -368,3 +368,64 @@ export const readXLSXFileForMilitary = (file: any, setFileData: Function) => {
 
   reader.readAsBinaryString(file as any);
 };
+
+export const readXLSXFileForFamilyTree = (file: any, setFileData: Function) => {
+  const reader = new FileReader();
+
+  reader.onload = (e: any) => {
+    const content = e.target.result;
+    const workbook = XLSX.read(content, { type: 'binary' });
+    const firstSheetName = workbook.SheetNames[0];
+    const worksheet = workbook.Sheets[firstSheetName];
+    const data = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+    const headers: any = data[0];
+
+    const extractedData = data.slice(1).map((row: any) => ({
+      sequenceNumber: row[headers.indexOf('Sequence Number')]?.toString(),
+      gender: row[headers.indexOf('Gender')]?.toString(),
+      degreeOfRelationship:
+        row[headers.indexOf('Degree of Relationship')]?.toString(),
+      name: row[headers.indexOf('Name')]?.toString(),
+      surname: row[headers.indexOf('Surname')]?.toString(),
+      fathersName: row[headers.indexOf("Father's Name")]?.toString(),
+      mothersName: row[headers.indexOf("Mother's Name")]?.toString(),
+      placeOfBirth: row[headers.indexOf('Place of Birth')]?.toString(),
+      dateOfBirth: row[headers.indexOf('Date of Birth')]?.toString(),
+      cityDistrictNeighbourhoodVillage:
+        row[headers.indexOf('City District Neighbourhood/Village')]?.toString(),
+      maritalStatus: row[headers.indexOf('Marital Status')]?.toString(),
+      status: row[headers.indexOf('Status')]?.toString(),
+      dateOfDeath: row[headers.indexOf('Date of Death')]?.toString(),
+    }));
+
+    const newED = extractedData.filter((data: any) => {
+      if (
+        data?.sequenceNumber?.toString().trim() ||
+        data?.gender?.toString().trim() ||
+        data?.degreeOfRelationship?.toString().trim() ||
+        data?.name?.toString().trim() ||
+        data?.surname?.toString().trim() ||
+        data?.fathersName?.toString().trim() ||
+        data?.mothersName?.toString().trim() ||
+        data?.placeOfBirth?.toString().trim() ||
+        data?.dateOfBirth?.toString().trim() ||
+        data?.cityDistrictNeighbourhoodVillage?.toString().trim() ||
+        data?.maritalStatus?.toString().trim() ||
+        data?.status?.toString().trim() ||
+        data?.dateOfDeath?.toString().trim()
+      ) {
+        return data;
+      }
+    });
+
+    setFileData((prev: any) => {
+      if (prev.length > 0) {
+        const updatedPrev = [...prev, ...newED];
+        return updatedPrev;
+      }
+      return newED;
+    });
+  };
+
+  reader.readAsBinaryString(file as any);
+};

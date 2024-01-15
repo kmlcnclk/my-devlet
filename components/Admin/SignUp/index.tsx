@@ -28,6 +28,7 @@ function SignUp() {
     { text: 'Criminal Record', value: 'criminalRecord' },
     { text: 'Asset', value: 'asset' },
     { text: 'Military', value: 'military' },
+    { text: 'Family Tree', value: 'familyTree' },
   ];
 
   const [signUpData, setSignUpData] = useState<

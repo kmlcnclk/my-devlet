@@ -144,3 +144,27 @@ export const createJSONFileForMilitary = () => {
 
   return { url };
 };
+
+export const createJSONFileForFamilyTree = () => {
+  let newData = [
+    {
+      'Sequence Number': '1',
+      Gender: 'Male',
+      'Degree of Relationship': 'Dad',
+      Name: 'John',
+      Surname: 'Doe',
+      "Father's Name": 'Jack',
+      "Mother's Name": 'Mary',
+      'Place of Birth': 'USA',
+      'Date of Birth': 'Sat Jan 06 2001 19:18:19 GMT+0200 (GMT+02:00)',
+      'City District Neighbourhood/Village': 'Florida',
+      'Marital Status': 'Married',
+      Status: 'Live',
+      'Date of Death': '',
+    },
+  ];
+
+  const url = jsonCreator(newData);
+
+  return { url };
+};

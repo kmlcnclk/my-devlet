@@ -249,6 +249,40 @@ class Web3Service {
     await this._userContract.getMilitaryRecords(from, userId);
   }
 
+  async setFamilyTreeRecord(
+    from: string,
+    userId: string,
+    genders: string[],
+    degreeOfRelationships: string[],
+    names: string[],
+    surnames: string[],
+    fathersNames: string[],
+    mothersNames: string[],
+    dateOfBirths: number[],
+    statuss: string[],
+    dateOfDeaths: number[],
+    ipfsHash: string
+  ): Promise<void> {
+    await this._userContract.setFamilyTreeRecord(
+      from,
+      userId,
+      genders,
+      degreeOfRelationships,
+      names,
+      surnames,
+      fathersNames,
+      mothersNames,
+      dateOfBirths,
+      statuss,
+      dateOfDeaths,
+      ipfsHash
+    );
+  }
+
+  async getFamilyTreeRecords(from: string, userId: string) {
+    await this._userContract.getFamilyTreeRecords(from, userId);
+  }
+
   async setUserData(
     from: string,
     userId: string,
