@@ -154,3 +154,65 @@ export const createCSVFileForAsset = () => {
 
   return { url };
 };
+
+export const createCSVFileForMilitary = () => {
+  let newData = [
+    [
+      'Name',
+      'Date of Birth',
+      'State of Military',
+      'Postponement Date',
+      'Date of Construction',
+    ],
+    [
+      'John Doe',
+      'Sat Jan 06 2001 19:18:19 GMT+0200 (GMT+02:00)',
+      'Postponed',
+      'Sat Jan 06 2024 19:18:19 GMT+0200 (GMT+02:00)',
+      '',
+    ],
+  ];
+
+  const url = csvCreator(newData);
+
+  return { url };
+};
+
+export const createCSVFileForFamilyTree = () => {
+  let newData = [
+    [
+      'Sequence Number',
+      'Gender',
+      'Degree of Relationship',
+      'Name',
+      'Surname',
+      "Father's Name",
+      "Mother's Name",
+      'Place of Birth',
+      'Date of Birth',
+      'City District Neighbourhood/Village',
+      'Marital Status',
+      'Status',
+      'Date of Death',
+    ],
+    [
+      '1',
+      'Male',
+      'Dad',
+      'John',
+      'Doe',
+      'Jack',
+      'Mary',
+      'USA',
+      'Sat Jan 06 2001 19:18:19 GMT+0200 (GMT+02:00)',
+      'Florida',
+      'Married',
+      'Live',
+      '',
+    ],
+  ];
+
+  const url = csvCreator(newData);
+
+  return { url };
+};

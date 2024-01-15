@@ -423,3 +423,141 @@ export const readCSVFileForAsset = (file: any, setFileData: Function) => {
 
   reader.readAsText(file as any);
 };
+
+export const readCSVFileForMilitary = (file: any, setFileData: Function) => {
+  const reader = new FileReader();
+
+  reader.onload = (e: any) => {
+    const content = e.target.result;
+    const newED = parseCSV(content);
+
+    setFileData((prev: any) => {
+      if (prev.length > 0) {
+        const updatedPrev = [...prev, ...newED];
+        return updatedPrev;
+      }
+      return newED;
+    });
+  };
+
+  const parseCSV = (csvString: any) => {
+    const lines = csvString.split('\n');
+    const headers = lines[0].split(',');
+    const extractedData = [];
+    for (let i = 1; i < lines.length; i++) {
+      const row: any = {};
+      const values = lines[i].split(',');
+      for (let j = 0; j < headers.length; j++) {
+        if (headers[j] === 'Name') {
+          row.name = values[j];
+        } else if (headers[j] === 'Date of Birth') {
+          row.dateOfBirth = values[j];
+        } else if (headers[j] === 'State of Military') {
+          row.stateOfMilitary = values[j];
+        } else if (headers[j] === 'Postponement Date') {
+          row.postponementDate = values[j];
+        } else if (headers[j] === 'Date of Construction') {
+          row.dateOfConstruction = values[j];
+        }
+      }
+      extractedData.push(row);
+    }
+
+    const newED = extractedData.filter((data: any) => {
+      if (
+        data?.name?.trim() ||
+        data?.dateOfBirth?.trim() ||
+        data?.stateOfMilitary?.trim() ||
+        data?.postponementDate?.trim() ||
+        data?.dateOfConstruction?.trim()
+      ) {
+        return data;
+      }
+    });
+
+    return newED;
+  };
+
+  reader.readAsText(file as any);
+};
+
+export const readCSVFileForFamilyTree = (file: any, setFileData: Function) => {
+  const reader = new FileReader();
+
+  reader.onload = (e: any) => {
+    const content = e.target.result;
+    const newED = parseCSV(content);
+
+    setFileData((prev: any) => {
+      if (prev.length > 0) {
+        const updatedPrev = [...prev, ...newED];
+        return updatedPrev;
+      }
+      return newED;
+    });
+  };
+
+  const parseCSV = (csvString: any) => {
+    const lines = csvString.split('\n');
+    const headers = lines[0].split(',');
+    const extractedData = [];
+    for (let i = 1; i < lines.length; i++) {
+      const row: any = {};
+      const values = lines[i].split(',');
+      for (let j = 0; j < headers.length; j++) {
+        if (headers[j] === 'Sequence Number') {
+          row.sequenceNumber = values[j];
+        } else if (headers[j] === 'Gender') {
+          row.gender = values[j];
+        } else if (headers[j] === 'Degree of Relationship') {
+          row.degreeOfRelationship = values[j];
+        } else if (headers[j] === 'Name') {
+          row.name = values[j];
+        } else if (headers[j] === 'Surname') {
+          row.surname = values[j];
+        } else if (headers[j] === "Father's Name") {
+          row.fathersName = values[j];
+        } else if (headers[j] === "Mother's Name") {
+          row.mothersName = values[j];
+        } else if (headers[j] === 'Place of Birth') {
+          row.placeOfBirth = values[j];
+        } else if (headers[j] === 'Date of Birth') {
+          row.dateOfBirth = values[j];
+        } else if (headers[j] === 'City District Neighbourhood/Village') {
+          row.cityDistrictNeighbourhoodVillage = values[j];
+        } else if (headers[j] === 'Marital Status') {
+          row.maritalStatus = values[j];
+        } else if (headers[j] === 'Status') {
+          row.status = values[j];
+        } else if (headers[j] === 'Date of Death') {
+          row.dateOfDeath = values[j];
+        }
+      }
+      extractedData.push(row);
+    }
+
+    const newED = extractedData.filter((data: any) => {
+      if (
+        data?.sequenceNumber?.trim() ||
+        data?.gender?.trim() ||
+        data?.degreeOfRelationship?.trim() ||
+        data?.name?.trim() ||
+        data?.surname?.trim() ||
+        data?.fathersName?.trim() ||
+        data?.mothersName?.trim() ||
+        data?.placeOfBirth?.trim() ||
+        data?.dateOfBirth?.trim() ||
+        data?.cityDistrictNeighbourhoodVillage?.trim() ||
+        data?.maritalStatus?.trim() ||
+        data?.status?.trim() ||
+        data?.dateOfDeath?.trim()
+      ) {
+        return data;
+      }
+    });
+
+    return newED;
+  };
+
+  reader.readAsText(file as any);
+};

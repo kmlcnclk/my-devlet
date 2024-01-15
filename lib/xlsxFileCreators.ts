@@ -162,3 +162,65 @@ export const createXLSXFileForAsset = () => {
 
   return { url };
 };
+
+export const createXLSXFileForMilitary = () => {
+  let newData = [
+    [
+      'Name',
+      'Date of Birth',
+      'State of Military',
+      'Postponement Date',
+      'Date of Construction',
+    ],
+    [
+      'John Doe',
+      'Sat Jan 06 2001 19:18:19 GMT+0200 (GMT+02:00)',
+      'Postponed',
+      'Sat Jan 06 2024 19:18:19 GMT+0200 (GMT+02:00)',
+      '',
+    ],
+  ];
+
+  const url = xlsxCreator(newData);
+
+  return { url };
+};
+
+export const createXLSXFileForFamilyTree = () => {
+  let newData = [
+    [
+      'Sequence Number',
+      'Gender',
+      'Degree of Relationship',
+      'Name',
+      'Surname',
+      "Father's Name",
+      "Mother's Name",
+      'Place of Birth',
+      'Date of Birth',
+      'City District Neighbourhood/Village',
+      'Marital Status',
+      'Status',
+      'Date of Death',
+    ],
+    [
+      '1',
+      'Male',
+      'Dad',
+      'John',
+      'Doe',
+      'Jack',
+      'Mary',
+      'USA',
+      'Sat Jan 06 2001 19:18:19 GMT+0200 (GMT+02:00)',
+      'Florida',
+      'Married',
+      'Live',
+      '',
+    ],
+  ];
+
+  const url = xlsxCreator(newData);
+
+  return { url };
+};

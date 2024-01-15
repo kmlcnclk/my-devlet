@@ -12,6 +12,8 @@ import { IoDocumentsSharp } from 'react-icons/io5';
 import { FaMoneyBills } from 'react-icons/fa6';
 import GavelIcon from '@mui/icons-material/Gavel';
 import WebAssetIcon from '@mui/icons-material/WebAsset';
+import MilitaryTechIcon from '@mui/icons-material/MilitaryTech';
+import FamilyRestroomIcon from '@mui/icons-material/FamilyRestroom';
 
 export interface RouterConfigData {
   id: string;
@@ -88,6 +90,24 @@ export const educationConfig: RouterConfigData[] = [
     ml: '50px',
   },
   {
+    id: 'military-background',
+    title: 'Military',
+    type: 'item',
+    icon: <MilitaryTechIcon sx={{ mb: '-4px' }} />,
+    url: '/admin/dashboard/military',
+    children: [],
+    ml: '50px',
+  },
+  {
+    id: 'family-tree-background',
+    title: 'Family Tree',
+    type: 'item',
+    icon: <FamilyRestroomIcon sx={{ mb: '-4px' }} />,
+    url: '/admin/dashboard/family-tree',
+    children: [],
+    ml: '50px',
+  },
+  {
     id: 'smart-contract',
     title: 'Smart Contract',
     type: 'item',
@@ -159,6 +179,24 @@ export const businessConfig: RouterConfigData[] = [
     type: 'item',
     icon: <WebAssetIcon />,
     url: '/admin/dashboard/add-blockchain/asset',
+    children: [],
+    ml: '50px',
+  },
+  {
+    id: 'military-background',
+    title: 'Military',
+    type: 'item',
+    icon: <MilitaryTechIcon sx={{ mb: '-4px' }} />,
+    url: '/admin/dashboard/add-blockchain/military',
+    children: [],
+    ml: '50px',
+  },
+  {
+    id: 'family-tree-background',
+    title: 'Family Tree',
+    type: 'item',
+    icon: <FamilyRestroomIcon />,
+    url: '/admin/dashboard/add-blockchain/family-tree',
     children: [],
     ml: '50px',
   },

@@ -37,6 +37,8 @@ const adminSchema = new mongoose.Schema(
         'taxDebt',
         'criminalRecord',
         'asset',
+        'military',
+        'familyTree',
       ],
     },
     resetPasswordToken: {
