@@ -168,10 +168,10 @@ function FamilyTreeBackground() {
                   <strong>Surname</strong>
                 </TableCell>
                 <TableCell>
-                  <strong>Father's Name</strong>
+                  <strong>Father&apos;s Name</strong>
                 </TableCell>
                 <TableCell>
-                  <strong>Mother's Name</strong>
+                  <strong>Mother&apos;s Name</strong>
                 </TableCell>
                 <TableCell>
                   <strong>Place of Birth</strong>
