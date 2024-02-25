@@ -78,6 +78,12 @@ class SmartContractService {
     } catch (err: any) {
       if (err.error.message.indexOf('insufficient funds') != -1)
         throw new CustomError('Web3 JS Error', 'Insufficient funds', 500);
+      else if (err.error.message.indexOf('gas less than'))
+        throw new CustomError(
+          'Web3 JS Error',
+          'Gas is not enough for process',
+          500
+        );
       else throw new CustomError('Web3 JS Error', err.error.message, 500);
     }
   }
@@ -131,6 +137,12 @@ class SmartContractService {
     } catch (err: any) {
       if (err.error.message.indexOf('insufficient funds') != -1)
         throw new CustomError('Web3 JS Error', 'Insufficient funds', 500);
+      else if (err.error.message.indexOf('gas less than'))
+        throw new CustomError(
+          'Web3 JS Error',
+          'Gas is not enough for process',
+          500
+        );
       else throw new CustomError('Web3 JS Error', err.error.message, 500);
     }
   }
