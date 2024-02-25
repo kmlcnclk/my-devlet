@@ -30,7 +30,7 @@ function AppPage({
       <Provider store={store}>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <Head>
-            <title>My Devlet</title>
+            <title>Smart Neast</title>
             <meta
               name="viewport"
               content="width=device-width, initial-scale=1"
