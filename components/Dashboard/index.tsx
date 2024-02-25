@@ -59,7 +59,7 @@ function Dashboard() {
             }}
             className={inter.className}
           >
-            You have gained early access to My Devlet&apos;s unique Web3.0
+            You have gained early access to Smart Neast&apos;s unique Web3.0
             technology solutions.
           </Typography>
         </Box>
