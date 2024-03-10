@@ -29,7 +29,7 @@ function NftInfo() {
             textAlign: { xs: 'center', md: 'left' },
           }}
         >
-          What can you learn at Smart Neast?
+          What can you learn at Smartchain?
         </Typography>
         <Infos />
       </Box>
