@@ -8,6 +8,7 @@ import UserService from '@/server/services/UserService';
 import UserDAO from '@/server/data/UserDAO';
 import MongoDB from '@/server/lib/Mongoose';
 import { openMongooseConnection } from '@/server/middlewares/openDBConnection';
+import { corsForDigitalCampus } from '@/server/middlewares/cors';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
@@ -50,6 +51,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-export default openMongooseConnection(
-  validateResource(handler, generateJwtTokenSchema)
+export default corsForDigitalCampus(
+  openMongooseConnection(validateResource(handler, generateJwtTokenSchema))
 );

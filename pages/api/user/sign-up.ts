@@ -14,6 +14,7 @@ import UserService from '@/server/services/UserService';
 import { EthereumKeyPair } from '@/server/lib/EthereumKeyPair';
 import MongoDB from '@/server/lib/Mongoose';
 import { openMongooseConnection } from '@/server/middlewares/openDBConnection';
+import { corsForDigitalCampus } from '@/server/middlewares/cors';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
@@ -54,6 +55,8 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-export default openMongooseConnection(
-  validateResource(isUserEmailExists(handler), createUserSchema)
+export default corsForDigitalCampus(
+  openMongooseConnection(
+    validateResource(isUserEmailExists(handler), createUserSchema)
+  )
 );

@@ -34,6 +34,7 @@
     "lodash": "^4.17.21",
     "mongoose": "^7.5.3",
     "next": "latest",
+    "nextjs-cors": "^2.2.0",
     "node-rsa": "^1.1.1",
     "react": "latest",
     "react-dom": "latest",
