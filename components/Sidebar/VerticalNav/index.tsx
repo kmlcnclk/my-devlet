@@ -26,8 +26,15 @@ function VerticalNav() {
       >
         <Box
           component="img"
-          src="/images/neu.png"
-          sx={{ width: "200px", objectFit: "contain" }}
+          src="/images/rcaiot-logo.png"
+          sx={{
+            width: "250px",
+            background: "#f3f3f3",
+            height: "100px",
+            borderRadius: "20px",
+            p: "10px",
+            objectFit: "contain",
+          }}
         />
       </Box>
 
