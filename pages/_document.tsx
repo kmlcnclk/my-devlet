@@ -16,7 +16,7 @@ class MyDocument extends Document {
           <script
             dangerouslySetInnerHTML={{
               __html: `
-            window.gtranslateSettings = {"default_language":"en","native_language_names":true,"languages":["en","tr","ru","uk","ar","es","ko","de"],"wrapper_selector":".gtranslate_wrapper","switcher_horizontal_position":"right"}
+            window.gtranslateSettings = {"default_language":"en","native_language_names":true,"languages":["en","tr","ru","uk","de","ar","es","ko","zh-CN"],"wrapper_selector":".gtranslate_wrapper","switcher_horizontal_position":"right"}
             `,
             }}
           />

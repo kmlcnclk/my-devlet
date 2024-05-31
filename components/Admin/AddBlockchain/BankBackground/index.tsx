@@ -1,4 +1,4 @@
-import { getAdminAccessTokenFromLocalStorage } from '@/localstorage/adminAccessTokenStorage';
+import { getAdminAccessTokenFromLocalStorage } from "@/localstorage/adminAccessTokenStorage";
 import {
   Box,
   Button,
@@ -6,23 +6,26 @@ import {
   MenuItem,
   Select,
   Typography,
-} from '@mui/material';
-import React, { useRef, useState } from 'react';
-import { toast } from 'react-toastify';
-import BankInfoTable from './BankInfoTable';
-import html2canvas from 'html2canvas';
-import jsPDF from 'jspdf';
-import { ipfsUploader } from '@/src/ipfsUploader';
+} from "@mui/material";
+import React, { useEffect, useRef, useState } from "react";
+import { toast } from "react-toastify";
+import BankInfoTable from "./BankInfoTable";
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
+import { ipfsUploader } from "@/src/ipfsUploader";
 import {
   AddBlockChainByAdminType,
   BankBackgroundReturnType,
-} from '@/types/BankBackground';
-import { Inter } from 'next/font/google';
-import { RootState } from '@/store';
-import { useSelector } from 'react-redux';
-import { SmartContractReturnType } from '@/types/SmartContract';
+} from "@/types/BankBackground";
+import { Inter } from "next/font/google";
+import { RootState } from "@/store";
+import { useSelector } from "react-redux";
+import { SmartContractReturnType } from "@/types/SmartContract";
+import { ReturnedUserType } from "@/types/User";
+import SelectUserModal from "../../SelectUserModal";
+import { fetchUsers } from "../../FetchUsers";
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({ subsets: ["latin"] });
 
 function BankBackground() {
   const [bankBackground, setBankBackground] =
@@ -30,21 +33,26 @@ function BankBackground() {
   const bankTableRef = useRef(null);
 
   const [isLoading, setIsLoading] = useState(false);
-  const [smartContract, setSmartContract] = useState<string>('');
-  const [bankId, setBankId] = useState<string>('');
-  const [userId, setUserId] = useState<string>('');
-  const [isBankSelected, setIsBankSelected] = useState<boolean>(false);
+  const [smartContract, setSmartContract] = useState<string>("");
+  const [userId, setUserId] = useState<string>("");
+  const [isUserSelected, setIsUserSelected] = useState<boolean>(false);
+  const [users, setUsers] = useState<ReturnedUserType[]>([]);
+  const [userName, setUserName] = useState<string>("");
 
   const smartContracts: SmartContractReturnType[] = useSelector(
     (state: RootState) => state.smartContractForAdmin.values
   ) as SmartContractReturnType[];
 
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
   const addIPFS = async () => {
     const input = bankTableRef.current;
     if (input)
       return html2canvas(input).then(async (canvas) => {
-        const imgData = canvas.toDataURL('image/png');
-        const pdf = new jsPDF('p', 'mm', 'a4', true);
+        const imgData = canvas.toDataURL("image/png");
+        const pdf = new jsPDF("p", "mm", "a4", true);
         const pdfWidth = pdf.internal.pageSize.getWidth();
         const pdfHeight = pdf.internal.pageSize.getHeight();
         const imgWidth = canvas.width;
@@ -54,13 +62,13 @@ function BankBackground() {
         const imgY = 30;
         pdf.addImage(
           imgData,
-          'PNG',
+          "PNG",
           imgX,
           imgY,
           imgWidth * ratio,
           imgHeight * ratio
         );
-        const pdfBuffer = await pdf.output('arraybuffer');
+        const pdfBuffer = await pdf.output("arraybuffer");
 
         const hash = await ipfsUploader(pdfBuffer);
 
@@ -77,15 +85,15 @@ function BankBackground() {
       if (ipfsHash) {
         const addBlockchainData: AddBlockChainByAdminType = {
           userId: userId,
-          id: bankId,
+          id: bankBackground._id,
           smartContract: smartContract,
           ipfsHash,
         };
 
-        const res = await fetch('/api/admin/bankBackground/addBlockchain', {
-          method: 'POST',
+        const res = await fetch("/api/admin/bankBackground/addBlockchain", {
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
             Authorization: `Bearer ${getAdminAccessTokenFromLocalStorage()}`,
           },
           body: JSON.stringify(addBlockchainData),
@@ -104,18 +112,21 @@ function BankBackground() {
         }
       }
     } else {
-      toast.info('Bank Background could not found');
+      toast.info("Bank Background could not found");
     }
   };
 
   const getBank = async () => {
-    const res = await fetch(`/api/admin/bankBackground/getById?id=${bankId}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${getAdminAccessTokenFromLocalStorage()}`,
-      },
-    });
+    const res = await fetch(
+      `/api/admin/bankBackground/getByUserId?userId=${userId}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${getAdminAccessTokenFromLocalStorage()}`,
+        },
+      }
+    );
 
     const data = await res.json();
     if (!res.ok) {
@@ -124,14 +135,20 @@ function BankBackground() {
       else if (data[0]) toast.error(data[0].message);
     } else {
       setBankBackground(data.bankBackground);
-      toast.success('Bank is successfully found');
+      toast.success("Bank is successfully found");
     }
   };
+
+  useEffect(() => {
+    if (isUserSelected) {
+      getBank();
+    }
+  }, [isUserSelected]);
 
   return (
     <Box
       sx={{
-        mt: '20px',
+        mt: "20px",
       }}
     >
       {bankBackground ? (
@@ -143,117 +160,96 @@ function BankBackground() {
           component="form"
           onSubmit={addBlockChain}
           sx={{
-            p: { xs: '15px', sm: '23px' },
+            p: { xs: "15px", sm: "23px" },
           }}
         >
           <Box
             sx={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: { xs: 'flex-start' },
-              flexDirection: 'column',
-              width: '100%',
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "flex-end",
+              flexDirection: { xs: "column", sm: "row" },
+              width: "100%",
+              my: "30px",
             }}
           >
-            <Typography
-              className={inter.className}
-              sx={{ color: '#666666', fontWeight: '500', fontSize: '14px' }}
-            >
-              Bank Id:
-            </Typography>
             <Box
-              component="input"
-              required
-              disabled={Boolean(bankId) && isBankSelected}
-              value={bankId}
-              onChange={(e: any) => setBankId(e.target.value)}
               sx={{
-                height: '40px',
-                width: '100%',
-                bgcolor: '#F8F9F8',
-                color: '#666666',
-                border: '0.2px solid #8F8F8F',
-                boxShadow: '0px 3px 20px rgba(0, 0, 0, 0.1)',
-                borderRadius: '10px',
-                px: '15px',
-                '&:focus': {
-                  outline: 'none',
+                display: "flex",
+                justifyContent: "center",
+                alignItems: { xs: "flex-start" },
+                flexDirection: "column",
+                width: "100%",
+              }}
+            >
+              <Typography
+                className="titles-label"
+                sx={{ fontWeight: "500", fontSize: { xs: "14px", sm: "18px" } }}
+              >
+                User Name:
+              </Typography>
+              <Box
+                component="input"
+                required
+                value={userName}
+                onChange={(e: any) => setUserName(e.target.value)}
+                sx={{
+                  height: "40px",
+                  width: "100%",
+                  bgcolor: "#F8F9F8",
+                  color: "#666666",
+                  border: "0.2px solid #8F8F8F",
+                  boxShadow: "0px 3px 20px rgba(0, 0, 0, 0.1)",
+                  borderRadius: "10px",
+                  px: "15px",
+                  "&:focus": {
+                    outline: "none",
+                  },
+                }}
+              />
+            </Box>
+
+            <Button
+              onClick={async () => {
+                if (userName) {
+                  await fetchUsers(userName, setUsers, handleOpen);
+                } else {
+                  toast.info("You have to write user's name");
+                }
+              }}
+              type="button"
+              sx={{
+                ml: { xs: "0px", sm: "20px" },
+                color: "#FFFDFF",
+                fontWeight: "500",
+                fontSize: "15px",
+                height: "40px",
+                width: { xs: "100%", sm: "49%" },
+                mt: "27px",
+                borderRadius: { xs: "10px", sm: "15px" },
+                bgcolor: "#317DED",
+                border: "2px solid #317DED",
+                boxShadow: "0px 4px 10px 0px #00000040",
+                "&:hover": {
+                  scale: "1.02",
+                  transition: "transform 0.3s ease",
                 },
               }}
-            />
-          </Box>
-          <Button
-            onClick={() => {
-              if (bankId) {
-                setIsBankSelected(true);
-                getBank();
-              } else {
-                toast.info('You have to enter an bank id');
-              }
-            }}
-            type="button"
-            sx={{
-              color: '#FFFDFF',
-              fontWeight: '500',
-              fontSize: '15px',
-              height: '45px',
-              width: '100%',
-              mt: '27px',
-              borderRadius: '10px',
-              bgcolor: '#317DED',
-              border: '2px solid #317DED',
-              boxShadow: '0px 4px 10px 0px #00000040',
-            }}
-            variant="contained"
-          >
-            Select
-          </Button>
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: { xs: 'flex-start' },
-              flexDirection: 'column',
-              width: '100%',
-              mt: '30px',
-            }}
-          >
-            <Typography
-              className={inter.className}
-              sx={{ color: '#666666', fontWeight: '500', fontSize: '14px' }}
+              variant="contained"
             >
-              User Id:
-            </Typography>
-            <Box
-              component="input"
-              required
-              value={userId}
-              onChange={(e: any) => setUserId(e.target.value)}
-              sx={{
-                height: '40px',
-                width: '100%',
-                bgcolor: '#F8F9F8',
-                color: '#666666',
-                border: '0.2px solid #8F8F8F',
-                boxShadow: '0px 3px 20px rgba(0, 0, 0, 0.1)',
-                borderRadius: '10px',
-                px: '15px',
-                '&:focus': {
-                  outline: 'none',
-                },
-              }}
-            />
+              Search
+            </Button>
           </Box>
 
           <Box
             sx={{
-              width: '100%',
-              mt: '30px',
+              width: "100%",
+              mt: "30px",
             }}
           >
             <Typography
               className={inter.className}
-              sx={{ color: '#666666', fontWeight: '500', fontSize: '14px' }}
+              sx={{ color: "#666666", fontWeight: "500", fontSize: "14px" }}
             >
               Choose Your Wallet:
             </Typography>
@@ -264,17 +260,17 @@ function BankBackground() {
               onChange={(e) => setSmartContract(e.target.value)}
               className={inter.className}
               sx={{
-                bgcolor: '#F8F9F8',
-                boxShadow: '0px 3px 20px rgba(0, 0, 0, 0.1)',
-                borderRadius: '10px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                p: '0px',
-                color: '#666666',
-                height: '40px',
-                '&:focus': {
-                  outline: 'none',
+                bgcolor: "#F8F9F8",
+                boxShadow: "0px 3px 20px rgba(0, 0, 0, 0.1)",
+                borderRadius: "10px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                p: "0px",
+                color: "#666666",
+                height: "40px",
+                "&:focus": {
+                  outline: "none",
                 },
               }}
             >
@@ -283,21 +279,21 @@ function BankBackground() {
                   key={smartContract?._id}
                   value={smartContract?._id}
                   sx={{
-                    color: '#666666',
-                    fontWeight: '400',
-                    fontSize: '13px',
-                    display: 'flex',
-                    alignItems: 'center',
+                    color: "#666666",
+                    fontWeight: "400",
+                    fontSize: "13px",
+                    display: "flex",
+                    alignItems: "center",
                   }}
                   className={inter.className}
                 >
                   <Typography
                     className={inter.className}
                     sx={{
-                      color: '#666666',
+                      color: "#666666",
                       fontWeight: 500,
-                      fontSize: '12px',
-                      display: 'inline-block',
+                      fontSize: "12px",
+                      display: "inline-block",
                     }}
                   >
                     {smartContract?.name}
@@ -310,32 +306,32 @@ function BankBackground() {
               disabled={isLoading}
               type="submit"
               sx={{
-                color: '#FFFDFF',
-                fontWeight: '500',
-                fontSize: '13px',
-                height: { xs: '39px', md: '49px' },
-                width: '100%',
-                mt: '30px',
-                display: 'inline',
-                borderRadius: '15px',
-                bgcolor: '#317DED',
-                border: '2px solid #317DED',
-                boxShadow: '0px 4px 10px 0px #00000040',
+                color: "#FFFDFF",
+                fontWeight: "500",
+                fontSize: "13px",
+                height: { xs: "39px", md: "49px" },
+                width: "100%",
+                mt: "30px",
+                display: "inline",
+                borderRadius: "15px",
+                bgcolor: "#317DED",
+                border: "2px solid #317DED",
+                boxShadow: "0px 4px 10px 0px #00000040",
               }}
               variant="contained"
             >
               {isLoading ? (
                 <CircularProgress
                   size={24}
-                  sx={{ color: '#317DED', mt: '4px' }}
+                  sx={{ color: "#317DED", mt: "4px" }}
                 />
               ) : (
                 <Typography
                   className={inter.className}
                   sx={{
-                    color: '#f3f3f3',
-                    fontWeight: '500',
-                    fontSize: '14px',
+                    color: "#f3f3f3",
+                    fontWeight: "500",
+                    fontSize: "14px",
                   }}
                 >
                   Add to Blockchain
@@ -347,24 +343,27 @@ function BankBackground() {
       ) : (
         <Box
           sx={{
-            height: '70vh',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
+            height: "70vh",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
           }}
         >
           <Typography
             className={inter.className}
             sx={{
-              color: '#555',
+              color: "#555",
               fontWeight: 500,
-              fontSize: '16px',
+              fontSize: "16px",
             }}
           >
             You don&apos;t have any smart contract
           </Typography>
         </Box>
       )}
+      <SelectUserModal
+        {...{ handleClose, users, open, userId, setUserId, setIsUserSelected }}
+      />
     </Box>
   );
 }
