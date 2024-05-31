@@ -1,8 +1,8 @@
-import Web3, { EthExecutionAPI, SupportedProviders } from 'web3';
-import userContractArtifact from '../../contracts/UserContract.json';
-import userContractArtifact1 from '../../contracts/UserContract1.json';
-import HDWalletProvider from '@truffle/hdwallet-provider';
-import CustomError from '@/server/errors/CustomError';
+import Web3, { EthExecutionAPI, SupportedProviders } from "web3";
+import userContractArtifact from "../../contracts/UserContract.json";
+import userContractArtifact1 from "../../contracts/UserContract1.json";
+import HDWalletProvider from "@truffle/hdwallet-provider";
+import CustomError from "@/server/errors/CustomError";
 
 export default class UserContract {
   private _web3: Web3;
@@ -29,12 +29,12 @@ export default class UserContract {
 
     this._web3 = new Web3(provider);
 
-    if (whichContract === '0') {
+    if (whichContract === "0") {
       this._contract = new this._web3.eth.Contract(
         userContractArtifact.abi,
         contractAddress
       );
-    } else if (whichContract === '1') {
+    } else if (whichContract === "1") {
       this._contract = new this._web3.eth.Contract(
         userContractArtifact1.abi,
         contractAddress
@@ -48,11 +48,15 @@ export default class UserContract {
 
   private whichNetwork(network: string) {
     switch (network.toLowerCase()) {
-      case 'Binance Smart Chain':
+      case "Binance Smart Chain":
+        return process.env.INFURA_BSC_PROVIDER;
+      case "Binance Smart Chain Testnet":
         return process.env.INFURA_BSC_TESTNET_PROVIDER;
-      case 'ethereum':
+      case "ethereum":
+        return process.env.INFURA_ETHEREUM_PROVIDER;
+      case "sepolia":
         return process.env.INFURA_ETHEREUM_TESTNET_PROVIDER;
-      case 'polygon':
+      case "polygon":
         return process.env.INFURA_POLYGON_TESTNET_PROVIDER;
       default:
         return process.env.INFURA_BSC_TESTNET_PROVIDER;
@@ -103,10 +107,10 @@ export default class UserContract {
         signedTransaction.rawTransaction
       );
     } catch (err: any) {
-      if (err.error.message.indexOf('insufficient funds') != -1) {
-        throw new CustomError('Web3 JS Error', 'Insufficient funds', 500);
+      if (err.error.message.indexOf("insufficient funds") != -1) {
+        throw new CustomError("Web3 JS Error", "Insufficient funds", 500);
       } else {
-        throw new CustomError('Web3 JS Error', err.error.message, 500);
+        throw new CustomError("Web3 JS Error", err.error.message, 500);
       }
     }
   }
@@ -120,10 +124,10 @@ export default class UserContract {
         .getEducationRecords(userId)
         .call();
     } catch (err: any) {
-      if (err.error.message.indexOf('insufficient funds') != -1) {
-        throw new CustomError('Web3 JS Error', 'Insufficient funds', 500);
+      if (err.error.message.indexOf("insufficient funds") != -1) {
+        throw new CustomError("Web3 JS Error", "Insufficient funds", 500);
       } else {
-        throw new CustomError('Web3 JS Error', err.error.message, 500);
+        throw new CustomError("Web3 JS Error", err.error.message, 500);
       }
     }
   }
@@ -172,10 +176,10 @@ export default class UserContract {
         signedTransaction.rawTransaction
       );
     } catch (err: any) {
-      if (err.error.message.indexOf('insufficient funds') != -1) {
-        throw new CustomError('Web3 JS Error', 'Insufficient funds', 500);
+      if (err.error.message.indexOf("insufficient funds") != -1) {
+        throw new CustomError("Web3 JS Error", "Insufficient funds", 500);
       } else {
-        throw new CustomError('Web3 JS Error', err.error.message, 500);
+        throw new CustomError("Web3 JS Error", err.error.message, 500);
       }
     }
   }
@@ -184,10 +188,10 @@ export default class UserContract {
     try {
       const mintTx = await this._contract.methods.getBankRecords(userId).call();
     } catch (err: any) {
-      if (err.error.message.indexOf('insufficient funds') != -1) {
-        throw new CustomError('Web3 JS Error', 'Insufficient funds', 500);
+      if (err.error.message.indexOf("insufficient funds") != -1) {
+        throw new CustomError("Web3 JS Error", "Insufficient funds", 500);
       } else {
-        throw new CustomError('Web3 JS Error', err.error.message, 500);
+        throw new CustomError("Web3 JS Error", err.error.message, 500);
       }
     }
   }
@@ -244,10 +248,10 @@ export default class UserContract {
         signedTransaction.rawTransaction
       );
     } catch (err: any) {
-      if (err.error.message.indexOf('insufficient funds') != -1) {
-        throw new CustomError('Web3 JS Error', 'Insufficient funds', 500);
+      if (err.error.message.indexOf("insufficient funds") != -1) {
+        throw new CustomError("Web3 JS Error", "Insufficient funds", 500);
       } else {
-        throw new CustomError('Web3 JS Error', err.error.message, 500);
+        throw new CustomError("Web3 JS Error", err.error.message, 500);
       }
     }
   }
@@ -258,10 +262,10 @@ export default class UserContract {
         .getHospitalRecords(userId)
         .call();
     } catch (err: any) {
-      if (err.error.message.indexOf('insufficient funds') != -1) {
-        throw new CustomError('Web3 JS Error', 'Insufficient funds', 500);
+      if (err.error.message.indexOf("insufficient funds") != -1) {
+        throw new CustomError("Web3 JS Error", "Insufficient funds", 500);
       } else {
-        throw new CustomError('Web3 JS Error', err.error.message, 500);
+        throw new CustomError("Web3 JS Error", err.error.message, 500);
       }
     }
   }
@@ -314,10 +318,10 @@ export default class UserContract {
         signedTransaction.rawTransaction
       );
     } catch (err: any) {
-      if (err.error.message.indexOf('insufficient funds') != -1) {
-        throw new CustomError('Web3 JS Error', 'Insufficient funds', 500);
+      if (err.error.message.indexOf("insufficient funds") != -1) {
+        throw new CustomError("Web3 JS Error", "Insufficient funds", 500);
       } else {
-        throw new CustomError('Web3 JS Error', err.error.message, 500);
+        throw new CustomError("Web3 JS Error", err.error.message, 500);
       }
     }
   }
@@ -328,10 +332,10 @@ export default class UserContract {
         .getNotaryRecords(userId)
         .call();
     } catch (err: any) {
-      if (err.error.message.indexOf('insufficient funds') != -1) {
-        throw new CustomError('Web3 JS Error', 'Insufficient funds', 500);
+      if (err.error.message.indexOf("insufficient funds") != -1) {
+        throw new CustomError("Web3 JS Error", "Insufficient funds", 500);
       } else {
-        throw new CustomError('Web3 JS Error', err.error.message, 500);
+        throw new CustomError("Web3 JS Error", err.error.message, 500);
       }
     }
   }
@@ -385,10 +389,10 @@ export default class UserContract {
         signedTransaction.rawTransaction
       );
     } catch (err: any) {
-      if (err.error.message.indexOf('insufficient funds') != -1) {
-        throw new CustomError('Web3 JS Error', 'Insufficient funds', 500);
+      if (err.error.message.indexOf("insufficient funds") != -1) {
+        throw new CustomError("Web3 JS Error", "Insufficient funds", 500);
       } else {
-        throw new CustomError('Web3 JS Error', err.error.message, 500);
+        throw new CustomError("Web3 JS Error", err.error.message, 500);
       }
     }
   }
@@ -399,10 +403,10 @@ export default class UserContract {
         .getTaxDebtRecords(userId)
         .call();
     } catch (err: any) {
-      if (err.error.message.indexOf('insufficient funds') != -1) {
-        throw new CustomError('Web3 JS Error', 'Insufficient funds', 500);
+      if (err.error.message.indexOf("insufficient funds") != -1) {
+        throw new CustomError("Web3 JS Error", "Insufficient funds", 500);
       } else {
-        throw new CustomError('Web3 JS Error', err.error.message, 500);
+        throw new CustomError("Web3 JS Error", err.error.message, 500);
       }
     }
   }
@@ -461,10 +465,10 @@ export default class UserContract {
         signedTransaction.rawTransaction
       );
     } catch (err: any) {
-      if (err.error.message.indexOf('insufficient funds') != -1) {
-        throw new CustomError('Web3 JS Error', 'Insufficient funds', 500);
+      if (err.error.message.indexOf("insufficient funds") != -1) {
+        throw new CustomError("Web3 JS Error", "Insufficient funds", 500);
       } else {
-        throw new CustomError('Web3 JS Error', err.error.message, 500);
+        throw new CustomError("Web3 JS Error", err.error.message, 500);
       }
     }
   }
@@ -478,10 +482,10 @@ export default class UserContract {
         .getCriminalRecordRecords(userId)
         .call();
     } catch (err: any) {
-      if (err.error.message.indexOf('insufficient funds') != -1) {
-        throw new CustomError('Web3 JS Error', 'Insufficient funds', 500);
+      if (err.error.message.indexOf("insufficient funds") != -1) {
+        throw new CustomError("Web3 JS Error", "Insufficient funds", 500);
       } else {
-        throw new CustomError('Web3 JS Error', err.error.message, 500);
+        throw new CustomError("Web3 JS Error", err.error.message, 500);
       }
     }
   }
@@ -536,10 +540,10 @@ export default class UserContract {
         signedTransaction.rawTransaction
       );
     } catch (err: any) {
-      if (err.error.message.indexOf('insufficient funds') != -1) {
-        throw new CustomError('Web3 JS Error', 'Insufficient funds', 500);
+      if (err.error.message.indexOf("insufficient funds") != -1) {
+        throw new CustomError("Web3 JS Error", "Insufficient funds", 500);
       } else {
-        throw new CustomError('Web3 JS Error', err.error.message, 500);
+        throw new CustomError("Web3 JS Error", err.error.message, 500);
       }
     }
   }
@@ -550,10 +554,10 @@ export default class UserContract {
         .getAssetRecords(userId)
         .call();
     } catch (err: any) {
-      if (err.error.message.indexOf('insufficient funds') != -1) {
-        throw new CustomError('Web3 JS Error', 'Insufficient funds', 500);
+      if (err.error.message.indexOf("insufficient funds") != -1) {
+        throw new CustomError("Web3 JS Error", "Insufficient funds", 500);
       } else {
-        throw new CustomError('Web3 JS Error', err.error.message, 500);
+        throw new CustomError("Web3 JS Error", err.error.message, 500);
       }
     }
   }
@@ -604,10 +608,10 @@ export default class UserContract {
         signedTransaction.rawTransaction
       );
     } catch (err: any) {
-      if (err.error.message.indexOf('insufficient funds') != -1) {
-        throw new CustomError('Web3 JS Error', 'Insufficient funds', 500);
+      if (err.error.message.indexOf("insufficient funds") != -1) {
+        throw new CustomError("Web3 JS Error", "Insufficient funds", 500);
       } else {
-        throw new CustomError('Web3 JS Error', err.error.message, 500);
+        throw new CustomError("Web3 JS Error", err.error.message, 500);
       }
     }
   }
@@ -618,10 +622,10 @@ export default class UserContract {
         .getMilitaryRecords(userId)
         .call();
     } catch (err: any) {
-      if (err.error.message.indexOf('insufficient funds') != -1) {
-        throw new CustomError('Web3 JS Error', 'Insufficient funds', 500);
+      if (err.error.message.indexOf("insufficient funds") != -1) {
+        throw new CustomError("Web3 JS Error", "Insufficient funds", 500);
       } else {
-        throw new CustomError('Web3 JS Error', err.error.message, 500);
+        throw new CustomError("Web3 JS Error", err.error.message, 500);
       }
     }
   }
@@ -680,10 +684,10 @@ export default class UserContract {
         signedTransaction.rawTransaction
       );
     } catch (err: any) {
-      if (err.error.message.indexOf('insufficient funds') != -1) {
-        throw new CustomError('Web3 JS Error', 'Insufficient funds', 500);
+      if (err.error.message.indexOf("insufficient funds") != -1) {
+        throw new CustomError("Web3 JS Error", "Insufficient funds", 500);
       } else {
-        throw new CustomError('Web3 JS Error', err.error.message, 500);
+        throw new CustomError("Web3 JS Error", err.error.message, 500);
       }
     }
   }
@@ -697,10 +701,10 @@ export default class UserContract {
         .getFamilyTreeRecords(userId)
         .call();
     } catch (err: any) {
-      if (err.error.message.indexOf('insufficient funds') != -1) {
-        throw new CustomError('Web3 JS Error', 'Insufficient funds', 500);
+      if (err.error.message.indexOf("insufficient funds") != -1) {
+        throw new CustomError("Web3 JS Error", "Insufficient funds", 500);
       } else {
-        throw new CustomError('Web3 JS Error', err.error.message, 500);
+        throw new CustomError("Web3 JS Error", err.error.message, 500);
       }
     }
   }
@@ -709,10 +713,10 @@ export default class UserContract {
     try {
       const mintTx = await this._contract.methods.getUserData(userId).call();
     } catch (err: any) {
-      if (err.error.message.indexOf('insufficient funds') != -1) {
-        throw new CustomError('Web3 JS Error', 'Insufficient funds', 500);
+      if (err.error.message.indexOf("insufficient funds") != -1) {
+        throw new CustomError("Web3 JS Error", "Insufficient funds", 500);
       } else {
-        throw new CustomError('Web3 JS Error', err.error.message, 500);
+        throw new CustomError("Web3 JS Error", err.error.message, 500);
       }
     }
   }
@@ -750,10 +754,10 @@ export default class UserContract {
         signedTransaction.rawTransaction
       );
     } catch (err: any) {
-      if (err.error.message.indexOf('insufficient funds') != -1) {
-        throw new CustomError('Web3 JS Error', 'Insufficient funds', 500);
+      if (err.error.message.indexOf("insufficient funds") != -1) {
+        throw new CustomError("Web3 JS Error", "Insufficient funds", 500);
       } else {
-        throw new CustomError('Web3 JS Error', err.error.message, 500);
+        throw new CustomError("Web3 JS Error", err.error.message, 500);
       }
     }
   }

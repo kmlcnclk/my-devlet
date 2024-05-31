@@ -1,28 +1,32 @@
-import smartContractModel from '../models/smartContractModel';
-import Web3, { EthExecutionAPI, SupportedProviders } from 'web3';
-import HDWalletProvider from '@truffle/hdwallet-provider';
-import userContractArtifact from '../contracts/UserContract.json';
-import userContractArtifact1 from '../contracts/UserContract1.json';
-import CustomError from '../errors/CustomError';
+import smartContractModel from "../models/smartContractModel";
+import Web3, { EthExecutionAPI, SupportedProviders } from "web3";
+import HDWalletProvider from "@truffle/hdwallet-provider";
+import userContractArtifact from "../contracts/UserContract.json";
+import userContractArtifact1 from "../contracts/UserContract1.json";
+import CustomError from "../errors/CustomError";
 
 class SmartContractService {
   constructor() {}
 
   async getSmartContractWithID(id: string) {
     const smartContract = await smartContractModel.find({ _id: id }).populate({
-      path: 'userId',
-      select: 'name',
+      path: "userId",
+      select: "name",
     });
     return smartContract;
   }
 
   private whichNetwork(network: string) {
     switch (network.toLowerCase()) {
-      case 'Binance Smart Chain':
+      case "Binance Smart Chain":
+        return process.env.INFURA_BSC_PROVIDER;
+      case "Binance Smart Chain Testnet":
         return process.env.INFURA_BSC_TESTNET_PROVIDER;
-      case 'ethereum':
+      case "ethereum":
+        return process.env.INFURA_ETHEREUM_PROVIDER;
+      case "sepolia":
         return process.env.INFURA_ETHEREUM_TESTNET_PROVIDER;
-      case 'polygon':
+      case "polygon":
         return process.env.INFURA_POLYGON_TESTNET_PROVIDER;
       default:
         return process.env.INFURA_BSC_TESTNET_PROVIDER;
@@ -76,15 +80,15 @@ class SmartContractService {
 
       return createReceipt.contractAddress as string;
     } catch (err: any) {
-      if (err.error.message.indexOf('insufficient funds') != -1)
-        throw new CustomError('Web3 JS Error', 'Insufficient funds', 500);
-      else if (err.error.message.indexOf('gas less than'))
+      if (err.error.message.indexOf("insufficient funds") != -1)
+        throw new CustomError("Web3 JS Error", "Insufficient funds", 500);
+      else if (err.error.message.indexOf("gas less than"))
         throw new CustomError(
-          'Web3 JS Error',
-          'Gas is not enough for process',
+          "Web3 JS Error",
+          "Gas is not enough for process",
           500
         );
-      else throw new CustomError('Web3 JS Error', err.error.message, 500);
+      else throw new CustomError("Web3 JS Error", err.error.message, 500);
     }
   }
 
@@ -135,15 +139,15 @@ class SmartContractService {
 
       return createReceipt.contractAddress as string;
     } catch (err: any) {
-      if (err.error.message.indexOf('insufficient funds') != -1)
-        throw new CustomError('Web3 JS Error', 'Insufficient funds', 500);
-      else if (err.error.message.indexOf('gas less than'))
+      if (err.error.message.indexOf("insufficient funds") != -1)
+        throw new CustomError("Web3 JS Error", "Insufficient funds", 500);
+      else if (err.error.message.indexOf("gas less than"))
         throw new CustomError(
-          'Web3 JS Error',
-          'Gas is not enough for process',
+          "Web3 JS Error",
+          "Gas is not enough for process",
           500
         );
-      else throw new CustomError('Web3 JS Error', err.error.message, 500);
+      else throw new CustomError("Web3 JS Error", err.error.message, 500);
     }
   }
 }
