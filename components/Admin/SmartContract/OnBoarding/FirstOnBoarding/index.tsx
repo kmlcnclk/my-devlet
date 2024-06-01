@@ -1,13 +1,14 @@
-import {
-  Box,
-  Button,
-  MenuItem,
-  Select,
-  TextField,
-  Typography,
-} from "@mui/material";
-import React from "react";
+import { Box, Button, TextField, Typography } from "@mui/material";
+import React, { useEffect } from "react";
 import { Inter } from "next/font/google";
+import {
+  GeneralValueType,
+  setCurrentNetwork,
+} from "@/store/slices/generalSlice";
+import { AppDispatch, RootState } from "@/store";
+import { useDispatch, useSelector } from "react-redux";
+import { useWeb3Modal, useWeb3ModalAccount } from "@web3modal/ethers/react";
+import Image from "next/image";
 const inter = Inter({ subsets: ["latin"] });
 
 interface Props {
@@ -28,6 +29,54 @@ const FirstOnBoarding: React.FC<Props> = ({
     e.preventDefault();
     setStateOfOnBoarding("second");
   };
+
+  const { chainId } = useWeb3ModalAccount();
+  const { open } = useWeb3Modal();
+
+  const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    if (chainId === 1) {
+      dispatch(setCurrentNetwork("eth"));
+      setInputs((prev: any) => {
+        let updatedPrev = { ...prev };
+        updatedPrev.network = "ethereum";
+        return updatedPrev;
+      });
+    } else if (chainId === 11155111) {
+      dispatch(setCurrentNetwork("sepolia"));
+      setInputs((prev: any) => {
+        let updatedPrev = { ...prev };
+        updatedPrev.network = "sepolia";
+        return updatedPrev;
+      });
+    } else if (chainId === 5) {
+      dispatch(setCurrentNetwork("goerli"));
+      setInputs((prev: any) => {
+        let updatedPrev = { ...prev };
+        updatedPrev.network = "goerli";
+        return updatedPrev;
+      });
+    } else if (chainId === 56) {
+      dispatch(setCurrentNetwork("bsc"));
+      setInputs((prev: any) => {
+        let updatedPrev = { ...prev };
+        updatedPrev.network = "Binance Smart Chain";
+        return updatedPrev;
+      });
+    } else if (chainId === 97) {
+      dispatch(setCurrentNetwork("tbsc"));
+      setInputs((prev: any) => {
+        let updatedPrev = { ...prev };
+        updatedPrev.network = "Binance Smart Chain Testnet";
+        return updatedPrev;
+      });
+    }
+  }, [chainId]);
+
+  const generalValues: GeneralValueType = useSelector(
+    (state: RootState) => state.general.value
+  ) as GeneralValueType;
 
   return (
     <Box
@@ -155,192 +204,67 @@ const FirstOnBoarding: React.FC<Props> = ({
             Choose Your Network: (The most popular network is BNB Chain)
           </Typography>
 
-          <Select
-            required
-            value={inputs.network}
-            onChange={(e) => {
-              setInputs((prev: any) => {
-                let updatedPrev = { ...prev };
-                updatedPrev.network = e.target.value;
-                return updatedPrev;
-              });
-            }}
-            className={inter.className}
+          <Button
+            variant="outlined"
             sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
               width: "100%",
-              height: "37px",
+              mt: "10px",
+              height: "50px",
               borderRadius: "10px",
-              bgcolor: "#F8F9F8",
-              fontWeight: "400",
-              fontSize: "13px",
+              py: "10px",
+              border: "#f3f3f3 1px solid",
+              background: "linear-gradient(90deg, #2563eb 2.08%, #1e40af 100%)",
+              "&:hover": {
+                border: "white 2px solid",
+              },
+            }}
+            onClick={() => {
+              if (generalValues.walletAddress) {
+                open({ view: "Networks" });
+              }
             }}
           >
-            <MenuItem
-              value="Binance Smart Chain"
+            <Typography
               sx={{
-                color: "#666666",
-                fontWeight: "400",
-                fontSize: "13px",
-                display: "flex",
-                alignItems: "center",
+                fontSize: "14px",
+                fontWeight: "600",
+                color: "white",
               }}
-              className={inter.className}
             >
-              <Box
-                component="img"
+              {generalValues.currentNetwork === "bsc" ||
+              generalValues.currentNetwork === "tbsc"
+                ? "Switch to ETH"
+                : "Switch to BSC"}
+            </Typography>
+            {generalValues.currentNetwork === "eth" ||
+            generalValues.currentNetwork === "sepolia" ||
+            generalValues.currentNetwork === "goerli" ? (
+              <Image
+                style={{
+                  marginLeft: "10px",
+                  objectFit: "contain",
+                }}
                 src="/images/bnb-logo.png"
-                sx={{
-                  width: "12px",
-                  objectFit: "contain",
-                  mr: "8px",
-                  mb: "-1px",
-                }}
+                alt="BNB Logo"
+                width={25}
+                height={25}
               />
-              <Typography
-                className={inter.className}
-                sx={{
-                  color: "#666666",
-                  fontWeight: 500,
-                  fontSize: "12px",
-                  display: "inline-block",
-                }}
-              >
-                Binance Smart Chain
-              </Typography>
-            </MenuItem>
-            <MenuItem
-              value="Binance Smart Chain Testnet"
-              sx={{
-                color: "#666666",
-                fontWeight: "400",
-                fontSize: "13px",
-                display: "flex",
-                alignItems: "center",
-              }}
-              className={inter.className}
-            >
-              <Box
-                component="img"
-                src="/images/bnb-logo.png"
-                sx={{
-                  width: "12px",
+            ) : (
+              <Image
+                style={{
+                  marginLeft: "10px",
                   objectFit: "contain",
-                  mr: "8px",
-                  mb: "-1px",
                 }}
-              />
-              <Typography
-                className={inter.className}
-                sx={{
-                  color: "#666666",
-                  fontWeight: 500,
-                  fontSize: "12px",
-                  display: "inline-block",
-                }}
-              >
-                Binance Smart Chain Testnet
-              </Typography>
-            </MenuItem>
-            <MenuItem
-              value="polygon"
-              sx={{
-                color: "#666666",
-                fontWeight: "400",
-                fontSize: "13px",
-                display: "flex",
-                alignItems: "center",
-              }}
-              className={inter.className}
-            >
-              <Box
-                component="img"
-                src="/images/polygon-logo.png"
-                sx={{
-                  width: "12px",
-                  objectFit: "contain",
-                  mr: "8px",
-                  mb: "-1px",
-                }}
-              />
-              <Typography
-                className={inter.className}
-                sx={{
-                  color: "#666666",
-                  fontWeight: 500,
-                  fontSize: "12px",
-                  display: "inline-block",
-                }}
-              >
-                Polygon
-              </Typography>
-            </MenuItem>
-            <MenuItem
-              value="ethereum"
-              sx={{
-                color: "#666666",
-                fontWeight: "400",
-                fontSize: "13px",
-                display: "flex",
-                alignItems: "center",
-              }}
-              className={inter.className}
-            >
-              <Box
-                component="img"
                 src="/images/ethereum-logo.png"
-                sx={{
-                  width: "8px",
-                  objectFit: "contain",
-                  mr: "8px",
-                  mb: "-1px",
-                }}
+                alt="ETH Logo"
+                width={25}
+                height={25}
               />
-              <Typography
-                className={inter.className}
-                sx={{
-                  color: "#666666",
-                  fontWeight: 500,
-                  fontSize: "12px",
-                  display: "inline-block",
-                }}
-              >
-                Ethereum
-              </Typography>
-            </MenuItem>
-            <MenuItem
-              value="sepolia"
-              sx={{
-                color: "#666666",
-                fontWeight: "400",
-                fontSize: "13px",
-                display: "flex",
-                alignItems: "center",
-              }}
-              className={inter.className}
-            >
-              <Box
-                component="img"
-                src="/images/ethereum-logo.png"
-                sx={{
-                  width: "8px",
-                  objectFit: "contain",
-                  mr: "8px",
-                  mb: "-1px",
-                }}
-              />
-              <Typography
-                className={inter.className}
-                sx={{
-                  color: "#666666",
-                  fontWeight: 500,
-                  fontSize: "12px",
-                  display: "inline-block",
-                }}
-              >
-                Sepolia
-              </Typography>
-            </MenuItem>
-          </Select>
+            )}
+          </Button>
         </Box>
 
         <Button
@@ -348,10 +272,11 @@ const FirstOnBoarding: React.FC<Props> = ({
           sx={{
             mt: "30px",
             background: "linear-gradient(90deg, #e809d9 2.08%, #730b6c 100%)",
-            width: "220px",
-            height: "40px",
+            width: "100%",
+            height: "50px",
+            borderRadius: "10px",
+            py: "10px",
             textTransform: "initial",
-            borderRadius: "20px",
             color: "#fff",
           }}
         >
