@@ -1,4 +1,4 @@
-import SettingsIcon from '@mui/icons-material/Settings';
+// import SettingsIcon from '@mui/icons-material/Settings';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import PersonIcon from '@mui/icons-material/Person';
 import CreateIcon from '@mui/icons-material/Create';
@@ -160,14 +160,14 @@ export const routesConfig: RouterConfigData[] = [
     url: '/dashboard/profile',
     children: [],
   },
-  {
-    id: 'settings',
-    title: 'Settings',
-    type: 'item',
-    icon: <SettingsIcon />,
-    url: '/dashboard/settings',
-    children: [],
-  },
+  // {
+  //   id: 'settings',
+  //   title: 'Settings',
+  //   type: 'item',
+  //   icon: <SettingsIcon />,
+  //   url: '/dashboard/settings',
+  //   children: [],
+  // },
 ];
 
 export const routesForMenu: string[] = [];

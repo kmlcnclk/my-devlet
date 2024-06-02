@@ -1,18 +1,19 @@
-import { Fragment } from 'react';
-import Head from 'next/head';
-import { AppProps } from 'next/app';
-import { ThemeProvider } from '@mui/material/styles';
-import { useTheme } from '@mui/material/styles';
-import { ToastContainer } from 'react-toastify';
-import CssBaseline from '@mui/material/CssBaseline';
-import { store } from '@/store';
-import { Provider } from 'react-redux';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { Fragment } from "react";
+import Head from "next/head";
+import { AppProps } from "next/app";
+import { ThemeProvider } from "@mui/material/styles";
+import { useTheme } from "@mui/material/styles";
+import { ToastContainer } from "react-toastify";
+import CssBaseline from "@mui/material/CssBaseline";
+import { store } from "@/store";
+import { Provider } from "react-redux";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { Web3ModalProvider } from "@/lib/Web3ModalLayout";
 // import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import MongoDB from '@/server/lib/Mongoose';
+import MongoDB from "@/server/lib/Mongoose";
 
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 // import '../styles/globals.css';
 // import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 // import { SessionProvider } from 'next-auth/react';
@@ -43,12 +44,14 @@ function AppPage({
           <ThemeProvider theme={baseTheme}>
             {/* <LocalizationProvider dateAdapter={AdapterDateFns}> */}
             <CssBaseline />
-            <Component {...pageProps} />
+            <Web3ModalProvider>
+              <Component {...pageProps} />
+            </Web3ModalProvider>
             {/* </LocalizationProvider> */}
           </ThemeProvider>
           {/* </SessionProvider> */}
           <ToastContainer
-            position="bottom-right"
+            position="top-right"
             autoClose={2000}
             hideProgressBar={false}
             newestOnTop={false}
@@ -59,8 +62,8 @@ function AppPage({
             pauseOnHover={false}
             theme="light"
             style={{
-              width: 'auto',
-              minWidth: '300px',
+              width: "auto",
+              minWidth: "300px",
             }}
           />
         </LocalizationProvider>
