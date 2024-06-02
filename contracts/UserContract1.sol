@@ -38,6 +38,15 @@ contract UserContract1 {
         uint256 dateOfDeath;
     }
 
+    struct SubscriptionTransactionInfo {
+        string subscriptionType;
+        string companyName;
+        uint256 subscriptionStartDate;
+        uint256 subscriptionEndDate;
+        string subscriberName;
+        string subscriberSurname;
+    }
+
     struct UserAsset {
         AssetInfo[] assetInfos;
         string ipfsHash;
@@ -53,9 +62,16 @@ contract UserContract1 {
         string ipfsHash;
     }
 
+    struct UserSubscriptionTransaction {
+        SubscriptionTransactionInfo[] subscriptionTransactionInfos;
+        string ipfsHash;
+    }
+
     mapping(string => UserAsset) private assetRecords;
     mapping(string => UserMilitary) private militaryRecords;
     mapping(string => UserFamilyTree) private familyTreeRecords;
+    mapping(string => UserSubscriptionTransaction)
+        private subscriptionTransactionRecords;
 
     mapping(string => UserData) users;
 
@@ -81,6 +97,12 @@ contract UserContract1 {
     event UserFamilyTreeUpdated(
         string indexed userId,
         FamilyTreeInfo[] familyTreeInfos,
+        string ipfsHash
+    );
+
+    event UserSubscriptionTransactionUpdated(
+        string indexed userId,
+        SubscriptionTransactionInfo[] subscriptionTransactionInfos,
         string ipfsHash
     );
 
@@ -311,5 +333,80 @@ contract UserContract1 {
         string memory userId
     ) public view returns (string memory) {
         return familyTreeRecords[userId].ipfsHash;
+    }
+
+    function setSubscriptionTransactionRecord(
+        string memory userId,
+        string[] memory subscriptionTypes,
+        string[] memory companyNames,
+        uint256[] memory subscriptionStartDates,
+        uint256[] memory subscriptionEndDates,
+        string[] memory subscriberNames,
+        string[] memory subscriberSurnames,
+        string memory ipfsHash
+    ) public {
+        require(
+            subscriptionTypes.length == companyNames.length &&
+                companyNames.length == subscriptionStartDates.length &&
+                subscriptionStartDates.length == subscriptionEndDates.length &&
+                subscriptionEndDates.length == subscriberNames.length &&
+                subscriberNames.length == subscriberSurnames.length,
+            "Input arrays must have the same length"
+        );
+
+        for (uint256 i = 0; i < subscriptionTypes.length; i++) {
+            SubscriptionTransactionInfo
+                memory newSubscriptionTransaction = SubscriptionTransactionInfo({
+                    subscriptionType: subscriptionTypes[i],
+                    companyName: companyNames[i],
+                    subscriptionStartDate: subscriptionStartDates[i],
+                    subscriptionEndDate: subscriptionEndDates[i],
+                    subscriberName: subscriberNames[i],
+                    subscriberSurname: subscriberSurnames[i]
+                });
+
+            subscriptionTransactionRecords[userId]
+                .subscriptionTransactionInfos
+                .push(newSubscriptionTransaction);
+        }
+
+        subscriptionTransactionRecords[userId].ipfsHash = ipfsHash;
+
+        emit UserSubscriptionTransactionUpdated(
+            userId,
+            subscriptionTransactionRecords[userId].subscriptionTransactionInfos,
+            ipfsHash
+        );
+    }
+
+    function getSubscriptionTransactionRecords(
+        string memory userId
+    ) public view returns (SubscriptionTransactionInfo[] memory) {
+        return
+            subscriptionTransactionRecords[userId].subscriptionTransactionInfos;
+    }
+
+    function setSubscriptionTransactionIPFSHash(
+        string memory userId,
+        string memory ipfsHash
+    ) public {
+        UserSubscriptionTransaction
+            storage userSubscriptionTransaction = subscriptionTransactionRecords[
+                userId
+            ];
+
+        userSubscriptionTransaction.ipfsHash = ipfsHash;
+
+        emit UserSubscriptionTransactionUpdated(
+            userId,
+            userSubscriptionTransaction.subscriptionTransactionInfos,
+            ipfsHash
+        );
+    }
+
+    function getSubscriptionTransactionIPFSHash(
+        string memory userId
+    ) public view returns (string memory) {
+        return subscriptionTransactionRecords[userId].ipfsHash;
     }
 }
