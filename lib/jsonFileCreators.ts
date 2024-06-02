@@ -185,3 +185,21 @@ export const createJSONFileForSubscriptionTransaction = () => {
 
   return { url };
 };
+
+export const createJSONFileForTrafficDebt = () => {
+  let newData = [
+    {
+      "Debt Payer": "John Doe",
+      "Debt Amount": "13123",
+      "Expiry Date": "Sat Jan 06 2024 19:18:19 GMT+0200 (GMT+02:00)",
+      "License Plate": "fsdfs",
+      "Is Paid": false,
+      "Payment Date": "Sat Jan 06 2024 19:18:19 GMT+0200 (GMT+02:00)",
+      "Payment Amount": "5454",
+    },
+  ];
+
+  const url = jsonCreator(newData);
+
+  return { url };
+};

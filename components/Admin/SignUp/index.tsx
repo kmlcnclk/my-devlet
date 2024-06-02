@@ -30,6 +30,8 @@ function SignUp() {
     { text: "Military", value: "military" },
     { text: "Family Tree", value: "familyTree" },
     { text: "Subscription Transaction", value: "subscriptionTransaction" },
+    { text: "Traffic Debt", value: "trafficDebt" },
+
   ];
 
   const [signUpData, setSignUpData] = useState<

@@ -47,6 +47,16 @@ contract UserContract1 {
         string subscriberSurname;
     }
 
+    struct TrafficDebtInfo {
+        string debtPayer;
+        uint256 debtAmount;
+        uint256 expiryDate;
+        string licensePlate;
+        bool isPaid;
+        uint256 paymentDate;
+        uint256 paymentAmount;
+    }
+
     struct UserAsset {
         AssetInfo[] assetInfos;
         string ipfsHash;
@@ -67,11 +77,17 @@ contract UserContract1 {
         string ipfsHash;
     }
 
+    struct UserTrafficDebt {
+        TrafficDebtInfo[] trafficDebtInfos;
+        string ipfsHash;
+    }
+
     mapping(string => UserAsset) private assetRecords;
     mapping(string => UserMilitary) private militaryRecords;
     mapping(string => UserFamilyTree) private familyTreeRecords;
     mapping(string => UserSubscriptionTransaction)
         private subscriptionTransactionRecords;
+    mapping(string => UserTrafficDebt) private trafficDebtRecords;
 
     mapping(string => UserData) users;
 
@@ -103,6 +119,12 @@ contract UserContract1 {
     event UserSubscriptionTransactionUpdated(
         string indexed userId,
         SubscriptionTransactionInfo[] subscriptionTransactionInfos,
+        string ipfsHash
+    );
+
+    event UserTrafficDebtUpdated(
+        string indexed userId,
+        TrafficDebtInfo[] trafficDebtInfos,
         string ipfsHash
     );
 
@@ -408,5 +430,76 @@ contract UserContract1 {
         string memory userId
     ) public view returns (string memory) {
         return subscriptionTransactionRecords[userId].ipfsHash;
+    }
+
+    function setTrafficDebtRecord(
+        string memory userId,
+        string[] memory debtPayers,
+        uint256[] memory debtAmounts,
+        uint256[] memory expiryDates,
+        string[] memory licensePlates,
+        bool[] memory isPaids,
+        uint256[] memory paymentDates,
+        uint256[] memory paymentAmounts,
+        string memory ipfsHash
+    ) public {
+        require(
+            debtPayers.length == debtAmounts.length &&
+                debtAmounts.length == expiryDates.length &&
+                expiryDates.length == licensePlates.length &&
+                licensePlates.length == isPaids.length &&
+                isPaids.length == paymentDates.length &&
+                paymentDates.length == paymentAmounts.length,
+            "Input arrays must have the same length"
+        );
+
+        for (uint256 i = 0; i < debtPayers.length; i++) {
+            TrafficDebtInfo memory newTrafficDebt = TrafficDebtInfo({
+                debtPayer: debtPayers[i],
+                debtAmount: debtAmounts[i],
+                expiryDate: expiryDates[i],
+                licensePlate: licensePlates[i],
+                isPaid: isPaids[i],
+                paymentDate: paymentDates[i],
+                paymentAmount: paymentAmounts[i]
+            });
+
+            trafficDebtRecords[userId].trafficDebtInfos.push(newTrafficDebt);
+        }
+
+        trafficDebtRecords[userId].ipfsHash = ipfsHash;
+
+        emit UserTrafficDebtUpdated(
+            userId,
+            trafficDebtRecords[userId].trafficDebtInfos,
+            ipfsHash
+        );
+    }
+
+    function getTrafficDebtRecords(
+        string memory userId
+    ) public view returns (TrafficDebtInfo[] memory) {
+        return trafficDebtRecords[userId].trafficDebtInfos;
+    }
+
+    function setTrafficDebtIPFSHash(
+        string memory userId,
+        string memory ipfsHash
+    ) public {
+        UserTrafficDebt storage userTrafficDebt = trafficDebtRecords[userId];
+
+        userTrafficDebt.ipfsHash = ipfsHash;
+
+        emit UserTrafficDebtUpdated(
+            userId,
+            userTrafficDebt.trafficDebtInfos,
+            ipfsHash
+        );
+    }
+
+    function getTrafficDebtIPFSHash(
+        string memory userId
+    ) public view returns (string memory) {
+        return trafficDebtRecords[userId].ipfsHash;
     }
 }

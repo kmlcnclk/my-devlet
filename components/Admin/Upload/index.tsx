@@ -14,6 +14,7 @@ import {
   readXLSXFileForNotary,
   readXLSXFileForTaxDebt,
   readXLSXFileForSubscriptionTransaction,
+  readXLSXFileForTrafficDebt,
 } from "@/lib/xlsxFileReaders";
 import { File } from "buffer";
 import { toast } from "react-toastify";
@@ -28,6 +29,7 @@ import {
   readCSVFileForNotary,
   readCSVFileForTaxDebt,
   readCSVFileForSubscriptionTransaction,
+  readCSVFileForTrafficDebt,
 } from "@/lib/csvFileReaders";
 import {
   readJSONFileForAsset,
@@ -40,6 +42,7 @@ import {
   readJSONFileForNotary,
   readJSONFileForTaxDebt,
   readJSONFileForSubscriptionTransaction,
+  readJSONFileForTrafficDebt,
 } from "@/lib/jsonFileReaders";
 
 interface Props {
@@ -135,6 +138,8 @@ const Upload: React.FC<Props> = ({
               e.dataTransfer.files[0],
               setFileData
             );
+          } else if (whichProperty === "trafficDebt") {
+            readXLSXFileForTrafficDebt(e.dataTransfer.files[0], setFileData);
           }
         } else if (res == "text/csv") {
           if (whichProperty === "education") {
@@ -160,6 +165,8 @@ const Upload: React.FC<Props> = ({
               e.dataTransfer.files[0],
               setFileData
             );
+          } else if (whichProperty === "trafficDebt") {
+            readCSVFileForTrafficDebt(e.dataTransfer.files[0], setFileData);
           }
         } else if (res == "application/json") {
           if (whichProperty === "education") {
@@ -185,6 +192,8 @@ const Upload: React.FC<Props> = ({
               e.dataTransfer.files[0],
               setFileData
             );
+          } else if (whichProperty === "trafficDebt") {
+            readJSONFileForTrafficDebt(e.dataTransfer.files[0], setFileData);
           }
         }
         setFile(e.dataTransfer.files[0]);
@@ -246,6 +255,8 @@ const Upload: React.FC<Props> = ({
               e.target.files[0],
               setFileData
             );
+          } else if (whichProperty === "trafficDebt") {
+            readXLSXFileForTrafficDebt(e.target.files[0], setFileData);
           }
         } else if (res == "text/csv") {
           if (whichProperty === "education") {
@@ -271,6 +282,8 @@ const Upload: React.FC<Props> = ({
               e.target.files[0],
               setFileData
             );
+          } else if (whichProperty === "trafficDebt") {
+            readCSVFileForTrafficDebt(e.target.files[0], setFileData);
           }
         } else if (res == "application/json") {
           if (whichProperty === "education") {
@@ -296,6 +309,8 @@ const Upload: React.FC<Props> = ({
               e.target.files[0],
               setFileData
             );
+          } else if (whichProperty === "trafficDebt") {
+            readJSONFileForTrafficDebt(e.target.files[0], setFileData);
           }
         }
         setFile(e.target.files[0]);

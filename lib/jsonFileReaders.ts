@@ -418,3 +418,48 @@ export const readJSONFileForSubscriptionTransaction = (
 
   reader.readAsText(file as any);
 };
+
+export const readJSONFileForTrafficDebt = (
+  file: any,
+  setFileData: Function
+) => {
+  const reader = new FileReader();
+
+  reader.onload = (e: any) => {
+    const content = e.target.result;
+    const jsonData = JSON.parse(content);
+    const extractedData = jsonData.map((item: any) => ({
+      debtPayer: item["Debt Payer"]?.toString(),
+      debtAmount: Number(item["Debt Amount"]?.toString()),
+      expiryDate: item["Expiry Date"]?.toString(),
+      licensePlate: item["License Plate"]?.toString(),
+      isPaid: Boolean(item["Is Paid"]?.toString()),
+      paymentDate: item["Payment Date"]?.toString(),
+      paymentAmount: Number(item["Payment Amount"]?.toString()),
+    }));
+
+    const newED = extractedData.filter((data: any) => {
+      if (
+        data.debtPayer ||
+        data.debtAmount ||
+        data.expiryDate ||
+        data.licensePlate ||
+        data.isPaid ||
+        data.paymentDate ||
+        data.paymentAmount
+      ) {
+        return data;
+      }
+    });
+
+    setFileData((prev: any) => {
+      if (prev.length > 0) {
+        const updatedPrev = [...prev, ...newED];
+        return updatedPrev;
+      }
+      return newED;
+    });
+  };
+
+  reader.readAsText(file as any);
+};

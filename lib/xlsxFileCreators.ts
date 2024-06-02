@@ -242,3 +242,30 @@ export const createXLSXFileForSubscriptionTransaction = () => {
 
   return { url };
 };
+
+export const createXLSXFileForTrafficDebt = () => {
+  let newData = [
+    [
+      "Debt Payer",
+      "Debt Amount",
+      "Expiry Date",
+      "License Plate",
+      "Is Paid",
+      "Payment Date",
+      "Payment Amount",
+    ],
+    [
+      "John Doe",
+      "13123",
+      "Sat Jan 06 2024 19:18:19 GMT+0200 (GMT+02:00)",
+      "fsdfs",
+      "false",
+      "Sat Jan 06 2024 19:18:19 GMT+0200 (GMT+02:00)",
+      "5454",
+    ],
+  ];
+
+  const url = xlsxCreator(newData);
+
+  return { url };
+};

@@ -479,3 +479,53 @@ export const readXLSXFileForSubscriptionTransaction = (
 
   reader.readAsBinaryString(file as any);
 };
+
+export const readXLSXFileForTrafficDebt = (
+  file: any,
+  setFileData: Function
+) => {
+  const reader = new FileReader();
+
+  reader.onload = (e: any) => {
+    const content = e.target.result;
+    const workbook = XLSX.read(content, { type: "binary" });
+    const firstSheetName = workbook.SheetNames[0];
+    const worksheet = workbook.Sheets[firstSheetName];
+    const data = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+    const headers: any = data[0];
+
+    const extractedData = data.slice(1).map((row: any) => ({
+      debtPayer: row[headers.indexOf("Debt Payer")]?.toString(),
+      debtAmount: Number(row[headers.indexOf("Debt Amount")]?.toString()),
+      expiryDate: row[headers.indexOf("Expiry Date")]?.toString(),
+      licensePlate: row[headers.indexOf("License Plate")]?.toString(),
+      isPaid: Boolean(row[headers.indexOf("Is Paid")]?.toString()),
+      paymentDate: row[headers.indexOf("Payment Date")]?.toString(),
+      paymentAmount: Number(row[headers.indexOf("Payment Amount")]?.toString()),
+    }));
+
+    const newED = extractedData.filter((data: any) => {
+      if (
+        data?.debtPayer?.toString().trim() ||
+        data?.debtAmount?.toString().trim() ||
+        data?.expiryDate?.toString().trim() ||
+        data?.licensePlate?.toString().trim() ||
+        data?.isPaid?.toString().trim() ||
+        data?.paymentDate?.toString().trim() ||
+        data?.paymentAmount?.toString().trim()
+      ) {
+        return data;
+      }
+    });
+
+    setFileData((prev: any) => {
+      if (prev.length > 0) {
+        const updatedPrev = [...prev, ...newED];
+        return updatedPrev;
+      }
+      return newED;
+    });
+  };
+
+  reader.readAsBinaryString(file as any);
+};

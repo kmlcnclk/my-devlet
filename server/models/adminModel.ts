@@ -40,6 +40,7 @@ const adminSchema = new mongoose.Schema(
         "military",
         "familyTree",
         "subscriptionTransaction",
+        "trafficDebt",
       ],
     },
     resetPasswordToken: {

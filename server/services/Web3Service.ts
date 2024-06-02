@@ -311,6 +311,36 @@ class Web3Service {
     await this._userContract.getSubscriptionTransactionRecords(from, userId);
   }
 
+  async setTrafficDebtRecord(
+    from: string,
+    userId: string,
+    taxpayers: string[],
+    debtAmounts: number[],
+    expiryDates: number[],
+    typeOfTaxs: string[],
+    isPaids: boolean[],
+    paymentDates: number[],
+    paymentAmounts: number[],
+    ipfsHash: string
+  ): Promise<void> {
+    await this._userContract.setTrafficDebtRecord(
+      from,
+      userId,
+      taxpayers,
+      debtAmounts,
+      expiryDates,
+      typeOfTaxs,
+      isPaids,
+      paymentDates,
+      paymentAmounts,
+      ipfsHash
+    );
+  }
+
+  async getTrafficDebtRecords(from: string, userId: string) {
+    await this._userContract.getTrafficDebtRecords(from, userId);
+  }
+
   async setUserData(
     from: string,
     userId: string,

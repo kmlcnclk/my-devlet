@@ -15,6 +15,7 @@ import WebAssetIcon from "@mui/icons-material/WebAsset";
 import MilitaryTechIcon from "@mui/icons-material/MilitaryTech";
 import FamilyRestroomIcon from "@mui/icons-material/FamilyRestroom";
 import SubscriptionsIcon from "@mui/icons-material/Subscriptions";
+import TrafficIcon from "@mui/icons-material/Traffic";
 
 export interface RouterConfigData {
   id: string;
@@ -118,6 +119,15 @@ export const educationConfig: RouterConfigData[] = [
     ml: "50px",
   },
   {
+    id: "traffic-debt-background",
+    title: "Traffic Debt",
+    type: "item",
+    icon: <TrafficIcon />,
+    url: "/admin/dashboard/traffic-debt",
+    children: [],
+    ml: "50px",
+  },
+  {
     id: "smart-contract",
     title: "Smart Contract",
     type: "item",
@@ -216,6 +226,15 @@ export const businessConfig: RouterConfigData[] = [
     type: "item",
     icon: <SubscriptionsIcon />,
     url: "/admin/dashboard/add-blockchain/subscription-transaction",
+    children: [],
+    ml: "50px",
+  },
+  {
+    id: "traffic-debt-background",
+    title: "Traffic Debt",
+    type: "item",
+    icon: <TrafficIcon />,
+    url: "/admin/dashboard/add-blockchain/traffic-debt",
     children: [],
     ml: "50px",
   },
