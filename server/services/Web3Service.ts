@@ -1,4 +1,4 @@
-import UserContract from '../data/web3/userContract';
+import UserContract from "../data/web3/userContract";
 
 class Web3Service {
   private _userContract: UserContract;
@@ -281,6 +281,64 @@ class Web3Service {
 
   async getFamilyTreeRecords(from: string, userId: string) {
     await this._userContract.getFamilyTreeRecords(from, userId);
+  }
+
+  async setSubscriptionTransactionRecord(
+    from: string,
+    userId: string,
+    subscriptionTypes: string[],
+    companyNames: string[],
+    subscriptionStartDates: number[],
+    subscriptionEndDates: number[],
+    subscriberNames: string[],
+    subscriberSurnames: string[],
+    ipfsHash: string
+  ): Promise<void> {
+    await this._userContract.setSubscriptionTransactionRecord(
+      from,
+      userId,
+      subscriptionTypes,
+      companyNames,
+      subscriptionStartDates,
+      subscriptionEndDates,
+      subscriberNames,
+      subscriberSurnames,
+      ipfsHash
+    );
+  }
+
+  async getSubscriptionTransactionRecords(from: string, userId: string) {
+    await this._userContract.getSubscriptionTransactionRecords(from, userId);
+  }
+
+  async setTrafficDebtRecord(
+    from: string,
+    userId: string,
+    taxpayers: string[],
+    debtAmounts: number[],
+    expiryDates: number[],
+    typeOfTaxs: string[],
+    isPaids: boolean[],
+    paymentDates: number[],
+    paymentAmounts: number[],
+    ipfsHash: string
+  ): Promise<void> {
+    await this._userContract.setTrafficDebtRecord(
+      from,
+      userId,
+      taxpayers,
+      debtAmounts,
+      expiryDates,
+      typeOfTaxs,
+      isPaids,
+      paymentDates,
+      paymentAmounts,
+      ipfsHash
+    );
+  }
+
+  async getTrafficDebtRecords(from: string, userId: string) {
+    await this._userContract.getTrafficDebtRecords(from, userId);
   }
 
   async setUserData(
