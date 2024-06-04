@@ -40,6 +40,10 @@ function Card1() {
       url: "/dashboard/military",
     },
     {
+      value: "Family Tree",
+      url: "/dashboard/family-tree",
+    },
+    {
       value: "Subscription Transaction",
       url: "/dashboard/subscription-transaction",
     },
