@@ -45,7 +45,7 @@ export const createCSVFileForHospital = () => {
 export const createCSVFileForBank = () => {
   let newData = [
     ["Bank Name", "Account Balance", "Account Number", "Account Type"],
-    ["Near East Bacnk", "1212", "12341231231", "Normal"],
+    ["Near East Bacnk", "1212", "12341231231", "Personal"],
   ];
 
   const url = csvCreator(newData);
@@ -254,6 +254,33 @@ export const createCSVFileForTrafficDebt = () => {
       "false",
       "Sat Jan 06 2024 19:18:19 GMT+0200 (GMT+02:00)",
       "5454",
+    ],
+  ];
+
+  const url = csvCreator(newData);
+
+  return { url };
+};
+
+export const createCSVFileForPlaceOfResidence = () => {
+  let newData = [
+    [
+      "Name",
+      "Surname",
+      "Type of Address",
+      "Location of Address",
+      "Is Current Address",
+      "Settlement Date",
+      "Leaving Date",
+    ],
+    [
+      "John",
+      "Doe",
+      "fsdfs",
+      "5454",
+      "false",
+      "Sat Jan 06 2024 19:18:19 GMT+0200 (GMT+02:00)",
+      "Sat Jan 06 2024 19:18:19 GMT+0200 (GMT+02:00)",
     ],
   ];
 

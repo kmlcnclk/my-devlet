@@ -17,6 +17,7 @@ import MilitaryTechIcon from "@mui/icons-material/MilitaryTech";
 import FamilyRestroomIcon from "@mui/icons-material/FamilyRestroom";
 import SubscriptionsIcon from "@mui/icons-material/Subscriptions";
 import TrafficIcon from "@mui/icons-material/Traffic";
+import PlaceIcon from "@mui/icons-material/Place";
 
 export interface RouterConfigData {
   id: string;
@@ -147,6 +148,14 @@ export const routesConfig: RouterConfigData[] = [
     type: "item",
     icon: <TrafficIcon />,
     url: "/dashboard/traffic-debt",
+    children: [],
+  },
+  {
+    id: "place-of-residence",
+    title: "Place of Residence",
+    type: "item",
+    icon: <PlaceIcon />,
+    url: "/dashboard/place-of-residence",
     children: [],
   },
   {

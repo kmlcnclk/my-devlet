@@ -31,7 +31,7 @@ function SignUp() {
     { text: "Family Tree", value: "familyTree" },
     { text: "Subscription Transaction", value: "subscriptionTransaction" },
     { text: "Traffic Debt", value: "trafficDebt" },
-
+    { text: "Place of Residence", value: "placeOfResidence" },
   ];
 
   const [signUpData, setSignUpData] = useState<

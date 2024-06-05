@@ -48,7 +48,7 @@ export const createJSONFileForBank = () => {
       "Bank Name": "Near East Bank",
       "Account Balance": "1212",
       "Account Number": "12341231231",
-      "Account Type": "Normal",
+      "Account Type": "Personal",
     },
   ];
 
@@ -196,6 +196,24 @@ export const createJSONFileForTrafficDebt = () => {
       "Is Paid": false,
       "Payment Date": "Sat Jan 06 2024 19:18:19 GMT+0200 (GMT+02:00)",
       "Payment Amount": "5454",
+    },
+  ];
+
+  const url = jsonCreator(newData);
+
+  return { url };
+};
+
+export const createJSONFileForPlaceOfResidence = () => {
+  let newData = [
+    {
+      Name: "John",
+      Surname: "Doe",
+      "Type of Address": "3sdfsd",
+      "Location of Address": "fsdfs",
+      "Is Current Address": false,
+      "Settlement Date": "Sat Jan 06 2024 19:18:19 GMT+0200 (GMT+02:00)",
+      "Leaving Date": "Sat Jan 06 2024 19:18:19 GMT+0200 (GMT+02:00)",
     },
   ];
 

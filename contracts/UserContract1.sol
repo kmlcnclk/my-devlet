@@ -57,6 +57,16 @@ contract UserContract1 {
         uint256 paymentAmount;
     }
 
+    struct PlaceOfResidenceInfo {
+        string name;
+        string surname;
+        string typeOfAddress;
+        string locationOfAddress;
+        bool isCurrentAddress;
+        uint256 settlementDate;
+        uint256 leavingDate;
+    }
+
     struct UserAsset {
         AssetInfo[] assetInfos;
         string ipfsHash;
@@ -82,12 +92,18 @@ contract UserContract1 {
         string ipfsHash;
     }
 
+    struct UserPlaceOfResidence {
+        PlaceOfResidenceInfo[] placeOfResidenceInfos;
+        string ipfsHash;
+    }
+
     mapping(string => UserAsset) private assetRecords;
     mapping(string => UserMilitary) private militaryRecords;
     mapping(string => UserFamilyTree) private familyTreeRecords;
     mapping(string => UserSubscriptionTransaction)
         private subscriptionTransactionRecords;
     mapping(string => UserTrafficDebt) private trafficDebtRecords;
+    mapping(string => UserPlaceOfResidence) private placeOfResidenceRecords;
 
     mapping(string => UserData) users;
 
@@ -125,6 +141,12 @@ contract UserContract1 {
     event UserTrafficDebtUpdated(
         string indexed userId,
         TrafficDebtInfo[] trafficDebtInfos,
+        string ipfsHash
+    );
+
+    event UserPlaceOfResidenceUpdated(
+        string indexed userId,
+        PlaceOfResidenceInfo[] placeOfResidenceInfos,
         string ipfsHash
     );
 
@@ -501,5 +523,80 @@ contract UserContract1 {
         string memory userId
     ) public view returns (string memory) {
         return trafficDebtRecords[userId].ipfsHash;
+    }
+
+    function setPlaceOfResidenceRecord(
+        string memory userId,
+        string[] memory names,
+        string[] memory surnames,
+        string[] memory typeOfAddresses,
+        string[] memory locationOfAddresses,
+        bool[] memory isCurrentAddresses,
+        uint256[] memory settlementDates,
+        uint256[] memory leavingDates,
+        string memory ipfsHash
+    ) public {
+        require(
+            names.length == surnames.length &&
+                surnames.length == typeOfAddresses.length &&
+                typeOfAddresses.length == locationOfAddresses.length &&
+                locationOfAddresses.length == isCurrentAddresses.length &&
+                isCurrentAddresses.length == settlementDates.length &&
+                settlementDates.length == leavingDates.length,
+            "Input arrays must have the same length"
+        );
+
+        for (uint256 i = 0; i < names.length; i++) {
+            PlaceOfResidenceInfo
+                memory newPlaceOfResidence = PlaceOfResidenceInfo({
+                    name: names[i],
+                    surname: surnames[i],
+                    typeOfAddress: typeOfAddresses[i],
+                    locationOfAddress: locationOfAddresses[i],
+                    isCurrentAddress: isCurrentAddresses[i],
+                    settlementDate: settlementDates[i],
+                    leavingDate: leavingDates[i]
+                });
+
+            placeOfResidenceRecords[userId].placeOfResidenceInfos.push(
+                newPlaceOfResidence
+            );
+        }
+
+        placeOfResidenceRecords[userId].ipfsHash = ipfsHash;
+
+        emit UserPlaceOfResidenceUpdated(
+            userId,
+            placeOfResidenceRecords[userId].placeOfResidenceInfos,
+            ipfsHash
+        );
+    }
+
+    function getPlaceOfResidenceRecords(
+        string memory userId
+    ) public view returns (PlaceOfResidenceInfo[] memory) {
+        return placeOfResidenceRecords[userId].placeOfResidenceInfos;
+    }
+
+    function setPlaceOfResidenceIPFSHash(
+        string memory userId,
+        string memory ipfsHash
+    ) public {
+        UserPlaceOfResidence
+            storage userPlaceOfResidence = placeOfResidenceRecords[userId];
+
+        userPlaceOfResidence.ipfsHash = ipfsHash;
+
+        emit UserPlaceOfResidenceUpdated(
+            userId,
+            userPlaceOfResidence.placeOfResidenceInfos,
+            ipfsHash
+        );
+    }
+
+    function getPlaceOfResidenceIPFSHash(
+        string memory userId
+    ) public view returns (string memory) {
+        return placeOfResidenceRecords[userId].ipfsHash;
     }
 }

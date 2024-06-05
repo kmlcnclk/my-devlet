@@ -51,6 +51,10 @@ function Card1() {
       value: "Traffic Debt",
       url: "/dashboard/traffic-debt",
     },
+    {
+      value: "Place of Residence",
+      url: "/dashboard/place-of-residence",
+    },
   ];
 
   return (

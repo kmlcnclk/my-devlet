@@ -463,3 +463,48 @@ export const readJSONFileForTrafficDebt = (
 
   reader.readAsText(file as any);
 };
+
+export const readJSONFileForPlaceOfResidence = (
+  file: any,
+  setFileData: Function
+) => {
+  const reader = new FileReader();
+
+  reader.onload = (e: any) => {
+    const content = e.target.result;
+    const jsonData = JSON.parse(content);
+    const extractedData = jsonData.map((item: any) => ({
+      name: item["Name"]?.toString(),
+      surname: item["Surname"]?.toString(),
+      typeOfAddress: item["Type of Address"]?.toString(),
+      locationOfAddress: item["Location of Address"]?.toString(),
+      isCurrentAddress: Boolean(item["Is Current Address"]?.toString()),
+      settlementDate: item["Settlement Date"]?.toString(),
+      leavingDate: item["Leaving Date"]?.toString(),
+    }));
+
+    const newED = extractedData.filter((data: any) => {
+      if (
+        data.name ||
+        data.surname ||
+        data.typeOfAddress ||
+        data.locationOfAddress ||
+        data.isCurrentAddress ||
+        data.settlementDate ||
+        data.leavingDate
+      ) {
+        return data;
+      }
+    });
+
+    setFileData((prev: any) => {
+      if (prev.length > 0) {
+        const updatedPrev = [...prev, ...newED];
+        return updatedPrev;
+      }
+      return newED;
+    });
+  };
+
+  reader.readAsText(file as any);
+};
