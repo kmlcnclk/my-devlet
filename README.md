@@ -51,6 +51,7 @@ The system supports the following networks:
 - Winston
 - UUID
 - xlsx
+- AWS S3 Bucket
 
 
 ## Node Version
