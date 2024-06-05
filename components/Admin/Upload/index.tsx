@@ -15,6 +15,7 @@ import {
   readXLSXFileForTaxDebt,
   readXLSXFileForSubscriptionTransaction,
   readXLSXFileForTrafficDebt,
+  readXLSXFileForPlaceOfResidence,
 } from "@/lib/xlsxFileReaders";
 import { File } from "buffer";
 import { toast } from "react-toastify";
@@ -30,6 +31,7 @@ import {
   readCSVFileForTaxDebt,
   readCSVFileForSubscriptionTransaction,
   readCSVFileForTrafficDebt,
+  readCSVFileForPlaceOfResidence,
 } from "@/lib/csvFileReaders";
 import {
   readJSONFileForAsset,
@@ -43,6 +45,7 @@ import {
   readJSONFileForTaxDebt,
   readJSONFileForSubscriptionTransaction,
   readJSONFileForTrafficDebt,
+  readJSONFileForPlaceOfResidence,
 } from "@/lib/jsonFileReaders";
 
 interface Props {
@@ -140,6 +143,11 @@ const Upload: React.FC<Props> = ({
             );
           } else if (whichProperty === "trafficDebt") {
             readXLSXFileForTrafficDebt(e.dataTransfer.files[0], setFileData);
+          } else if (whichProperty === "placeOfResidence") {
+            readXLSXFileForPlaceOfResidence(
+              e.dataTransfer.files[0],
+              setFileData
+            );
           }
         } else if (res == "text/csv") {
           if (whichProperty === "education") {
@@ -167,6 +175,11 @@ const Upload: React.FC<Props> = ({
             );
           } else if (whichProperty === "trafficDebt") {
             readCSVFileForTrafficDebt(e.dataTransfer.files[0], setFileData);
+          } else if (whichProperty === "placeOfResidence") {
+            readCSVFileForPlaceOfResidence(
+              e.dataTransfer.files[0],
+              setFileData
+            );
           }
         } else if (res == "application/json") {
           if (whichProperty === "education") {
@@ -194,6 +207,11 @@ const Upload: React.FC<Props> = ({
             );
           } else if (whichProperty === "trafficDebt") {
             readJSONFileForTrafficDebt(e.dataTransfer.files[0], setFileData);
+          } else if (whichProperty === "placeOfResidence") {
+            readJSONFileForPlaceOfResidence(
+              e.dataTransfer.files[0],
+              setFileData
+            );
           }
         }
         setFile(e.dataTransfer.files[0]);
@@ -257,6 +275,8 @@ const Upload: React.FC<Props> = ({
             );
           } else if (whichProperty === "trafficDebt") {
             readXLSXFileForTrafficDebt(e.target.files[0], setFileData);
+          } else if (whichProperty === "placeOfResidence") {
+            readXLSXFileForPlaceOfResidence(e.target.files[0], setFileData);
           }
         } else if (res == "text/csv") {
           if (whichProperty === "education") {
@@ -284,6 +304,8 @@ const Upload: React.FC<Props> = ({
             );
           } else if (whichProperty === "trafficDebt") {
             readCSVFileForTrafficDebt(e.target.files[0], setFileData);
+          } else if (whichProperty === "placeOfResidence") {
+            readCSVFileForPlaceOfResidence(e.target.files[0], setFileData);
           }
         } else if (res == "application/json") {
           if (whichProperty === "education") {
@@ -311,6 +333,8 @@ const Upload: React.FC<Props> = ({
             );
           } else if (whichProperty === "trafficDebt") {
             readJSONFileForTrafficDebt(e.target.files[0], setFileData);
+          } else if (whichProperty === "placeOfResidence") {
+            readJSONFileForPlaceOfResidence(e.target.files[0], setFileData);
           }
         }
         setFile(e.target.files[0]);

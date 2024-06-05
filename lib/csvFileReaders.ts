@@ -687,3 +687,69 @@ export const readCSVFileForTrafficDebt = (file: any, setFileData: Function) => {
 
   reader.readAsText(file as any);
 };
+
+export const readCSVFileForPlaceOfResidence = (
+  file: any,
+  setFileData: Function
+) => {
+  const reader = new FileReader();
+
+  reader.onload = (e: any) => {
+    const content = e.target.result;
+    const newED = parseCSV(content);
+
+    setFileData((prev: any) => {
+      if (prev.length > 0) {
+        const updatedPrev = [...prev, ...newED];
+        return updatedPrev;
+      }
+      return newED;
+    });
+  };
+
+  const parseCSV = (csvString: any) => {
+    const lines = csvString.split("\n");
+    const headers = lines[0].split(",");
+    const extractedData = [];
+    for (let i = 1; i < lines.length; i++) {
+      const row: any = {};
+      const values = lines[i].split(",");
+      for (let j = 0; j < headers.length; j++) {
+        if (headers[j] === "Name") {
+          row.name = values[j];
+        } else if (headers[j] === "Surname") {
+          row.surname = values[j];
+        } else if (headers[j] === "Type of Address") {
+          row.typeOfAddress = values[j];
+        } else if (headers[j] === "Location of Address") {
+          row.locationOfAddress = values[j];
+        } else if (headers[j] === "Is Current Address") {
+          row.isCurrentAddress = Boolean(values[j]);
+        } else if (headers[j] === "Settlement Date") {
+          row.settlementDate = values[j];
+        } else if (headers[j] === "Leaving Date") {
+          row.leavingDate = values[j];
+        }
+      }
+      extractedData.push(row);
+    }
+
+    const newED = extractedData.filter((data: any) => {
+      if (
+        data?.name?.trim() ||
+        data?.surname?.trim() ||
+        data?.typeOfAddress?.trim() ||
+        data?.locationOfAddress?.trim() ||
+        data?.isCurrentAddress?.trim() ||
+        data?.settlementDate?.trim() ||
+        data?.leavingDate?.trim()
+      ) {
+        return data;
+      }
+    });
+
+    return newED;
+  };
+
+  reader.readAsText(file as any);
+};

@@ -341,6 +341,36 @@ class Web3Service {
     await this._userContract.getTrafficDebtRecords(from, userId);
   }
 
+  async setPlaceOfResidenceRecord(
+    from: string,
+    userId: string,
+    names: string[],
+    surnames: string[],
+    typeOfAddress: string[],
+    locationOfAddress: string[],
+    isCurrentAddress: boolean[],
+    settlementDate: number[],
+    leavingDate: number[],
+    ipfsHash: string
+  ): Promise<void> {
+    await this._userContract.setPlaceOfResidenceRecord(
+      from,
+      userId,
+      names,
+      surnames,
+      typeOfAddress,
+      locationOfAddress,
+      isCurrentAddress,
+      settlementDate,
+      leavingDate,
+      ipfsHash
+    );
+  }
+
+  async getPlaceOfResidenceRecords(from: string, userId: string) {
+    await this._userContract.getPlaceOfResidenceRecords(from, userId);
+  }
+
   async setUserData(
     from: string,
     userId: string,

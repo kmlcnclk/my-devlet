@@ -529,3 +529,56 @@ export const readXLSXFileForTrafficDebt = (
 
   reader.readAsBinaryString(file as any);
 };
+
+export const readXLSXFileForPlaceOfResidence = (
+  file: any,
+  setFileData: Function
+) => {
+  const reader = new FileReader();
+
+  reader.onload = (e: any) => {
+    const content = e.target.result;
+    const workbook = XLSX.read(content, { type: "binary" });
+    const firstSheetName = workbook.SheetNames[0];
+    const worksheet = workbook.Sheets[firstSheetName];
+    const data = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+    const headers: any = data[0];
+
+    const extractedData = data.slice(1).map((row: any) => ({
+      name: row[headers.indexOf("Name")]?.toString(),
+      surname: row[headers.indexOf("Surname")]?.toString(),
+      typeOfAddress: row[headers.indexOf("Type of Address")]?.toString(),
+      locationOfAddress:
+        row[headers.indexOf("Location of Address")]?.toString(),
+      isCurrentAddress: Boolean(
+        row[headers.indexOf("Is Current Address")]?.toString()
+      ),
+      settlementDate: row[headers.indexOf("Settlement Date")]?.toString(),
+      leavingDate: row[headers.indexOf("Leaving Date")]?.toString(),
+    }));
+
+    const newED = extractedData.filter((data: any) => {
+      if (
+        data?.name?.toString().trim() ||
+        data?.surname?.toString().trim() ||
+        data?.typeOfAddress?.toString().trim() ||
+        data?.locationOfAddress?.toString().trim() ||
+        data?.isCurrentAddress?.toString().trim() ||
+        data?.settlementDate?.toString().trim() ||
+        data?.leavingDate?.toString().trim()
+      ) {
+        return data;
+      }
+    });
+
+    setFileData((prev: any) => {
+      if (prev.length > 0) {
+        const updatedPrev = [...prev, ...newED];
+        return updatedPrev;
+      }
+      return newED;
+    });
+  };
+
+  reader.readAsBinaryString(file as any);
+};
