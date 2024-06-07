@@ -1,3 +1,7 @@
+# Full Name
+
+Kamilcan Çelik - 20212675
+
 # Decentralized Citizen Information System For NEU
 
 With this system, users can add their own information added by admins to the Blockchain and share it with their friends in pdf format. It is similar to Turkish e-government but has some fundamental differences. The most important of these differences is Blockchain technology.
